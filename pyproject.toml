@@ -1,0 +1,36 @@
+[project]
+name = "pysenscraft"
+version = "1.0.0"
+description = "Python Sensitivity Crafting Toolbox for Decision Support"
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+requires-python = ">=3.10"
+keywords = ["python", "sensitivity analysis", "decision-making", "mcda", "robustness"]
+authors = [
+    {name = "Jakub Więckowski", email = "j.wieckowski@il-pib.pl"},
+]
+maintainers = [
+  {name = "Jakub Więckowski", email = "j.wieckowski@il-pib.pl" }
+]
+  # How mature is this project? Common values are
+  #   3 - Alpha
+  #   4 - Beta
+  #   5 - Production/Stable
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    # paczki z requirements + wersje
+]
+
+[project.urls] 
+"Homepage" = "https://github.com/pypa/sampleproject"
+"Bug Reports" = "https://github.com/pypa/sampleproject/issues"
+"Source" = "https://github.com/pypa/sampleproject/"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
