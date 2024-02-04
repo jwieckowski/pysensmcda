@@ -1,11 +1,11 @@
-# Copyright (C) 2023 Jakub Więckowski
+# Copyright (C) 2023 - 2024 Jakub Więckowski
 
 from tqdm import tqdm
 import threading
 import os
 from time import time
 
-def generate_weights_scenarios(n, step, precision=3, filename=None):
+def generate_weights_scenarios(n: int, step: float, precision: int = 3, filename: str = None):
     """
     Generate scenarios for examining criteria weights
 
@@ -21,7 +21,8 @@ def generate_weights_scenarios(n, step, precision=3, filename=None):
         The number of decimal places to round the generated criteria weights.
 
     filename : str or None, optional, default=None
-        If provided, the generated scenarios will be saved to the specified file. If None, scenarios will be returned as a list.
+        If provided, the generated scenarios will be saved to the specified file. 
+        If None, scenarios will be returned as a list.
 
     Returns
     -------
@@ -32,15 +33,15 @@ def generate_weights_scenarios(n, step, precision=3, filename=None):
     -----
     This function generates scenarios by iteratively adjusting criteria weights for a given number of criteria and step size. It starts with the maximum value for one criterion and decreases it by the step size while increasing the values of other criteria to maintain the sum. The scenarios can be saved to a file or returned as a list.
 
-    Examples
+    ## Examples
     --------
-    # Example 1: Generate and save scenarios to a file
+    ### Example 1: Generate and save scenarios to a file
     >>> generate_weights_scenarios(3, 0.2, 2, "scenarios.txt")
 
-    # Example 2: Generate scenarios and return as a list
+    ### Example 2: Generate scenarios and return as a list
     >>> scenarios = generate_weights_scenarios(4, 0.1, 3)
     >>> print(scenarios)
-    >>> [[0.9, 0.1, 0.0, 0.0], [0.8, 0.2, 0.0, 0.0], ...]
+    >>> [(0.9, 0.1, 0.0, 0.0), (0.8, 0.2, 0.0, 0.0), ...]
 
     """
 
@@ -85,8 +86,8 @@ def generate_weights_scenarios(n, step, precision=3, filename=None):
     results = []
     stack = [(n, max_points, [])]
     
-    num_cores = os.cpu_count()  # Get the number of CPU cores
-    num_threads = min(num_cores * 2, 8)  # Adjust as needed
+    num_cores = os.cpu_count()
+    num_threads = min(num_cores * 2, 8)
 
     threads = []
     for _ in range(num_threads):
@@ -108,12 +109,13 @@ def generate_weights_scenarios(n, step, precision=3, filename=None):
 
 if __name__ == '__main__':
     # Example usage
-    n = 3
-    STEP = 0.001
+    n = 6
+    STEP = 0.1
     MAX_POINTS = int(1 / STEP)
 
     start_time = time()
     results = generate_weights_scenarios(n, STEP)
+    print(results[0:10])
     end_time = time()
     execution_time = end_time - start_time  # Calculate the execution time
     print(f"Execution time: {execution_time:.2f} seconds")  # Print the execution time
