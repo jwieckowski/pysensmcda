@@ -3,11 +3,10 @@
 from tqdm import tqdm
 import threading
 import os
-from time import time
 
 def generate_weights_scenarios(n: int, step: float, precision: int = 3, filename: str = None):
     """
-    Generate scenarios for examining criteria weights
+    Generate scenarios for examining criteria weights based on given criteria number and step of weights space exploration
 
     Parameters
     ----------
@@ -105,17 +104,3 @@ def generate_weights_scenarios(n: int, step: float, precision: int = 3, filename
                 outfile.write('\n')
     else:
         return results
-
-
-if __name__ == '__main__':
-    # Example usage
-    n = 6
-    STEP = 0.1
-    MAX_POINTS = int(1 / STEP)
-
-    start_time = time()
-    results = generate_weights_scenarios(n, STEP)
-    print(results[0:10])
-    end_time = time()
-    execution_time = end_time - start_time  # Calculate the execution time
-    print(f"Execution time: {execution_time:.2f} seconds")  # Print the execution time
