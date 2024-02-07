@@ -4,7 +4,7 @@ import numpy as np
 
 def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int | np.ndarray = None):
     """
-    TODO
+    Remove one or more criteria from a decision matrix and adjust corresponding criteria weights.
 
     Parameters
     ----------
@@ -12,23 +12,27 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
         2D array with decision matrix containing multiple criteria and alternatives.
 
     weights : ndarray
-        Vector of initial criteria weights.
+        1D vector of initial criteria weights.
 
-    combinations : ndarray, optional, default=None
-        2D array of combinations of criteria indices to be removed. If not provided, combinations will be generated automatically based on the specified `n` value.
-
-    n : int, optional, default=3
-        Number of minimum number of criteria to keep in the decision matrix. In calculations used only when `combinations` is not provided.
+    indexes : None | int | ndarray, optional, default=None
+        Index or array of indexes specifying which criteria to remove. 
+        If None, one criterion will be removed by default
 
     Returns
     -------
-        TODO
+    List[Tuple[int, ndarray, ndarray]]
+        A list of tuples containing information about the removed criteria, new decision matrix,
+        and adjusted criteria weights.
 
     ## Examples
     --------
-    ### Example 1: Generate scenarios with custom combinations
+    ### Example 1: 
     TODO
-    ### Example 2: Generate scenarios with default combinations
+    ### Example 2: 
+    TODO
+    ### Example 3: 
+    TODO
+    ### Example 4: 
     TODO
     """
     
@@ -41,11 +45,11 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
 
     # weights dimension
     if weights.ndim != 1:
-        raise ValueError('Weights should be given as one dimensional vector')
+        raise ValueError('Weights should be given as one dimensional array')
 
     # matrix dimension
     if matrix.ndim != 2:
-        raise ValueError('Matrix should be given as at two dimensional vector')
+        raise ValueError('Matrix should be given as at two dimensional array')
 
     crit_indexes = None
 
@@ -81,6 +85,7 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
                 new_weights += deleted_weight / new_weights.shape[0]
             elif isinstance(c_idx, list):
                 new_weights += np.sum(deleted_weight) / new_weights.shape[0]
+            new_weights = new_weights / np.sum(new_weights)
 
             data.append((c_idx, new_matrix, new_weights))
         except:
