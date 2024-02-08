@@ -122,11 +122,11 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, rankings: np.nd
             if inspect.isclass(key):
                 class_params = methods[key][0]
                 method_params = methods[key][1]
-                method = key(*[eval(param, globals(), local_scope) if isinstance(param, str) else param for param in class_params])
+                method = key(*[eval(param, globals(), local_scope) for param in class_params])
             else:
                 method_params = methods[key]
                 method = key
-            pref = method(*[eval(param, globals(), local_scope) if isinstance(param, str) else param for param in method_params])
+            pref = method(*[eval(param, globals(), local_scope) for param in method_params])
             new_preferences.append(pref)
             if types[idx] == 1:
                 new_rankings.append(rankdata(pref * -1))
