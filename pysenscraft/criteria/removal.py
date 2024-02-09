@@ -101,7 +101,7 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
         for c_idx in indexes:
             if isinstance(c_idx, int):
                 if c_idx < 0 or c_idx >= weights.shape[0]:
-                    raise IndexError(f'Given index ({indexes}) out of range')
+                    raise IndexError(f'Given index ({c_idx}) out of range')
             elif isinstance(c_idx, list):
                 if any([idx < 0 or idx >= weights.shape[0] for idx in c_idx]):
                     raise IndexError(f'Given indexes ({c_idx}) out of range')
