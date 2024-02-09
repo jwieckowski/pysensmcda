@@ -5,6 +5,8 @@ import numpy as np
 from scipy.stats import rankdata
 from dataclasses import dataclass
 from pymcdm.correlations import weighted_spearman
+from pymcdm.methods import COMET, TOPSIS, VIKOR
+from pymcdm.methods.comet_tools import MethodExpert
 
 @dataclass
 class ICRAResults:
@@ -18,7 +20,7 @@ class ICRAResults:
     all_rankings: np.ndarray
     all_corrs: np.ndarray
 
-def iterative_compromise(methods: dict, preferences: np.ndarray, rankings: np.ndarray, types, corr_coef: callable=weighted_spearman, max_iters: int=1000, compromise_weights: np.ndarray | None=None) -> ICRAResults:
+def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coef: callable=weighted_spearman, max_iters: int=1000, compromise_weights: np.ndarray | None=None) -> ICRAResults:
     """ Iterative Compromise Ranking Analysis (ICRA).
         ---------------------------------------------
 
@@ -27,10 +29,15 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, rankings: np.nd
         Parameters
         ----------
         methods: array of callable
-            Array that should contain callable functions for all considered MCDMs. The function should return preference value. Support for pymcdm methods.
+            Array that should contain callable functions or objects for all considered MCDMs. The function or function returned by object should return preference value. The data should be stored in dictionary in following way:
+            >>> {
+            >>> Object: [[parameters for object initialization],
+            >>>         [parameters for funtion initialization]],
+            >>> funtion: [parameters for function initialization]
+            >>> }
+        `See example`
         preferences: ndarray
             Decision matrix consisting of preferences. Alternatives are in rows and Criteria (methods / experts) are in columns
-        rankings: ndarray
         types: ndarray
             Array with definitions of method types types: 1 if method ranks in ascending order and -1 if the method ranks in descending order
         corr_coef: callable, optional, default=pymcdm.weighted_spearman
@@ -38,7 +45,7 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, rankings: np.nd
         max_iters: int, optional, default=1000
             Maximum iterations number to seek compromise.
         compromise_weights: ndarray, optional, default=equal weights
-            Weights of methods in compromise seeking. Sum of the weights should be 1. (e.g. sum(weights) == 1).
+            Weights of methods / experts in compromise seeking. Sum of the weights should be 1. (e.g. sum(weights) == 1).
 
         Returns
         -------
@@ -54,7 +61,7 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, rankings: np.nd
             all_corrs: ndarray
 
         Example
-        --------
+        -------
         >>> ## Initial decision problem evaluation - random problem
         >>> decision_matrix = np.random.random((7, 5))
         >>> 
@@ -71,17 +78,17 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, rankings: np.nd
         >>> 
         >>> ## ICRA variables preparation
         >>> methods = {
-        >>>     COMET: [['np.vstack((np.min(matrix, axis=0), np.max(matrix, axis=0))).T', 
-        >>>                     'MethodExpert(TOPSIS(), weights, types)'], 
-        >>>             ['matrix']],
-        >>>     topsis: ['matrix', 'weights', 'types'],
-        >>>     vikor: ['matrix', 'weights', 'types']
-        >>>     }
+        ...     COMET: [['np.vstack((np.min(matrix, axis=0), np.max(matrix, axis=0))).T', 
+        ...                     'MethodExpert(TOPSIS(), weights, types)'], 
+        ...             ['matrix']],
+        ...     topsis: ['matrix', 'weights', 'types'],
+        ...     vikor: ['matrix', 'weights', 'types']
+        ...     }
         >>> 
         >>> ICRA_matrix = np.array([comet_pref, topsis_pref, vikor_pref]).T
         >>> method_types = np.array([1, 1, -1])
         >>> 
-        >>> result = iterative_compromise(methods, ICRA_matrix, np.array([comet.rank(comet_pref), topsis.rank(topsis_pref), vikor.rank(vikor_pref)]), method_types)
+        >>> result = iterative_compromise(methods, ICRA_matrix, method_types)
         >>> print(result.all_rankings)
     """
 
@@ -92,12 +99,16 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, rankings: np.nd
         results.all_rankings = np.array(all_rankings)
         results.all_corrs = np.array(all_corrs)
 
+    def rank(pref, rank_type):
+        return rankdata(pref * -1) if rank_type == 1 else rankdata(pref)
+
+    matrix = preferences
+    rankings = np.array([rank(pref, types[idx]) for idx, pref in enumerate(matrix.T)]).T
+
     results = ICRAResults(preferences, rankings, np.array([]), np.array([]), 0, np.array([]), np.array([]), np.array([]))
     all_corrs = []
     all_preferences = []
     all_rankings = []
-
-    matrix = preferences
 
     if compromise_weights is None:
         weights = np.ones(matrix.shape[1])/matrix.shape[1]
@@ -122,22 +133,21 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, rankings: np.nd
             if inspect.isclass(key):
                 class_params = methods[key][0]
                 method_params = methods[key][1]
-                method = key(*[eval(param, globals(), local_scope) for param in class_params])
+                method = key(*[eval(param, globals(), local_scope) if isinstance(param, str) else param for param in class_params])
             else:
                 method_params = methods[key]
                 method = key
-            pref = method(*[eval(param, globals(), local_scope) for param in method_params])
+            pref = method(*[eval(param, globals(), local_scope) if isinstance(param, str) else param for param in method_params])
             new_preferences.append(pref)
-            if types[idx] == 1:
-                new_rankings.append(rankdata(pref * -1))
-            else:
-                new_rankings.append(rankdata(pref))
+            new_rankings.append(rank(pref, types[idx]))
 
-        for i in range(len(new_rankings)-1):
-            internal_corrs[i] = corr_coef(new_rankings[i], new_rankings[i+1])
+        new_rankings = np.array(new_rankings).T
+        
+        for i in range(new_rankings.shape[1]-1):
+            internal_corrs[i] = corr_coef(new_rankings[:, i], new_rankings[:, i+1])
 
-        for i, new_ranking in enumerate(new_rankings):
-            corrs[i] = corr_coef(new_ranking, np.asarray(prev_rankings)[i])
+        for i in range(new_rankings.shape[1]):
+            corrs[i] = corr_coef(new_rankings[:, i], np.asarray(prev_rankings)[:, i])
 
         prev_rankings = new_rankings
         matrix = np.vstack(new_preferences).T
