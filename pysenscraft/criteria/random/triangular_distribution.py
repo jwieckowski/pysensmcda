@@ -2,12 +2,15 @@
 
 import numpy as np
 
-def triangular_distribution(left: float = 0.0, mode: float = 0.5, right: float = 1.0, size: int = 3):
+def triangular_distribution(size: int, left: float = 0.0, mode: float = 0.5, right: float = 1.0):
     """
     Generate a set of normalized weights sampled from a triangular distribution.
 
     Parameters
     ----------
+    size : int
+        Number of weights to generate.
+
     left : float, optional, default=0.0
         The lower bound of the triangular distribution.
 
@@ -17,9 +20,6 @@ def triangular_distribution(left: float = 0.0, mode: float = 0.5, right: float =
     right : float, optional, default=1.0
         The upper bound of the triangular distribution.
 
-    size : int, optional, default=3
-        Number of weights to generate.
-
     Returns
     -------
     ndarray
@@ -27,7 +27,13 @@ def triangular_distribution(left: float = 0.0, mode: float = 0.5, right: float =
 
     ## Example
     --------
-    TODO
+    ### Example 1: Generate normalized weights from a triangular distribution with default parameters
+    >>> weights = triangular_distribution(3)
+    >>> print(weights)
+    
+    ### Example 2: Generate normalized weights from a triangular distribution with explicit parameters
+    >>> weights = triangular_distribution(3, 2, 5, 6)
+    >>> print(weights)
     """
 
     if left > mode or mode > right or left > right:
@@ -36,7 +42,3 @@ def triangular_distribution(left: float = 0.0, mode: float = 0.5, right: float =
 
     weights = np.abs(np.random.triangular(left, mode, right, size=size))
     return np.array(weights) / np.sum(weights)
-
-if __name__ == '__main__':
-    weights = triangular_distribution()
-    print(weights)   

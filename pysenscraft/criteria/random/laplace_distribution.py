@@ -2,29 +2,35 @@
 
 import numpy as np
 
-def laplace_distribution(loc: float = 0.0, scale: float = 1.0, size: int = 3):
+def laplace_distribution(size: int, loc: float = 0.0, scale: float = 1.0):
     """
-    Generate a set of normalized weights sampled from a normal distribution.
+    Generate a set of normalized weights sampled from a laplace distribution.
 
     Parameters
     ----------
+    size : int
+        Number of weights to generate.
+
     loc : float, optional, default=0.0
         The position of distribution peak
     
     scale : float, optional, default=1.0
         The exponential decay. Must be non-negative
 
-    size : int, optional, default=3
-        Number of weights to generate.
-
     Returns
     -------
     ndarray
-        Array of normalized weights sampled from a normal distribution.
+        Array of normalized weights sampled from a laplace distribution.
 
     ## Example
     --------
-    TODO
+    ### Example: Generate normalized weights from a laplace distribution with default parameters
+    >>> weights = laplace_distribution(3)
+    >>> print(weights)
+
+    ### Example 2: Generate normalized weights from a laplace distribution with explicit parameters
+    >>> weights = laplace_distribution(3, 5, 2)
+    >>> print(weights)
     """
 
     if scale < 0:
@@ -32,7 +38,3 @@ def laplace_distribution(loc: float = 0.0, scale: float = 1.0, size: int = 3):
 
     weights = np.abs(np.random.laplace(loc, scale, size=size))
     return np.array(weights) / np.sum(weights)
-
-if __name__ == '__main__':
-    weights = laplace_distribution()
-    print(weights)   

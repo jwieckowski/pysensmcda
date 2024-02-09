@@ -2,13 +2,13 @@
 
 import numpy as np
 
-def random_distribution(size: int = 3):
+def random_distribution(size: int):
     """
     Generate a set of normalized weights sampled from a random distribution ( from half-open interval [0.0, 1.0) ).
 
     Parameters
     ----------
-    size : int, optional, default=3
+    size : int
         Number of weights to generate.
 
     Returns
@@ -18,12 +18,10 @@ def random_distribution(size: int = 3):
 
     ## Example
     --------
-    TODO
+    ### Example 1: Generate normalized weights from a random distribution with default parameters
+    >>> weights = random_distribution(3)
+    >>> print(weights)
     """
 
     weights = np.abs(np.random.random(size=size))
     return np.array(weights) / np.sum(weights)
-
-if __name__ == '__main__':
-    weights = random_distribution()
-    print(weights)   

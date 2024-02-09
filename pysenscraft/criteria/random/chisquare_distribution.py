@@ -2,17 +2,17 @@
 
 import numpy as np
 
-def chisquare_distribution(df: float = 1.0, size: int = 3):
+def chisquare_distribution(size: int, df: float = 1.0):
     """
     Generate a set of normalized weights sampled from a normal distribution.
 
     Parameters
     ----------
+    size : int
+        Number of weights to generate.
+
     df : float, optional, default=1.0
         Number of degrees of freedom. Must be > 0.
-
-    size : int, optional, default=3
-        Number of weights to generate.
 
     Returns
     -------
@@ -21,7 +21,13 @@ def chisquare_distribution(df: float = 1.0, size: int = 3):
 
     ## Example
     --------
-    TODO
+    ### Example: Generate normalized weights from a chi-square distribution with default parameters
+    >>> weights = chisquare_distribution(3)
+    >>> print(weights)
+
+    ### Example 2: Generate normalized weights from a chi-square distribution with explicit parameters
+    >>> weights = chisquare_distribution(3, 5)
+    >>> print(weights)
     """
 
     if df <= 0:
@@ -29,7 +35,3 @@ def chisquare_distribution(df: float = 1.0, size: int = 3):
 
     weights = np.abs(np.random.chisquare(df, size=size))
     return np.array(weights) / np.sum(weights)
-
-if __name__ == '__main__':
-    weights = chisquare_distribution()
-    print(weights)   
