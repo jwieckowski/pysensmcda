@@ -26,14 +26,49 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
 
     ## Examples
     --------
-    ### Example 1: 
-    TODO
-    ### Example 2: 
-    TODO
-    ### Example 3: 
-    TODO
-    ### Example 4: 
-    TODO
+    ### Example 1: no indexes given
+    >>> matrix = np.array([
+    ...     [1, 2, 3, 4, 4],
+    ...     [1, 2, 3, 4, 4],
+    ...     [4, 3, 2, 1, 4]
+    ... ])
+    >>> weights = np.array([0.25, 0.25, 0.2, 0.2, 0.1])
+    >>> results = remove_criteria(matrix, weights)
+    >>> for result in results:
+    ...     print(result)
+
+    ### Example 2: int index given
+    >>> matrix = np.array([
+    ...     [1, 2, 3, 4, 4],
+    ...     [1, 2, 3, 4, 4],
+    ...     [4, 3, 2, 1, 4]
+    ... ])
+    >>> weights = np.array([0.25, 0.25, 0.2, 0.2, 0.1])
+    >>> results = remove_criteria(matrix, weights, 3)
+    >>> for result in results:
+    ...     print(result)
+
+    ### Example 3: array indexes given, one-dimensional
+    >>> matrix = np.array([
+    ...     [1, 2, 3, 4, 4],
+    ...     [1, 2, 3, 4, 4],
+    ...     [4, 3, 2, 1, 4]
+    ... ])
+    >>> weights = np.array([0.25, 0.25, 0.2, 0.2, 0.1])
+    >>> results = remove_criteria(matrix, weights, np.array([1, 2, 3]))
+    >>> for result in results:
+    ...     print(result)
+
+    ### Example 4: array indexes given, elements of array as list
+    >>> matrix = np.array([
+    ...     [1, 2, 3, 4, 4],
+    ...     [1, 2, 3, 4, 4],
+    ...     [4, 3, 2, 1, 4]
+    ... ])
+    >>> weights = np.array([0.25, 0.25, 0.2, 0.2, 0.1])
+    >>> results = remove_criteria(matrix, weights, np.array([[0, 5], 2, 3], dtype='object'))
+    >>> for result in results:
+    ...     print(result)
     """
     
     matrix = np.array(matrix)
@@ -93,54 +128,3 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
 
     return data
     
-
-if __name__ == '__main__':
-    # Example 1, no indexes given
-    # by default one criterion removed from data subsequently 
-    print('Example 1 ---------------------')
-    matrix = np.array([
-        [1, 2, 3, 4, 4],
-        [1, 2, 3, 4, 4],
-        [4, 3, 2, 1, 4]
-    ])
-    weights = np.array([0.25, 0.25, 0.2, 0.2, 0.1])
-    results = remove_criteria(matrix, weights)
-    for result in results:
-        print(result)
-
-    # Example 2 int index given
-    matrix = np.array([
-        [1, 2, 3, 4, 4],
-        [1, 2, 3, 4, 4],
-        [4, 3, 2, 1, 4]
-    ])
-    print('Example 2 ---------------------')
-    weights = np.array([0.25, 0.25, 0.2, 0.2, 0.1])
-    results = remove_criteria(matrix, weights, 3)
-    for result in results:
-        print(result)
-
-    # Example 3 np array indexes given, one-dimensional
-    matrix = np.array([
-        [1, 2, 3, 4, 4],
-        [1, 2, 3, 4, 4],
-        [4, 3, 2, 1, 4]
-    ])
-    print('Example 3 ---------------------')
-    weights = np.array([0.25, 0.25, 0.2, 0.2, 0.1])
-    results = remove_criteria(matrix, weights, np.array([1, 2, 3]))
-    for result in results:
-        print(result)
-
-    # Example 4 np array indexes given, elements of array as list
-    matrix = np.array([
-        [1, 2, 3, 4, 4],
-        [1, 2, 3, 4, 4],
-        [4, 3, 2, 1, 4]
-    ])
-    print('Example 4 ---------------------')
-    weights = np.array([0.25, 0.25, 0.2, 0.2, 0.1])
-    results = remove_criteria(matrix, weights, np.array([[0, 5], 2, 3], dtype='object'))
-    for result in results:
-        print(result)
-
