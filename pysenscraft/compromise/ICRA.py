@@ -5,8 +5,6 @@ import numpy as np
 from scipy.stats import rankdata
 from dataclasses import dataclass
 from pymcdm.correlations import weighted_spearman
-from pymcdm.methods import COMET, TOPSIS, VIKOR
-from pymcdm.methods.comet_tools import MethodExpert
 
 @dataclass
 class ICRAResults:
@@ -130,16 +128,19 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
         new_rankings = []
         
         for idx, key in enumerate(methods.keys()):
-            if inspect.isclass(key):
-                class_params = methods[key][0]
-                method_params = methods[key][1]
-                method = key(*[eval(param, globals(), local_scope) if isinstance(param, str) else param for param in class_params])
-            else:
-                method_params = methods[key]
-                method = key
-            pref = method(*[eval(param, globals(), local_scope) if isinstance(param, str) else param for param in method_params])
-            new_preferences.append(pref)
-            new_rankings.append(rank(pref, types[idx]))
+            try:
+                if inspect.isclass(key):
+                    class_params = methods[key][0]
+                    method_params = methods[key][1]
+                    method = key(*[eval(param, globals(), local_scope) for param in class_params])
+                else:
+                    method_params = methods[key]
+                    method = key
+                pref = method(*[eval(param, globals(), local_scope) for param in method_params])
+                new_preferences.append(pref)
+                new_rankings.append(rank(pref, types[idx]))
+            except:
+                raise ValueError(f'Check methods dict. Wrong structure or parameters for key {key}.')
 
         new_rankings = np.array(new_rankings).T
         
@@ -158,7 +159,7 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
         all_rankings.append(new_rankings)
 
         if results.iters_number > max_iters:
-            print(f"Compromise not obtained in {max_iters} iterations.")
+            print(f'Compromise not obtained in {max_iters} iterations.')
             break
 
     assign_results(results, new_preferences, new_rankings, all_preferences, all_rankings, all_corrs)
