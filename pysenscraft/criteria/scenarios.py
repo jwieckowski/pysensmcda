@@ -4,7 +4,7 @@ from tqdm import tqdm
 import threading
 import os
 
-def generate_weights_scenarios(n: int, step: float, precision: int = 3, filename: str = None):
+def generate_weights_scenarios(n: int, step: float, precision: int = 3, threads_num: None | int = None, filename: str = None):
     """
     Generate scenarios for examining criteria weights based on given criteria number and step of weights space exploration
 
@@ -18,6 +18,10 @@ def generate_weights_scenarios(n: int, step: float, precision: int = 3, filename
 
     precision : int, optional, default=3
         The number of decimal places to round the generated criteria weights.
+
+    threads_num : int or None, optional, default=None
+        If provided, the generated scenarios will be generated with given number of threads. 
+        If None, all threads from CPU will be used
 
     filename : str or None, optional, default=None
         If provided, the generated scenarios will be saved to the specified file. 
@@ -85,8 +89,11 @@ def generate_weights_scenarios(n: int, step: float, precision: int = 3, filename
     results = []
     stack = [(n, max_points, [])]
     
-    num_cores = os.cpu_count()
-    num_threads = min(num_cores * 2, 8)
+    if threads_num is None:
+        num_cores = os.cpu_count()
+        num_threads = min(num_cores * 2, 8)
+    else:
+        num_threads = threads_num
 
     threads = []
     for _ in range(num_threads):
