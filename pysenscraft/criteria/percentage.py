@@ -30,7 +30,7 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
 
     Returns
     -------
-    List[Tuple[int, ndarray, ndarray]]
+    List[Tuple[int | tuple, tuple, ndarray]]
         A list of tuples containing information about the modified criteria index, percentage change,
         and the resulting criteria weights.
 
@@ -154,14 +154,26 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
         for change in changes:
             diff = weights[crit_idx] * change
 
-            for val in direction_values[crit_idx]:
+            change_direction = direction_values[crit_idx]
+            if not isinstance(crit_idx, (int, np.integer)):
+                change_direction = [direction_values[crit_idx][0]]
+                
+            for val in change_direction:
                 if isinstance(val, (int, np.integer)):
                     new_weights = modify_weights(weights, crit_idx, diff, val)
                     results.append((crit_idx, change * val, new_weights))
                 else:
-                    for v in [-1, 1]:
+                    for v in val:
+                        change_val = tuple(c * v for c in change)
                         new_weights = modify_weights(weights, crit_idx, diff, v)
-                        results.append((crit_idx, np.asarray(change) * v, new_weights))
+                        results.append((tuple(crit_idx), change_val, new_weights))
 
     return results
 
+
+weights = np.array([0.3, 0.3, 0.4])
+percentages = np.array([5, 5, 5])
+indexes = np.array([[0, 1], 2], dtype='object')
+results = percentage_modification(weights, percentages, indexes=indexes)
+for r in results:
+    print(r)
