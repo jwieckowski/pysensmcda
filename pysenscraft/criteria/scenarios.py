@@ -10,7 +10,7 @@ import tempfile
 import tqdm
 import pickle
 
-def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, cores_num: int|None = None, file_name: str|None = None, return_array: bool = False, sequential: bool = False, save_zeroed: bool = True):
+def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, cores_num: int|None = None, file_name: str|None = None, return_array: bool = False, sequential: bool = False, save_zeros: bool = True):
     """
     Generate scenarios for examining criteria weights based on given criteria number and step of weights space exploration
 
@@ -40,7 +40,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
     sequential: bool, optional, default=False
         If True code will be run sequentially. Progressbar will be shown and non temporary files created.
 
-    save_zeroed: bool, optional, default=True
+    save_zeros: bool, optional, default=True
         If True saves weights vectors where zeros are present.
 
     Returns
@@ -55,7 +55,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
     >>> # results will be saved to 'out.npy'
 
     ### Example 2: parallel with array return
-    >>> scenarios = generate_weights_scenarios(4, 0.1, 3)
+    >>> scenarios = generate_weights_scenarios(4, 0.1, 3, return_array=True)
     >>> print(scenarios)
     >>> [(0.9, 0.1, 0.0, 0.0), (0.8, 0.2, 0.0, 0.0), ...]
     >>> # results will be saved to 'out.npy'
@@ -146,7 +146,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
             s = s_copy.copy()
         return s
 
-    def run_parallel(cores_num, temp_dir, file_name, save_zeroed, return_array):
+    def run_parallel(cores_num, temp_dir, file_name, save_zeros, return_array):
         """
         Internal function for parallel initialization.
         """
@@ -168,7 +168,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
                     while True:
                         try:
                             temp_results = np.round(np.array(pickle.load(f)) * step, precision)
-                            if not save_zeroed:
+                            if not save_zeros:
                                 npaa.append(temp_results[np.all(temp_results != 0, axis=1)])
                             else:
                                 npaa.append(temp_results)
@@ -179,7 +179,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
             return np.load(f'{file_name}.npy')
 
         
-    def run_sequential(file_name, save_zeroed, return_array):
+    def run_sequential(file_name, save_zeros, return_array):
         """
         Internal function for initialization of sequential run.
         """
@@ -190,7 +190,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
         stack.append((crit_num, max_points, []))
         results = weight_gen(stack, iters_num)
 
-        if not save_zeroed:
+        if not save_zeros:
             results = results[np.all(results != 0, axis=1)]
 
         if file_name is not None:
@@ -206,12 +206,9 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
         num_cores = cores_num
     temp_dir = tempfile.gettempdir()
     if sequential:
-        return run_sequential(file_name, save_zeroed, return_array)
+        return run_sequential(file_name, save_zeros, return_array)
     else:
         try:
-            if return_array:
-                return run_parallel(num_cores, temp_dir, file_name, save_zeroed, return_array)
-            else:
-                run_parallel(num_cores, temp_dir, file_name, save_zeroed, return_array)
+            return run_parallel(num_cores, temp_dir, file_name, save_zeros, return_array)
         finally:
             delete_temp_files(num_cores, temp_dir)
