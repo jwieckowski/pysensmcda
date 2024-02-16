@@ -4,7 +4,7 @@ import numpy as np
 import pymcdm
 import inspect
 
-def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: object, call_kwargs: dict, direction: np.ndarray, step: int | float, bounds: None | np.ndarray = None, positions: None | np.ndarray = None):
+def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: callable, call_kwargs: dict, ranking_descending: bool, direction: np.ndarray, step: int | float, bounds: None | np.ndarray = None, positions: None | np.ndarray = None, return_zeros: bool = True, max_modification: None | int = None):
     """
     Promote alternatives in a decision matrix by adjusting specific criteria values, considering constraints on rankings. 
     With only required parameters given, the analysis is looking for changes that cause promotion for 1st position in ranking.
@@ -17,11 +17,17 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: o
     initial_ranking : ndarray
         1D vector representing the initial ranking of alternatives.
 
-    method : object
-        An instance of the method from the pymcdm package to be used for preference and ranking calculation.
+    method : callable
+        The evaluation function to be used for preference and ranking calculation.
+        Should include `matrix` as one of the parameters to pass decision matrix to assessment process.
 
     call_kwargs : dict
-        Dictionary with keyword arguments to be passed to the pymcdm method object.
+        Dictionary with keyword arguments to be passed to the evaluation function.
+        Should include `matrix` as one of the parameters to pass modified decision matrix to assessment process.
+
+    ranking_descending: bool
+        Flag determining the direction of alternatives ordering in ranking.
+        By setting the flag to True, greater values will have better positions in ranking.
 
     direction : ndarray
         1D vector specifying the direction of the modification for each column in decision matrix (1 for increase, -1 for decrease).
@@ -35,6 +41,13 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: o
     positions : None | ndarray, optional, default=None
         Target positions for the alternatives in the ranking after modification. 
         If None, the positions are not constrained and the 1st position is targeted.
+
+    return_zeros : bool, optional, default=True
+        Flag determining whether results without noticed promotion in ranking will be returned.
+
+    max_modification : None | int, optional, default=None
+        Value determining maximum modification size represented as percent of initial value.
+        Required if `bounds` parameter is not given.
 
     Returns
     -------
@@ -60,9 +73,11 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: o
     ...     "weights": weights,
     ...     "types": types
     ... }
+    >>> ranking_descending = True
     >>> direction = np.array([-1, 1, -1])
     >>> step = 0.5
-    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, direction, step)
+    >>> max_modification = 1000
+    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, max_modification=max_modification)
     >>> for r in results:
     ...     print(r)
 
@@ -81,10 +96,11 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: o
     ...     "weights": weights,
     ...     "types": types
     ... }
+    >>> ranking_descending = True
     >>> direction = np.array([-1, 1, -1])
     >>> step = 0.5
     >>> bounds = np.array([1, 15, 0])
-    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, direction, step, bounds)
+    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, bounds)
     >>> for r in results:
     ...     print(r)
 
@@ -103,17 +119,53 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: o
     ...     "weights": weights,
     ...     "types": types
     ... }
+    >>> ranking_descending = True
+    >>> direction = np.array([-1, 1, -1])
     >>> step = 0.5
     >>> bounds = np.array([1, 15, 0])
     >>> positions = np.array([1, 2, 1])
-    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, direction, step, bounds, positions)
+    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, bounds, positions)
+    >>> for r in results:
+    ...     print(r)
+
+    ### Example 4: Promotion analysis based on the COPRAS method with not returned values without noticed promotion
+    >>> matrix = np.array([
+    ...     [4, 2, 6],
+    ...     [7, 3, 2],
+    ...     [9, 6, 8]
+    ... ])
+    >>> weights = np.array([0.4, 0.5, 0.1])
+    >>> types = np.array([-1, 1, -1])
+    >>> copras = pymcdm.methods.COPRAS()
+    >>> initial_ranking = np.array([2, 3, 1])
+    >>> call_kwargs = {
+    ...     "matrix": matrix,
+    ...     "weights": weights,
+    ...     "types": types
+    ... }
+    >>> ranking_descending = True
+    >>> direction = np.array([-1, 1, -1])
+    >>> step = 0.5
+    >>> max_modification = 50
+    >>> return_zeros = False
+    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, max_modification=max_modification, return_zeros=return_zeros)
     >>> for r in results:
     ...     print(r)
     """
+    
+    def generate_crit_changes(matrix, alt_idx, crit_idx, direction, step, bounds, max_modification):
+        # set modification bounds
+        if bounds is None:
+            limit = matrix[alt_idx, crit_idx] * max_modification * direction[crit_idx]
+            crit_values = np.arange(matrix[alt_idx, crit_idx], limit, step * direction[crit_idx])
+        else:
+            crit_values = np.arange(matrix[alt_idx, crit_idx], bounds[crit_idx], step * direction[crit_idx])
 
-    methods_types = [obj for _, obj in inspect.getmembers(pymcdm.methods) if inspect.isclass(obj)]
-    if type(method) not in methods_types:
-        raise TypeError('Method object should be one of the pymcdm package methods')
+        for change in crit_values:
+            yield change
+
+    if not callable(method):
+        raise TypeError('Method should be callable')
 
     if not isinstance(matrix, np.ndarray):
         raise TypeError('Matrix should be a numpy array type')
@@ -138,6 +190,9 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: o
 
     if bounds is not None and not isinstance(bounds, np.ndarray):
         raise TypeError('Bounds should be a numpy array type')
+    
+    if bounds is None and max_modification is None:
+        raise TypeError('`max_modification` parameter must be given when `bounds` is None')
 
     if positions is not None:
         if not isinstance(positions, np.ndarray):
@@ -148,6 +203,9 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: o
 
         if any([p <= 0 or p > positions.shape[0] for p in positions]):
             raise ValueError('Values in positions should not exceed possible ranking placements')
+
+    if 'matrix' not in list(call_kwargs.keys()):
+        raise ValueError('Call kwargs dictionary should include `matrix` as one of the keys')
 
     # store promoted positions and changes that caused the promotions
     new_positions = np.full((matrix.shape), 0, dtype=int)
@@ -163,15 +221,8 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: o
             else:
                 new_positions[alt_idx, crit_idx] = positions[alt_idx]
 
-            # set modification bounds
-            if bounds is None:
-                # to tysiąc ustawione tak na sztywno żeby  była jakaś wartośc graniczna mimo wszystko dla których modyfikacje sie odbywają, może masz jakis inny pomysł jak to rozwiązać
-                crit_changes = np.arange(matrix[alt_idx, crit_idx], matrix[alt_idx, crit_idx] * 1000 * direction[crit_idx], step * direction[crit_idx])
-            else:
-                crit_changes = np.arange(matrix[alt_idx, crit_idx], bounds[crit_idx], step * direction[crit_idx])
-
             # put new changed value in decision matrix and assess alternatives
-            for change in crit_changes:
+            for change in generate_crit_changes(matrix, alt_idx, crit_idx, direction, step, bounds, max_modification):
                 
                 new_matrix = matrix.copy()
                 new_matrix[alt_idx, crit_idx] = change
@@ -180,7 +231,8 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: o
                 call_kwargs['matrix'] = new_matrix
                 try:
                     new_preferences = method(**call_kwargs)
-                    new_ranking = method.rank(new_preferences)
+                    # new_ranking = method.rank(new_preferences)
+                    new_ranking = pymcdm.helpers.rankdata(new_preferences, ranking_descending)
                 except Exception as err:
                     raise ValueError(err)
 
@@ -202,6 +254,10 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: o
                             changes[alt_idx, crit_idx] = change
                         break
 
-            results.append([alt_idx, crit_idx, changes[alt_idx, crit_idx], new_positions[alt_idx, crit_idx]])
-                    
+            if return_zeros:
+                results.append([alt_idx, crit_idx, changes[alt_idx, crit_idx], new_positions[alt_idx, crit_idx]])
+            else:
+                if new_positions[alt_idx, crit_idx] != initial_ranking[alt_idx]:        
+                    results.append([alt_idx, crit_idx, changes[alt_idx, crit_idx], new_positions[alt_idx, crit_idx]])
+            
     return results
