@@ -43,8 +43,8 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     ... [2, 6, 3],
     ... [9, 5, 7],
     ... ])
-    >>> percentage = 5
-    >>> results = percentage_modification(weights, percentage)
+    >>> percentages = 5
+    >>> results = percentage_modification(matrix, percentages)
     >>> for r in results:
     ...     print(r)
 
@@ -55,7 +55,7 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     ... [9, 5, 7],
     ... ])
     >>> percentages = np.array([3, 5, 8])
-    >>> results = percentage_modification(weights, percentage)
+    >>> results = percentage_modification(matrix, percentages)
     >>> for r in results:
     ...     print(r)
 
@@ -67,7 +67,7 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     ... ])
     >>> percentages = np.array([2, 4, 6])
     >>> direction = np.array([-1, 1, -1])
-    >>> results = percentage_modification(weights, percentage, direction)
+    >>> results = percentage_modification(matrix, percentages, direction)
     >>> for r in results:
     ...     print(r)
 
@@ -79,7 +79,7 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     ... ])
     >>> percentages = np.array([1, 4, 2])
     >>> indexes = np.array([[0, 2], 1], dtype='object')
-    >>> results = percentage_modification(weights, percentage, indexes)
+    >>> results = percentage_modification(matrix, percentages, indexes)
     >>> for r in results:
     ...     print(r)
 
@@ -91,7 +91,7 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     ... ])
     >>> percentages = np.array([2, 4, 9])
     >>> step = np.array([2, 2, 3])
-    >>> results = percentage_modification(weights, percentage, step=step)
+    >>> results = percentage_modification(matrix, percentages, step=step)
     >>> for r in results:
     ...     print(r)
     """
