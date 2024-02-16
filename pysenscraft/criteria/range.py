@@ -5,31 +5,34 @@ from itertools import product
 
 def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: float = 0.01):
     """
-    Modify a set of criteria weights based on specified percentage changes, directions, and indexes.
+    Modify a set of criteria weights based on specified range values, directions, and indexes.
 
     Parameters
     ----------
     weights : ndarray
         1D array representing the initial criteria weights. Should sum up to 1.
+
     range_values : ndarray
         Range of values for each criterion specifying the allowed changes.
         Should be given as a two-dimensional array where each row represents a criterion, 
         and the columns represent the lower and upper bounds of the allowed range.
+    
     indexes : None | ndarray, optional, default=None
         Indexes of the criteria to be modified. If None, all criteria are considered subsequently.
         If ndarray, it specifies the indexes or combinations of indexes for the criteria to be modified.
+    
     step : float, optional, default=0.01
-        Step size for the percentage change.
+        Step size for the change in given range.
 
     Returns
     -------
     List[Tuple[int, Union[float, Tuple[float, ...]], ndarray]]
         A list of tuples containing information about the modified criteria index, 
-        percentage change, and the resulting criteria weights.
+        range change, and the resulting criteria weights.
 
     ## Examples
     --------
-    ### Example 1: Modify weights with a single percentage change
+    ### Example 1: Modify weights with a single range change
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> range_values = np.array([[0.25, 0.3], [0.3, 0.35], [0.37, 0.43]])
     >>> results = range_modification(weights, range_values)
@@ -88,7 +91,7 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
     if np.round(np.sum(weights), 3) != 1:
         raise ValueError('Weights vector should sum up to 1')
 
-    # check if weights and percentages have the same length
+    # check if weights and range values have the same length
     if weights.shape[0] != range_values.shape[0]:
         raise ValueError('Weights and range values have different length')
 
