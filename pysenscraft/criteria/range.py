@@ -112,7 +112,7 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
 
     # generation of vector with subsequent values of weights for criteria
     range_changes = np.array([np.arange(range_values[i][0], range_values[i][1]+step, step) for i in range(weights.shape[0])], dtype='object')
-    range_changes = np.array([[val for val in rc if val >= range_values[idx][0] and val <= range_values[idx][1]] for idx, rc in enumerate(range_changes)])
+    range_changes = np.array([[val for val in rc if val >= range_values[idx][0] and val <= range_values[idx][1]] for idx, rc in enumerate(range_changes)], dtype='object')
 
     # criteria indexes to modify weights values
     indexes_values = None
@@ -128,7 +128,7 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
             changes = list(product(*range_changes[crit_idx]))
 
         for change in changes:
-            change_val = np.round(change, 6) if isinstance(change, np.float) else tuple(np.round(change, 6).tolist())
+            change_val = np.round(change, 6) if isinstance(change, float) else tuple(np.round(change, 6).tolist())
             new_weights = modify_weights(weights, crit_idx, change)
             if new_weights is not None:
                 results.append((crit_idx, change_val, new_weights))
