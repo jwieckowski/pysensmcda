@@ -30,8 +30,8 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
             Array that should contain callable functions or objects for all considered MCDMs. The function or function returned by object should return preference value. The data should be stored in dictionary in following way:
             >>> {
             >>> Object: [[parameters for object initialization],
-            >>>         [parameters for funtion initialization]],
-            >>> funtion: [parameters for function initialization]
+            >>>         [parameters for function initialization]],
+            >>> function: [parameters for function initialization]
             >>> }
         `See example`
         preferences: ndarray
