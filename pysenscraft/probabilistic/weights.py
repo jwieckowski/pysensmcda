@@ -4,7 +4,7 @@ import numpy as np
 
 def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6, perturbation_scale: float | np.ndarray = 0.1):
     """
-    Generate perturbed weights based on the given initial criteria weights.
+    Generate perturbed weights based on the given initial criteria weights based on the given perturbation scale and uniform distribution.
 
     Parameters
     ----------
