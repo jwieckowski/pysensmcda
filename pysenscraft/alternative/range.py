@@ -3,7 +3,7 @@
 import numpy as np
 from itertools import product
 
-def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: float | np.ndarray = 1):
+def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: int | float | np.ndarray = 1):
     """
     Modify a decision matrix based on specified range values, indexes representing the combination of columns to be modified, and steps of range modifications.
 
@@ -21,7 +21,7 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
         Indexes of the columns from the matrix to be modified. If None, all columns are considered subsequently.
         If ndarray, it specifies the indexes or combinations of indexes for the columns to be modified.
 
-    step : int | np.ndarray, optional, default=1
+    step : int | float | np.ndarray, optional, default=1
         Step size for the change in given range. If int, all changes for columns are made with the same step.
         If ndarray, the modification step is adjusted for each column separately.
 
@@ -112,6 +112,9 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
     if not isinstance(range_values, np.ndarray):
         raise TypeError('Range values should be given as numpy array')
     
+    if not isinstance(step, (int, float, np.ndarray)):
+        raise TypeError('Step should be type of integer, float or ndarray')
+
     # check if matrix and range values have the same length
     if range_values.ndim == 2:
         if matrix.shape[1] != range_values.shape[0]:
@@ -125,7 +128,7 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
             if isinstance(c_idx, (int, np.integer)):
                 if c_idx < 0 or c_idx >= matrix.shape[1]:
                     raise IndexError(f'Given index ({c_idx}) out of range')
-            elif isinstance(c_idx, list):
+            elif isinstance(c_idx, (list, np.ndarray)):
                 if any([idx < 0 or idx >= matrix.shape[1] for idx in c_idx]):
                     raise IndexError(f'Given indexes ({c_idx}) out of range')
 
