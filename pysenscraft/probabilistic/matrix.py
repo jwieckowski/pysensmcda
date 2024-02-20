@@ -47,7 +47,7 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
 
     ### Example 3 - Run with perturbation scale defined for each column
     >>> matrix = np.array([ [4, 3, 7], [1, 9, 6], [7, 5, 3] ])
-    >>> simulations = 1
+    >>> simulations = 100
     >>> precision = 3
     >>> perturbation_scale = np.array([0.5, 1, 0.4])
     >>> results = perturbed_matrix(matrix, simulations, precision, perturbation_scale)
@@ -56,7 +56,7 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
 
     ### Example 4 - Run with 2D perturbation scale array
     >>> matrix = np.array([ [4, 3, 7], [1, 9, 6], [7, 5, 3] ])
-    >>> simulations = 1
+    >>> simulations = 100
     >>> precision = 3
     >>> perturbation_scale = np.array([ [0.4, 0.5, 1], [0.7, 0.3, 1.2], [0.5, 0.1, 1.5] ])
     >>> results = perturbed_matrix(matrix, simulations, precision, perturbation_scale)
