@@ -2,14 +2,16 @@
 
 import seaborn as sns
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 
-def rankings_distribution(rankings, ax=None, title='', methods=None, legend_loc='upper', plot_type='box',
-                           plot_kwargs=dict(), xlabel='Alternative', ylabel='Position', show_legend=True):
+def rankings_distribution(rankings: np.ndarray, ax: mpl.axes.Axes|None=None, title: str='', methods: list[str]|None=None, legend_loc:str='upper', plot_type:str='box',
+                           plot_kwargs:dict=dict(), xlabel:str='Alternative', ylabel:str='Position', show_legend:bool=True):
     """
     Parameters
     ----------
-    rankings: nd.array
+    rankings: np.ndarray
         3d or 2d array of rankings to plot distribution for.
     ax: Axis | None, optional, default=None
         Matplotlib Axis to draw on. If None, current axis is used.
@@ -104,6 +106,9 @@ def rankings_distribution(rankings, ax=None, title='', methods=None, legend_loc=
             df['Method'] = method
         return df
     
+    if not isinstance(rankings, np.ndarray):
+        raise ValueError('Parameter rankings needs to be of type np.ndarray')
+    
     if ax is None:
         ax = plt.gca()
 
@@ -122,23 +127,24 @@ def rankings_distribution(rankings, ax=None, title='', methods=None, legend_loc=
         if methods is None:
             df = pd.concat([create_df(rankings[idx], f'Method {idx+1}') for idx in range(len(rankings))])
         elif len(rankings) == len(methods):
-            df = pd.concat([create_df(method) for method in methods])
+            df = pd.concat([create_df(rankings[idx], methods[idx]) for idx in range(len(rankings))])
         else:
             raise ValueError('Number of method names inconsistent with number of rankings.')
         plot_f(data=df, x=xlabel, y=ylabel, hue='Method', ax=ax, **plot_kwargs)
-    if show_legend:
+
+    if show_legend and rankings.ndim == 3:
         if legend_loc == 'upper':
             ax.set_title(title, y=1.12)
             sns.move_legend(ax, bbox_to_anchor=(0, 1.02, 1, 0.2), loc="lower left",
-                        mode="expand", borderaxespad=0, ncol=3, title=None)
+                        mode="expand", borderaxespad=0, ncol=len(rankings), title=None)
         elif legend_loc == 'lower':
             ax.set_title(title)
             sns.move_legend(ax, bbox_to_anchor=(0, -.25, 1, 0.2), loc="lower left",
-                        mode="expand", borderaxespad=0, ncol=3, title=None)
+                        mode="expand", borderaxespad=0, ncol=len(rankings), title=None)
         elif legend_loc == 'right':
             ax.set_title(title)
             sns.move_legend(ax, loc="upper left", bbox_to_anchor=(1.04, 1), borderaxespad=0)
     else:
         ax.set_title(title)
-
+    plt.tight_layout()
     return ax
