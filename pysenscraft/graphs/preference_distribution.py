@@ -25,13 +25,12 @@ def preference_distribution(g: sns.FacetGrid, xlabel: str):
     >>> df = pd.DataFrame(preference, columns=methods)
     >>> df = df.stack().reset_index()
     >>> df.rename(columns={df.columns[1]: 'Method', df.columns[2]: 'Preference'}, inplace=True)
-    >>> g = sns.FacetGrid(df, row='Method', hue='Method', aspect=10, height=.75)
-    >>> preference_distribution(g, 'Preference')
-    >>> plt.suptitle('Preference distribution')
-    >>> plt.show()
+    >>> with sns.axes_style('white', rc={"axes.facecolor": (0, 0, 0, 0)}):
+    >>>     g = sns.FacetGrid(df, row='Method', hue='Method', aspect=10, height=.75)
+    >>>     preference_distribution(g, 'Preference')
+    >>>     plt.suptitle('Preference distribution')
+    >>>     plt.show()
     """
-    sns.set_theme(style="white", rc={"axes.facecolor": (0, 0, 0, 0)})
-
     g.map(sns.kdeplot, xlabel, bw_adjust=.5, clip_on=False, fill=True, alpha=1, linewidth=1.5)
     g.map(sns.kdeplot, xlabel, clip_on=False, color="w", lw=2, bw_adjust=.5)
 
@@ -81,7 +80,22 @@ def ICRA_pref_distribution(results: ICRAResults, methods: list[str], palettes: l
         
     Examples
     --------
-    ### Example of obtaining ICRA results `see iterative_compromise for whole example`
+    ### Example of obtaining ICRA results
+    >>> ## Initial decision problem evaluation - random problem
+    >>> decision_matrix = np.random.random((7, 5))
+    >>> 
+    >>> decision_problem_weights = np.ones(decision_matrix.shape[1])/decision_matrix.shape[1]
+    >>> decision_problem_types = np.ones(decision_matrix.shape[1])
+    >>> 
+    >>> comet = COMET(np.vstack((np.min(decision_matrix, axis=0), np.max(decision_matrix, axis=0))).T, MethodExpert(TOPSIS(), decision_problem_weights, decision_problem_types))
+    >>> topsis = TOPSIS()
+    >>> vikor = VIKOR()
+    >>> 
+    >>> comet_pref = comet(decision_matrix)
+    >>> topsis_pref = topsis(decision_matrix, decision_problem_weights, decision_problem_types)
+    >>> vikor_pref = vikor(decision_matrix, decision_problem_weights, decision_problem_types)
+    >>> 
+    >>> ## ICRA variables preparation
     >>> methods = {
     >>>     COMET: [['np.vstack((np.min(matrix, axis=0), np.max(matrix, axis=0))).T', 
     >>>                     'MethodExpert(TOPSIS(), weights, types)'], 
@@ -147,16 +161,16 @@ def ICRA_pref_distribution(results: ICRAResults, methods: list[str], palettes: l
                        *sns.dark_palette(sns.color_palette('tab10')[idx], reverse=True, n_colors=iters_number-1)[:-1]]
         else:
             pal = palettes[indexes.index(idx)]
-
-        if by == 'iters':
-            g = sns.FacetGrid(df[df.Iteration == value], row='Method', hue='Method', palette=pal, **FacetGrid_kwargs)
-            title = f'Iteration {idx+1}'
-        elif by == 'methods':
-            g = sns.FacetGrid(df[df.Method == value], row='Iteration', hue='Iteration', palette=pal, **FacetGrid_kwargs)
-            title = value
-        preference_distribution(g, 'Preference')
-        plt.suptitle(title, x=(g.figure.subplotpars.right + g.figure.subplotpars.left)/2)
-        if save:
-            plt.savefig(f'{file_name}_{value}.{format}')
-        if show:
-            plt.show()
+        with sns.axes_style('white', rc={"axes.facecolor": (0, 0, 0, 0)}):
+            if by == 'iters':
+                g = sns.FacetGrid(df[df.Iteration == value], row='Method', hue='Method', palette=pal, **FacetGrid_kwargs)
+                title = f'Iteration {idx+1}'
+            elif by == 'methods':
+                g = sns.FacetGrid(df[df.Method == value], row='Iteration', hue='Iteration', palette=pal, **FacetGrid_kwargs)
+                title = value
+            preference_distribution(g, 'Preference')
+            plt.suptitle(title, x=(g.figure.subplotpars.right + g.figure.subplotpars.left)/2)
+            if save:
+                plt.savefig(f'{file_name}_{value}.{format}')
+            if show:
+                plt.show()
