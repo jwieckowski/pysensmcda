@@ -75,13 +75,13 @@ def rankings_distribution(rankings: np.ndarray, ax: mpl.axes.Axes|None=None, tit
     ax: Axis
         Axis on which plot was drawn.
     """
-    def create_df(rankings, method=None):
+    def create_df(rankings: np.ndarray, method: str|None=None):
         """
         Internal function for dataframe creation for the purpose of plotting rankings distribution
 
         Parameters
         ----------
-        rankings: nd.array
+        rankings: np.ndarray
             2d array of rankings for specific method
         method: str | None, optional, default=None
             Method name
