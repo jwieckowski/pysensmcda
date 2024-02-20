@@ -157,8 +157,11 @@ def ICRA_pref_distribution(results: ICRAResults, methods: list[str], palettes: l
             if by == 'iters':
                 pal = None
             elif by == 'methods':
-                pal = [*sns.light_palette(sns.color_palette('tab10')[idx], n_colors=iters_number)[1:-1], 
-                       *sns.dark_palette(sns.color_palette('tab10')[idx], reverse=True, n_colors=iters_number-1)[:-1]]
+                if iters_number <= 2:
+                    pal = sns.light_palette(sns.color_palette('tab10')[idx], n_colors=iters_number+1)[1:]
+                else:
+                    pal = [*sns.light_palette(sns.color_palette('tab10')[idx], n_colors=iters_number)[1:-1], 
+                        *sns.dark_palette(sns.color_palette('tab10')[idx], reverse=True, n_colors=iters_number)[:-1]]
         else:
             pal = palettes[indexes.index(idx)]
         with sns.axes_style('white', rc={"axes.facecolor": (0, 0, 0, 0)}):
