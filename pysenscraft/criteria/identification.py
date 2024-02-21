@@ -94,6 +94,7 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     for key in ['matrix', 'weights', 'types']:
         if key not in list(call_kwargs.keys()):
             raise ValueError(f'Call kwargs dictionary should include `{key}` as one of the keys')
+    
 
     try:
         initial_matrix = np.array(call_kwargs['matrix'].copy())
@@ -102,6 +103,9 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
 
     if initial_matrix.ndim != 2:
         raise ValueError('Matrix in `call_kwargs` should be a 2D array')
+
+    if excluded_criteria > initial_matrix.shape[1]:
+        raise ValueError('`excluded_criteria` should not exceed the number of columns in matrix')
 
     try:
         types = np.array(call_kwargs['types'].copy())
