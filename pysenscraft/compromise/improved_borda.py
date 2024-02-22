@@ -1,3 +1,5 @@
+# Copyright (C) 2024 Bartosz Paradowski
+
 import numpy as np
 from scipy.stats import rankdata
 
