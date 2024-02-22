@@ -30,7 +30,7 @@ def monte_carlo_weights(n: int, distribution='uniform', num_samples=1000, params
     Examples
     --------
     >>> n = 3
-    >>> modified_weights = monte_carlo_weight_modification(n, num_samples=1000, distribution='normal', params={'loc': 0.5, 'scale': 0.1})
+    >>> modified_weights = monte_carlo_weights(n, num_samples=1000, distribution='normal', params={'loc': 0.5, 'scale': 0.1})
     >>> print(modified_weights)
     """
 
