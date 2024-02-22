@@ -38,7 +38,7 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
             Decision matrix consisting of preferences. Alternatives are in rows and Criteria (methods / experts) are in columns
         types: ndarray
             Array with definitions of method types types: 1 if method ranks in ascending order and -1 if the method ranks in descending order
-        corr_coef: callable, optional, default=pymcdm.weighted_spearman
+        corr_coef: callable, optional, default=pymcdm.correlations.weighted_spearman
             Function which will be used to check similarity of rankings while achieving compromise.
         max_iters: int, optional, default=1000
             Maximum iterations number to seek compromise.

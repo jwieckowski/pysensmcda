@@ -1,11 +1,12 @@
 # Copyright (C) 2024 Jakub Więckowski
 
 import numpy as np
+from typing import Union, Callable, List
 import pymcdm
-import pymcdm.correlations as corr
+from pymcdm.correlations import weighted_spearman
 from pymcdm.weights import equal_weights
 
-def relevance_identification(method: callable, call_kwargs: dict, ranking_descending: bool, excluded_criteria: int = 1, precision: int = 6):
+def relevance_identification(method: callable, call_kwargs: dict, ranking_descending: bool, excluded_criteria: int = 1, corr_coef: Union[Callable, List[Callable]] = weighted_spearman, precision: int = 6):
     """
     The core idea behind this method is to iteratively exclude a specified number of criteria and evaluate the impact on the ranking of alternatives. 
     By systematically excluding different criteria and analyzing the resulting changes in the ranking, the function aims to identify which criteria significantly influence the final decision.
@@ -27,6 +28,11 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     excluded_criteria: int, optional, default=1
         Number of criteria to be excluded in each iteration.
 
+    corr_coef: callable | list, optional, default=pymcdm.correlations.weighted_spearman
+        Function which will be used to check similarity of rankings while achieving compromise.
+        If callable, then correlation calculated for given coefficient.
+        If list of callables, then correlation calculated for multiple coefficients.
+
     precision: int, optional, default=6
         Precision for rounding the results.
 
@@ -34,7 +40,7 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     -------
     list
         List of tuples containing information about the relevance identification process.
-        Each tuple includes the excluded criteria indices, Weighted Spearman coefficient value, Weighted Similarity coefficient value, Pearson coefficient value, distance calculated as the sum of the Euclidean distance between preferences, and the modified matrix.
+        Each tuple includes the excluded criteria indices, correlation coefficient values, distance calculated as the sum of the Euclidean distance between preferences, and the modified matrix.
 
     Examples
     --------
@@ -45,7 +51,7 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     ...    [9, 5, 7, 3],
     ...    [3, 5, 6, 3]
     ... ])
-    >>> criteria_types = np.array([1, 1, -1])
+    >>> criteria_types = np.array([1, 1, -1, 1])
     >>> weights = equal_weights(matrix)
     >>> topsis = pm.TOPSIS(normalization_function=norm.vector_normalization)
     >>> call_kwargs = {
@@ -80,7 +86,7 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     ...     'weights': weights,
     ...     'types': criteria_types
     ... }
-    >>> results = relevance_identification(topsis, call_kwargs, ranking_descending=True, excluded_criteria=3)
+    >>> results = relevance_identification(topsis, call_kwargs, corr_coef=[pymcdm.correlations.rw, pymcdm.correlations.ws, pymcdm.correlations.rs], ranking_descending=True, excluded_criteria=3)
     >>> for r in results:
     ...     print(r)
     """
@@ -116,6 +122,14 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
         raise ValueError('Types in `call_kwargs` should be a 2D array')
 
     call_kwargs['weights'] = equal_weights(initial_matrix)
+
+    if isinstance(corr_coef, list):
+        if any([not callable(coef) for coef in corr_coef]):
+            raise TypeError('`corr_coef` should be a list of callable')
+    else:
+        if not callable(corr_coef):
+            raise TypeError('`corr_coef` should be callable')
+        corr_coef = [corr_coef]
 
     results = []
 
@@ -161,12 +175,12 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
             # calculate results
             new_preferences = method(**call_kwargs)
             new_ranking = pymcdm.helpers.rankdata(new_preferences, ranking_descending)
-            rw = np.round(corr.rw(ref_ranking, new_ranking), precision)
-            ws = np.round(corr.ws(ref_ranking, new_ranking), precision)
-            rs = np.round(corr.rs(ref_ranking, new_ranking), precision)
+            corr_results = []
+            for corr in corr_coef:
+                corr_results.append(np.round(corr(ref_ranking, new_ranking), precision))
             distance = np.round(np.sum(np.sqrt((ref_preferences - new_preferences)**2)), precision)
 
-            temp_results.append((tuple(excluded + [i]), rw, ws, rs, distance, modified_matrix))
+            temp_results.append((tuple(excluded + [i]), *corr_results, distance, modified_matrix))
 
             # update minimum change index
             if distance < min_distance:
@@ -177,4 +191,3 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
         results.append(temp_results[min_change_idx])
 
     return results
-
