@@ -2,7 +2,6 @@
 
 import numpy as np
 import pymcdm
-import inspect
 
 def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: callable, call_kwargs: dict, ranking_descending: bool, direction: np.ndarray, step: int | float, bounds: None | np.ndarray = None, positions: None | np.ndarray = None, return_zeros: bool = True, max_modification: None | int = None):
     """
@@ -231,7 +230,6 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
                 call_kwargs['matrix'] = new_matrix
                 try:
                     new_preferences = method(**call_kwargs)
-                    # new_ranking = method.rank(new_preferences)
                     new_ranking = pymcdm.helpers.rankdata(new_preferences, ranking_descending)
                 except Exception as err:
                     raise ValueError(err)
