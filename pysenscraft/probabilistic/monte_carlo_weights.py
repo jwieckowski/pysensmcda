@@ -17,7 +17,7 @@ def monte_carlo_weights(n: int, distribution='uniform', num_samples=1000, params
 
     distribution : str, optional, default='uniform'
         Probability distribution for weight modification.
-        Options: 'uniform', 'normal', 'beta', 'gamma', 'exponential', 'triangular', 'logistic', 'laplace'.
+        Options: 'chisquare', 'laplace', 'normal', 'random', 'triangular', 'uniform'.
 
     params : dict, optional
         Parameters for the chosen distribution. Check NumPy documentation for details.
