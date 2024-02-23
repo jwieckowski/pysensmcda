@@ -64,4 +64,3 @@ def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None):
     else:
         M = rank_prob.to_numpy()
         return np.round(M / np.max(M, axis=normalization_axis), 4)
-
