@@ -9,27 +9,66 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
     Parameters
     ----------
     matrix : ndarray
-        2D array with decision matrix containing multiple criteria and alternatives.
+        2D array with a decision matrix containing multiple criteria and alternatives.
 
     indexes : None | int | ndarray, optional, default=None
         Index or array of indexes specifying which alternative to remove. 
-        If None, one alternative will be subsequently removed by default
+        If None, one alternative will be subsequently removed by default.
 
     Returns
     -------
     List[Tuple[int, ndarray]]
-        A list of tuples containing information about new decision matrix.
+        A list of tuples containing information about the new decision matrix.
 
     ## Examples
     --------
-    ### Example 1: 
-    TODO
-    ### Example 2: 
-    TODO
-    ### Example 3: 
-    TODO
-    ### Example 4: 
-    TODO
+    ### Example 1: Remove one alternative (default behavior)
+    >>> matrix = np.array([
+    ...     [1, 2, 3, 4],
+    ...     [1, 2, 3, 4],
+    ...     [4, 3, 2, 1],
+    ...     [3, 5, 3, 2],
+    ...     [4, 2, 5, 5],
+    ... ])
+    >>> results = remove_alternatives(matrix)
+    >>> for result in results:
+    ...     print(result)
+
+    ### Example 2: Remove alternative at a specific index
+    >>> matrix = np.array([
+    ...     [1, 2, 3, 4],
+    ...     [1, 2, 3, 4],
+    ...     [4, 3, 2, 1],
+    ...     [3, 5, 3, 2],
+    ...     [4, 2, 5, 5],
+    ... ])
+    >>> results = remove_alternatives(matrix, 3)
+    >>> for result in results:
+    ...     print(result)
+
+    ### Example 3: Remove alternatives with specified indexes (1D array)
+    >>> matrix = np.array([
+    ...     [1, 2, 3, 4],
+    ...     [1, 2, 3, 4],
+    ...     [4, 3, 2, 1],
+    ...     [3, 5, 3, 2],
+    ...     [4, 2, 5, 5],
+    ... ])
+    >>> results = remove_alternatives(matrix, np.array([1, 2, 3]))
+    >>> for result in results:
+    ...     print(result)
+
+    ### Example 4: Remove alternatives with specified indexes (mixed-type array)
+    >>> matrix = np.array([
+    ...     [1, 2, 3, 4],
+    ...     [1, 2, 3, 4],
+    ...     [4, 3, 2, 1],
+    ...     [3, 5, 3, 2],
+    ...     [4, 2, 5, 5],
+    ... ])
+    >>> results = remove_alternatives(matrix, np.array([[0, 5], 2, 3], dtype='object'))
+    >>> for result in results:
+    ...     print(result)
     """
     
     matrix = np.array(matrix)
@@ -72,58 +111,3 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
 
     return data
     
-
-if __name__ == '__main__':
-    # Example 1, no indexes given
-    # by default one alternative removed from data subsequently 
-    print('Example 1 ---------------------')
-    matrix = np.array([
-        [1, 2, 3, 4],
-        [1, 2, 3, 4],
-        [4, 3, 2, 1],
-        [3, 5, 3, 2],
-        [4, 2, 5, 5],
-    ])
-    results = remove_alternatives(matrix)
-    for result in results:
-        print(result)
-
-    # Example 2 int index given
-    matrix = np.array([
-        [1, 2, 3, 4],
-        [1, 2, 3, 4],
-        [4, 3, 2, 1],
-        [3, 5, 3, 2],
-        [4, 2, 5, 5],
-    ])
-    print('Example 2 ---------------------')
-    results = remove_alternatives(matrix, 3)
-    for result in results:
-        print(result)
-
-    # Example 3 np array indexes given, one-dimensional
-    matrix = np.array([
-        [1, 2, 3, 4],
-        [1, 2, 3, 4],
-        [4, 3, 2, 1],
-        [3, 5, 3, 2],
-        [4, 2, 5, 5],
-    ])
-    print('Example 3 ---------------------')
-    results = remove_alternatives(matrix, np.array([1, 2, 3]))
-    for result in results:
-        print(result)
-
-    # Example 4 np array indexes given, elements of array as list
-    matrix = np.array([
-        [1, 2, 3, 4],
-        [1, 2, 3, 4],
-        [4, 3, 2, 1],
-        [3, 5, 3, 2],
-        [4, 2, 5, 5],
-    ])
-    print('Example 4 ---------------------')
-    results = remove_alternatives(matrix, np.array([[0, 5], 2, 3], dtype='object'))
-    for result in results:
-        print(result)
-
