@@ -78,7 +78,7 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
         raise ValueError("Precision should be a non-negative integer")
 
     if isinstance(perturbation_scale, (float, int)):
-        perturbation_scale = np.full(matrix.shape[0], perturbation_scale)
+        perturbation_scale = np.full(matrix.shape, perturbation_scale)
     elif isinstance(perturbation_scale, np.ndarray):
         if perturbation_scale.ndim == 1:
             if perturbation_scale.shape[0] != matrix.shape[0]:
@@ -95,3 +95,4 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
         modified_matrices.append(list(np.round(modified_matrix, precision)))
 
     return np.array(modified_matrices)
+

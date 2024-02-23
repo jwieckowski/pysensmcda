@@ -137,3 +137,4 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
                 results.append((crit_idx, change_val, new_weights))
 
     return results
+
