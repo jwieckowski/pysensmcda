@@ -109,8 +109,11 @@ def ranking_alteration(weights: np.ndarray, initial_ranking: np.ndarray, method:
                 new_weights = weights.copy()
                 new_val = new_weights[crit_idx] + (step*change_index) * val
                 
-                if new_val == 0 or new_val < 0 or new_val >= 1:
-                    continue
+                # no allowed change in weights that cause ranking alteration
+                if new_val <= 0 or new_val >= 1:
+                    results.append((crit_idx, weights, initial_ranking))
+                    flag = False
+                    break
 
                 # change weights
                 new_weights[crit_idx] = new_val
@@ -122,8 +125,11 @@ def ranking_alteration(weights: np.ndarray, initial_ranking: np.ndarray, method:
                     if idx != crit_idx:
                         new_weights[idx] += equal_diff
                 
+                # no allowed change in weights that cause ranking alteration
                 if any([w >=1 or w <= 0 for w in new_weights]):
-                    continue
+                    results.append((crit_idx, weights, initial_ranking))
+                    flag = False
+                    break
 
                 call_kwargs['weights'] = new_weights
                 try:
