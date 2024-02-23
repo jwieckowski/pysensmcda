@@ -231,7 +231,6 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
                 call_kwargs['matrix'] = new_matrix
                 try:
                     new_preferences = method(**call_kwargs)
-                    # new_ranking = method.rank(new_preferences)
                     new_ranking = pymcdm.helpers.rankdata(new_preferences, ranking_descending)
                 except Exception as err:
                     raise ValueError(err)
