@@ -181,7 +181,7 @@ def ranking_demotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: ca
     if matrix.ndim != 2:
         raise ValueError('Matrix should be a 2D array')
 
-    if matrix.shape[1] != initial_ranking.shape[0]:
+    if matrix.shape[0] != initial_ranking.shape[0]:
         raise ValueError("Number of alternatives in matrix and positions in initial ranking should be the same")
     
     if matrix.shape[1] != direction.shape[0]:
@@ -197,7 +197,7 @@ def ranking_demotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: ca
         if not isinstance(positions, np.ndarray):
             raise TypeError('Positions should be a numpy array type')
     
-        if matrix.shape[1] != positions.shape[0]:
+        if matrix.shape[0] != positions.shape[0]:
             raise ValueError("Number of alternatives in matrix and length of positions should be the same")
 
         if any([p <= 0 or p > positions.shape[0] for p in positions]):
