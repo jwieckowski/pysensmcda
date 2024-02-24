@@ -62,6 +62,12 @@ def improved_borda(preferences: np.ndarray, preference_types: np.ndarray | list=
         Compromised ranking.
 
     """
+    if not isinstance(preferences, np.ndarray):
+        raise TypeError('Preferences should be given as numpy array')
+    
+    if not callable(normalization):
+        raise TypeError('Normalization should be callable')
+
     alternatives_num, methods_num = preferences.shape
 
     if not preference_types:
@@ -72,6 +78,9 @@ def improved_borda(preferences: np.ndarray, preference_types: np.ndarray | list=
 
     if len(preference_types) != methods_num:
         raise ValueError('The number of preference (ranking) types does not align with the number of columns of preferences.')
+    
+    if not all(callable(util_func) for util_func in utility_funcs):
+        raise TypeError('All utility functions should be callable')
     
     if len(norm_types) != methods_num:
         raise ValueError('The number of normalization types does not align with the number of columns of preferences.')
