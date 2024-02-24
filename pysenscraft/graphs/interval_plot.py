@@ -61,6 +61,14 @@ def interval_plot(results, figsize: tuple =(12, 8), xlabel: str ='Criteria Weigh
     >>> results = percentage_modification(weights, percentages, indexes=indexes)
     >>> interval_plot(results, max_elements_in_row=2)
 
+    # Example 3: Interval plot based on weights range modification with own ax parameter
+    >>> fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8, 3))
+    >>> weights = np.array([0.3, 0.3, 0.4])
+    >>> range_values = np.array([[0.25, 0.3], [0.3, 0.35], [0.37, 0.43]])
+    >>> results = range_modification(weights, range_values, indexes=np.array([0, 1, 2, [0, 2]], dtype='object'))
+    >>> interval_plot(results, max_elements_in_row=2, ax=ax)
+    >>> ax[0, 0].plot([0.3, 0.35, 0.41], [1, 2, 3])
+    >>> plt.show()
     """
 
 
@@ -72,9 +80,17 @@ def interval_plot(results, figsize: tuple =(12, 8), xlabel: str ='Criteria Weigh
 
     num_rows = int(np.ceil(cases_num / max_elements_in_row))
     num_cols = min(cases_num, max_elements_in_row)
+
+    fig = None
     if ax is None:
-        ax = plt.gca()
-        fig, ax = plt.subplots(num_rows, num_cols, figsize=figsize, sharex=shareX, ax=ax)
+        fig, ax = plt.subplots(num_rows, num_cols, figsize=figsize, sharex=shareX)
+    else:
+        if not isinstance(ax, np.ndarray):
+            raise TypeError('`ax` should be a type of ndarray')
+        ax_rows, ax_cols = ax.shape
+
+        if ax_rows != num_rows and ax_cols != num_cols:
+            raise ValueError(f'For given parameters, `ax` should have layout of {num_rows} rows and {num_cols} columns')
 
     for idx, case in enumerate(results_cases):
         row_idx = idx // max_elements_in_row
@@ -106,7 +122,9 @@ def interval_plot(results, figsize: tuple =(12, 8), xlabel: str ='Criteria Weigh
             ax[axes_idx].set_xlabel(xlabel, fontsize=label_fontsize)
 
         ax[axes_idx].grid(axis='both', alpha=grid_alpha)
+    
+    if fig:
+        fig.suptitle(title, fontsize=label_fontsize + 2)
 
-    fig.suptitle(title, fontsize=label_fontsize + 2)
     plt.tight_layout()
     return ax
