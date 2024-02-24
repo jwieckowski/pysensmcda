@@ -2,10 +2,11 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 
 def interval_plot(results, figsize: tuple =(12, 8), xlabel: str ='Criteria Weights',
-                                  label_fontsize: int=12, title: str ='Weights ranges', line_color: str ='blue',
-                                  line_width: int=2, grid_alpha: float =0.7, max_elements_in_row: int = 4, shareX: bool = True, save: bool =False, file_name: None | str = 'interval_weights', format: str='png'):
+                                label_fontsize: int=12, title: str ='Weights ranges', line_color: str ='blue',
+                                line_width: int=2, grid_alpha: float =0.7, max_elements_in_row: int = 4, shareX: bool = True, ax: mpl.axes.Axes|None=None):
     """
     Visualize the modified weights with range changes as intervals in a plot.
 
@@ -42,14 +43,8 @@ def interval_plot(results, figsize: tuple =(12, 8), xlabel: str ='Criteria Weigh
     shareX : bool, optional, default=True
         Whether to share X-axis among subplots.
 
-    save: bool, optional, default=False
-        If save=`True`, the plot is saved
-
-    file_name: str, optional, default='interval_weights'
-        If save=`True`, the plot is saved as f'{file_name}.{format}'
-
-    format: str, optional, default='png'
-        If save=`True`, the plot is saved as f'{file_name}.{format}'
+    ax: Axis | None, optional, default=None
+        Matplotlib Axis to draw on. If None, current axis is used.
 
     # Example Usage
     --------------
@@ -68,6 +63,7 @@ def interval_plot(results, figsize: tuple =(12, 8), xlabel: str ='Criteria Weigh
 
     """
 
+
     results_cases = []
     for r in results:
         if r[0] not in results_cases:
@@ -76,7 +72,8 @@ def interval_plot(results, figsize: tuple =(12, 8), xlabel: str ='Criteria Weigh
 
     num_rows = int(np.ceil(cases_num / max_elements_in_row))
     num_cols = min(cases_num, max_elements_in_row)
-    fig, axes = plt.subplots(num_rows, num_cols, figsize=figsize, sharex=shareX)
+    if ax is None:
+        fig, ax = plt.subplots(num_rows, num_cols, figsize=figsize, sharex=shareX)
 
     for idx, case in enumerate(results_cases):
         row_idx = idx // max_elements_in_row
@@ -91,7 +88,7 @@ def interval_plot(results, figsize: tuple =(12, 8), xlabel: str ='Criteria Weigh
 
         intervals = np.vstack([np.min(data, axis=0), np.max(data, axis=0)]).T
         for idx, interval in enumerate(intervals):
-            axes[axes_idx].plot(interval, [idx, idx], color=line_color, linewidth=line_width)
+            ax[axes_idx].plot(interval, [idx, idx], color=line_color, linewidth=line_width)
 
         if isinstance(case, int):
             criteria_labels = f'$C_{{{case + 1}}}$'
@@ -100,17 +97,15 @@ def interval_plot(results, figsize: tuple =(12, 8), xlabel: str ='Criteria Weigh
             for i in case:
                 criteria_labels += f'$C_{{{i + 1}}}$ '
         
-        axes[axes_idx].set_title(f'Change in {criteria_labels}', fontsize=label_fontsize)
-        axes[axes_idx].set_yticks(np.arange(cases_num))
-        axes[axes_idx].set_yticklabels([f'$C_{{{i + 1}}}$' for i in range(cases_num)], fontsize=label_fontsize)
+        ax[axes_idx].set_title(f'Change in {criteria_labels}', fontsize=label_fontsize)
+        ax[axes_idx].set_yticks(np.arange(cases_num))
+        ax[axes_idx].set_yticklabels([f'$C_{{{i + 1}}}$' for i in range(cases_num)], fontsize=label_fontsize)
         
         if row_idx == num_rows - 1:
-            axes[axes_idx].set_xlabel(xlabel, fontsize=label_fontsize)
+            ax[axes_idx].set_xlabel(xlabel, fontsize=label_fontsize)
 
-        axes[axes_idx].grid(axis='both', alpha=grid_alpha)
+        ax[axes_idx].grid(axis='both', alpha=grid_alpha)
 
     fig.suptitle(title, fontsize=label_fontsize + 2)
-    if save:
-        plt.savefig(f'{file_name}.{format}')
-    else:
-        plt.show()
+    plt.tight_layout()
+    return ax
