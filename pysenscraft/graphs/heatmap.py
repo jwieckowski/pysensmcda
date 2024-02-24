@@ -88,7 +88,4 @@ def heatmap(fuzzy_ranking_matrix,
     axs.set_xlabel(xlabel, fontsize=label_fontsize)
     axs.set_ylabel(ylabel, fontsize=label_fontsize)
 
-    if ax is None:
-        plt.show()
-    else:
-        return axs
+    return axs
