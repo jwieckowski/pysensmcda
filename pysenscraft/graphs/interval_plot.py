@@ -73,7 +73,8 @@ def interval_plot(results, figsize: tuple =(12, 8), xlabel: str ='Criteria Weigh
     num_rows = int(np.ceil(cases_num / max_elements_in_row))
     num_cols = min(cases_num, max_elements_in_row)
     if ax is None:
-        fig, ax = plt.subplots(num_rows, num_cols, figsize=figsize, sharex=shareX)
+        ax = plt.gca()
+        fig, ax = plt.subplots(num_rows, num_cols, figsize=figsize, sharex=shareX, ax=ax)
 
     for idx, case in enumerate(results_cases):
         row_idx = idx // max_elements_in_row
