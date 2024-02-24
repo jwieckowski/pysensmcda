@@ -1,3 +1,5 @@
+# Copyright (C) 2024 Bartosz Paradowski
+
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import matplotlib.ticker as mtick
 import matplotlib.pyplot as plt
