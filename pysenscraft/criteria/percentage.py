@@ -3,6 +3,9 @@
 import numpy as np
 from itertools import product
 
+import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider
+
 def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | float = 1):
     """
     Modify a set of criteria weights based on specified percentage changes, directions, and indexes.
@@ -169,3 +172,56 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
                         results.append((tuple(crit_idx), change_val, new_weights))
 
     return results
+
+
+def visualize_slider(results):
+    fig, ax = plt.subplots()
+    plt.subplots_adjust(left=0.25, right=0.9, top=0.9, bottom=0.25)
+
+    # Initial weights
+    initial_weights = np.array([0.3, 0.3, 0.4])
+
+    # Plot initial state
+    bars = ax.bar(np.arange(len(initial_weights)), initial_weights, align='center')
+
+    ax.set_ylim(0, 1)
+    ax.set_xticks(np.arange(len(initial_weights)))
+    ax.set_xticklabels([f'C{i+1}' for i in range(len(initial_weights))])
+
+    # Create a slider on the left side
+    slider_ax = plt.axes([0.05, 0.1, 0.15, 0.75])
+    percentage_slider = Slider(slider_ax, 'Percentage', -100, 100, valinit=0, valstep=1, orientation='vertical')
+
+    def update(val):
+        ax.clear()
+
+        # Calculate modified weights based on the selected percentage
+        percentage = percentage_slider.val
+        print(percentage)
+
+
+        # modified_weights = modify_weights(initial_weights, results[0][0], results[0][1] * percentage / 100, results[0][1])
+        modified_weights = initial_weights
+
+        # Plot modified state
+        bars = ax.bar(np.arange(len(modified_weights)), modified_weights, align='center')
+        ax.set_ylim(0, 1)
+        ax.set_xticks(np.arange(len(modified_weights)))
+        ax.set_xticklabels([f'C{i+1}' for i in range(len(modified_weights))])
+
+        plt.draw()
+
+    # Attach the update function to the slider
+    percentage_slider.on_changed(update)
+
+    plt.show()
+
+# Example usage
+weights = np.array([0.3, 0.3, 0.4])
+percentages = np.array([5, 5, 5])
+indexes = np.array([[0, 1], 2], dtype='object')
+results = percentage_modification(weights, percentages, indexes=indexes)
+
+# Visualize the slider
+visualize_slider(results)
+# print(results)
