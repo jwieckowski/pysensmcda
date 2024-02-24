@@ -3,7 +3,7 @@ name = "pysenscraft"
 version = "1.0.0"
 description = "Python Sensitivity Crafting Toolbox for Decision Support"
 readme = "README.md"
-license = {file = "LICENSE.txt"}
+license = {file = "LICENSE"}
 requires-python = ">=3.10"
 keywords = ["python", "sensitivity analysis", "decision-making", "mcda", "robustness"]
 authors = [
