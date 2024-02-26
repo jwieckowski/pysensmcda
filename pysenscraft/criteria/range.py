@@ -83,6 +83,7 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
 
         return new_weights / np.sum(new_weights)
 
+    
     # weights dimension
     if weights.ndim != 1:
         raise ValueError('Weights should be given as one dimensional array')
