@@ -1,6 +1,7 @@
 # Copyright (C) 2024 Jakub Więckowski
 
 import numpy as np
+from ..validator import Validator
 
 def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = None):
     """
@@ -71,33 +72,36 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
     ...     print(result)
     """
     
-    matrix = np.array(matrix)
-
-    # # matrix dimension - can be done not only for crisp matrix
-    # if matrix.ndim != 2:
-    #     raise ValueError('Matrix should be given as at two dimensional array')
+    Validator.is_type_valid(matrix, np.ndarray)
+    Validator.is_type_valid(indexes, (None, int, np.ndarray))
 
     alt_indexes = None
 
     if indexes is None:
         # generate vector of subsequent alternative indexes to remove
         alt_indexes = np.arange(0, matrix.shape[1])
-    
-    if isinstance(indexes, int):
-        if indexes >= matrix.shape[0] or indexes < 0:
-            raise IndexError(f'Given index ({indexes}) out of range')
-        alt_indexes = np.array([indexes])
+    else:
+        Validator.are_indexes_valid(indexes, matrix.shape[0])
 
-    if isinstance(indexes, np.ndarray):
-        for c_idx in indexes:
-            if isinstance(c_idx, int):
-                if c_idx < 0 or c_idx >= matrix.shape[0]:
-                    raise IndexError(f'Given index ({indexes}) out of range')
-            elif isinstance(c_idx, list):
-                if any([idx < 0 or idx >= matrix.shape[0] for idx in c_idx]):
-                    raise IndexError(f'Given indexes ({c_idx}) out of range')
+        if isinstance(indexes, int):
+            alt_indexes = np.array([indexes])
+        else: alt_indexes = indexes
 
-        alt_indexes = indexes
+    # if isinstance(indexes, int):
+    #     if indexes >= matrix.shape[0] or indexes < 0:
+    #         raise IndexError(f'Given index ({indexes}) out of range')
+    #     alt_indexes = np.array([indexes])
+
+    # if isinstance(indexes, np.ndarray):
+    #     for c_idx in indexes:
+    #         if isinstance(c_idx, int):
+    #             if c_idx < 0 or c_idx >= matrix.shape[0]:
+    #                 raise IndexError(f'Given index ({indexes}) out of range')
+    #         elif isinstance(c_idx, list):
+    #             if any([idx < 0 or idx >= matrix.shape[0] for idx in c_idx]):
+    #                 raise IndexError(f'Given indexes ({c_idx}) out of range')
+
+        # alt_indexes = indexes
 
     data = []
     # remove row in decision matrix
