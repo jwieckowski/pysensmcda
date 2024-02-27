@@ -6,7 +6,7 @@ import numpy as np
 from matplotlib.widgets import Slider
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-def hist_dist(data, ax=None, fig=None, xlabel='Value', kind='hist+kde', show_slider=True, title='', slider_label='Number\nof bins', slider_pad=None, bins_count='auto', slider_size='5%', min_bins=1, max_bins=20):
+def hist_dist(data: np.ndarray, ax: plt.Axes|None=None, fig: plt.Figure=None, xlabel:str='Value', kind:str='hist+kde', show_slider:bool=True, title:str='', slider_label:str='Number\nof bins', slider_pad:float|None=None, bins_count:str|int='auto', slider_size:str|float='5%', min_bins:int=1, max_bins:int=20):
     """
     Parameters
     ----------
@@ -26,7 +26,7 @@ def hist_dist(data, ax=None, fig=None, xlabel='Value', kind='hist+kde', show_sli
             Title of the axes.
         slider_label: str
             Label for the slider which is responsible for the number of bins.
-        slider_pad: float, optional, default=0.5
+        slider_pad: float|None, optional, default=None
             Padding that should be applied between axes and slider.
         bins_count: int|'auto', optional, default='auto'
             Number of initial bins.
@@ -115,7 +115,7 @@ def hist_dist(data, ax=None, fig=None, xlabel='Value', kind='hist+kde', show_sli
     else:
         return ax
     
-def mutli_hist_dist(data: np.ndarray, nrows: int, ncols:int, figsize: tuple[int], ax_title: bool=True, slider_label=True, slider_pad=0.5, slider_size='5%', title='Distribution of criteria values', kind='hist+kde', title_pos=0.5, w_pad=1.5, min_bins=1, max_bins=20, show_slider=True, bins_count='auto', main_slider_label='Number\nof bins', xlabel='Value'):
+def mutli_hist_dist(data: np.ndarray, nrows: int, ncols:int, figsize: tuple[int], ax_title: bool=True, slider_label:bool=True, slider_pad:float=0.5, slider_size:str|float='5%', title:str='Distribution of criteria values', kind:str='hist+kde', title_pos:float=0.5, w_pad:float=1.5, min_bins:int=1, max_bins:int=20, show_slider:bool=True, bins_count:str|int='auto', main_slider_label:str='Number\nof bins', xlabel:str='Value'):
     """
     Parameters
     ----------
