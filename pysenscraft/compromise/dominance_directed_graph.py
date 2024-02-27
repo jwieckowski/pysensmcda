@@ -1,3 +1,5 @@
+# Copyright (C) 2024 Bartosz Paradowski
+
 import numpy as np
 from numpy.linalg import matrix_power
 from scipy.stats import rankdata
@@ -25,15 +27,13 @@ def dominance_directed_graph(rankings: np.ndarray):
             Numpy array containing compromised ranking.
     """
 
-    alt_num, method_num = rankings.shape
+    alt_num = rankings.shape[0]
 
     final_points = np.zeros((alt_num, alt_num))
-    for method_idx in range(method_num):
-        ranking = rankings[:, method_idx]
+    for ranking in rankings.T:
         A = np.zeros((alt_num, alt_num))
         for idx in range(alt_num):
-            ind_better = np.where(ranking > ranking[idx])[0]
-            A[idx, ind_better] += 1
+            A[idx, ranking > ranking[idx]] += 1
         enhanced_dominant_matrix = A + matrix_power(A, 2)
         final_points += enhanced_dominant_matrix
     
