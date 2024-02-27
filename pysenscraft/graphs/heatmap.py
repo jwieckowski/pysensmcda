@@ -65,7 +65,7 @@ def heatmap(matrix: np.ndarray,
 
     Returns
     -------
-    None
+        ax
 
     Examples
     --------
