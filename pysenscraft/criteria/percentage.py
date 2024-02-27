@@ -2,6 +2,7 @@
 
 import numpy as np
 from itertools import product
+from ..validator import Validator
 
 def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | float = 1):
     """
@@ -91,33 +92,43 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
         
         return new_weights / np.sum(new_weights)
 
-
-    # weights dimension
-    if weights.ndim != 1:
-        raise ValueError('Weights should be given as one dimensional array')
+    # # weights dimension
+    # if weights.ndim != 1:
+    #     raise ValueError('Weights should be given as one dimensional array')
+    Validator.is_type_valid(weights, np.ndarray)
+    Validator.is_dimension_valid(weights, 1)
 
     # weights sum to 1
-    if np.round(np.sum(weights), 3) != 1:
-        raise ValueError('Weights vector should sum up to 1')
+    # if np.round(np.sum(weights), 3) != 1:
+    #     raise ValueError('Weights vector should sum up to 1')
+    Validator.is_sum_valid(weights, 1)
 
-    if isinstance(percentages, np.ndarray):
-        # check if weights and percentages have the same length
-        if weights.shape[0] != percentages.shape[0]:
-            raise ValueError('Weights and percentages have different length')
+    Validator.is_type_valid(percentages, np.ndarray)
+    # if isinstance(percentages, np.ndarray):
+    #     # check if weights and percentages have the same length
+    #     if weights.shape[0] != percentages.shape[0]:
+    #         raise ValueError('Weights and percentages have different length')
+    Validator.is_shape_equal(weights.shape, percentages.shape)
 
+    Validator.is_type_valid(direction, (None, np.ndarray))
+    # if direction is not None:
+    #     # check if weights and direction have the same length
+    #     if weights.shape[0] != direction.shape[0]:
+    #         raise ValueError('Weights and direction have different length')
+    Validator.is_shape_equal(weights.shape, direction.shape)
     if direction is not None:
-        # check if weights and direction have the same length
-        if weights.shape[0] != direction.shape[0]:
-            raise ValueError('Weights and direction have different length')
+        Validator.is_in_list(direction, [-1, 1])
 
-    if indexes is not None:
-        for c_idx in indexes:
-            if isinstance(c_idx, (int, np.integer)):
-                if c_idx < 0 or c_idx >= weights.shape[0]:
-                    raise IndexError(f'Given index ({c_idx}) out of range')
-            elif isinstance(c_idx, list):
-                if any([idx < 0 or idx >= weights.shape[0] for idx in c_idx]):
-                    raise IndexError(f'Given indexes ({c_idx}) out of range')
+    Validator.is_type_valid(indexes, (None, np.ndarray))
+    # if indexes is not None:
+    #     for c_idx in indexes:
+    #         if isinstance(c_idx, (int, np.integer)):
+    #             if c_idx < 0 or c_idx >= weights.shape[0]:
+    #                 raise IndexError(f'Given index ({c_idx}) out of range')
+    #         elif isinstance(c_idx, list):
+    #             if any([idx < 0 or idx >= weights.shape[0] for idx in c_idx]):
+    #                 raise IndexError(f'Given indexes ({c_idx}) out of range')
+    Validator.are_indexes_valid(indexes, weights.shape[0])
 
     results = []
 

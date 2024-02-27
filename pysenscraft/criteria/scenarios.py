@@ -9,6 +9,7 @@ from joblib import Parallel, delayed
 import tempfile
 import tqdm
 import pickle
+from ..validator import Validator
 
 def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, cores_num: int|None = None, file_name: str|None = None, return_array: bool = False, sequential: bool = False, save_zeros: bool = True):
     """
@@ -199,7 +200,19 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
         if return_array:
             return results
 
-    
+    Validator.is_type_valid(crit_num, int)
+    Validator.is_positive_value(crit_num)
+    Validator.is_type_valid(step, float)
+    Validator.is_type_valid(precision, int)
+    Validator.is_positive_value(precision)
+    Validator.is_type_valid(cores_num, (None, int))
+    if cores_num is not None:
+        Validator.is_positive_value(cores_num)
+    Validator.is_type_valid(file_name, (None, str))
+    Validator.is_type_valid(return_array, bool)
+    Validator.is_type_valid(sequential, bool)
+    Validator.is_type_valid(save_zeros, bool)
+
     if cores_num is None:
         num_cores = multiprocessing.cpu_count()
     else:

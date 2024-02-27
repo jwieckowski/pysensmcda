@@ -19,7 +19,7 @@ class Validator:
 
     @staticmethod
     def is_callable(var, custom_message = None):
-        if isinstance(var, list):
+        if isinstance(var, (list, np.ndarray)):
             if any([not callable(v) for v in var]):
                 if custom_message:
                     raise TypeError(custom_message)
@@ -157,6 +157,15 @@ class Validator:
 
         return True, dim
         
+    @staticmethod
+    def is_type_in_dict_valid(key, dict, type, custom_message = None):
+        if not isinstance(dict[key], type):
+            if custom_message:
+                raise TypeError(custom_message)
+            else:
+                raise TypeError(f"'{key}' in '{get_var_name(dict)}' should be given as {type}")
+        return True
+
 # examples
 # range_values = 1
 # print(Validator.is_type_valid(range_values, float))
