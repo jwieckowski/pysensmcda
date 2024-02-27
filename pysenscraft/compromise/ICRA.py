@@ -1,10 +1,11 @@
-# Copyright (C) 2024 Bartosz Paradowski
+# Copyright (C) 2024 Bartosz Paradowski, Jakub Więckowski
 
 import inspect
 import numpy as np
 from scipy.stats import rankdata
 from dataclasses import dataclass
 from pymcdm.correlations import weighted_spearman
+from ..validator import Validator
 
 @dataclass
 class ICRAResults:
@@ -18,7 +19,7 @@ class ICRAResults:
     all_rankings: np.ndarray
     all_corrs: np.ndarray
 
-def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coef: callable=weighted_spearman, max_iters: int=1000, compromise_weights: np.ndarray | None=None) -> ICRAResults:
+def iterative_compromise(methods: dict, preferences: np.ndarray, types: np.ndarray, corr_coef: callable=weighted_spearman, max_iters: int=1000, compromise_weights: np.ndarray | None=None) -> ICRAResults:
     """ Iterative Compromise Ranking Analysis (ICRA).
         ---------------------------------------------
 
@@ -99,6 +100,16 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
 
     def rank(pref, rank_type):
         return rankdata(pref * -1) if rank_type == 1 else rankdata(pref)
+
+    Validator.is_type_valid(methods, dict)
+    Validator.is_type_valid(preferences, np.ndarray)
+    Validator.is_type_valid(types, np.ndarray)
+    Validator.is_in_list(types, [-1, 1])
+    Validator.is_callable(corr_coef)
+    Validator.is_type_valid(max_iters, int)
+    Validator.is_positive_value(max_iters)
+    Validator.is_type_valid(compromise_weights, (None, np.ndarray))
+    Validator.is_sum_valid(compromise_weights, 1)
 
     matrix = preferences
     rankings = np.array([rank(pref, types[idx]) for idx, pref in enumerate(matrix.T)]).T

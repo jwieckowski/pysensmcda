@@ -1,7 +1,8 @@
-# Copyright (C) 2024 Bartosz Paradowski
+# Copyright (C) 2024 Bartosz Paradowski, Jakub Więckowski
 
 import numpy as np
 from scipy.stats import rankdata
+from ..validator import Validator
 
 def vector_normalization(x: np.ndarray, cost: bool=True) -> np.ndarray:
     """
@@ -62,11 +63,20 @@ def improved_borda(preferences: np.ndarray, preference_types: np.ndarray | list=
         Compromised ranking.
 
     """
-    if not isinstance(preferences, np.ndarray):
-        raise TypeError('Preferences should be given as numpy array')
     
-    if not callable(normalization):
-        raise TypeError('Normalization should be callable')
+    Validator.is_type_valid(preferences, np.ndarray)
+    Validator.is_type_valid(preference_types, (list, np.ndarray))
+    # if not isinstance(preferences, np.ndarray):
+    #     raise TypeError('Preferences should be given as numpy array')
+    
+    Validator.is_callable(normalization)
+    # if not all(callable(util_func) for util_func in utility_funcs):
+    #     raise TypeError('All utility functions should be callable')
+    Validator.is_callable(utility_funcs)
+    
+    # if not callable(normalization):
+    #     raise TypeError('Normalization should be callable')
+    Validator.is_type_valid(norm_types, (list, np.ndarray))
 
     alternatives_num, methods_num = preferences.shape
 
@@ -76,17 +86,18 @@ def improved_borda(preferences: np.ndarray, preference_types: np.ndarray | list=
     if not norm_types:
         norm_types = np.ones(methods_num)
 
-    if len(preference_types) != methods_num:
-        raise ValueError('The number of preference (ranking) types does not align with the number of columns of preferences.')
-    
-    if not all(callable(util_func) for util_func in utility_funcs):
-        raise TypeError('All utility functions should be callable')
-    
-    if len(norm_types) != methods_num:
-        raise ValueError('The number of normalization types does not align with the number of columns of preferences.')
+    # if len(preference_types) != methods_num:
+    #     raise ValueError('The number of preference (ranking) types does not align with the number of columns of preferences.')
+    Validator.is_shape_equal(len(preference_types), methods_num)
 
-    if utility_funcs and len(utility_funcs) != methods_num:
-        raise ValueError('The number of utility functions does not align with the number of columns of preferences.')
+    # if len(norm_types) != methods_num:
+    #     raise ValueError('The number of normalization types does not align with the number of columns of preferences.')
+    Validator.is_shape_equal(len(norm_types), methods_num)
+
+    # if utility_funcs and len(utility_funcs) != methods_num:
+    #     raise ValueError('The number of utility functions does not align with the number of columns of preferences.')
+    if utility_funcs:
+        Validator.is_shape_equal(len(utility_funcs), methods_num)
 
     util_prefs = preferences.copy()
     for idx, util_func in enumerate(utility_funcs):
