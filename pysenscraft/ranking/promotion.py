@@ -2,6 +2,7 @@
 
 import numpy as np
 import pymcdm
+from ..validator import Validator
 
 def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: callable, call_kwargs: dict, ranking_descending: bool, direction: np.ndarray, step: int | float, bounds: None | np.ndarray = None, positions: None | np.ndarray = None, return_zeros: bool = True, max_modification: None | int = None):
     """
@@ -163,48 +164,62 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
         for change in crit_values:
             yield change
 
-    if not callable(method):
-        raise TypeError('Method should be callable')
+    Validator.is_callable(method)
+    # if not callable(method):
+    #     raise TypeError('Method should be callable')
 
-    if not isinstance(matrix, np.ndarray):
-        raise TypeError('Matrix should be a numpy array type')
+    Validator.is_type_valid(matrix, np.ndarray)
+    # if not isinstance(matrix, np.ndarray):
+    #     raise TypeError('Matrix should be a numpy array type')
         
-    if not isinstance(initial_ranking, np.ndarray):
-        raise TypeError('Initial ranking should be a numpy array type')
+    Validator.is_type_valid(initial_ranking, np.ndarray)
+    # if not isinstance(initial_ranking, np.ndarray):
+    #     raise TypeError('Initial ranking should be a numpy array type')
     
-    if not isinstance(direction, np.ndarray):
-        raise TypeError('Direction should be a numpy array type')
+    Validator.is_type_valid(direction, np.ndarray)
+    # if not isinstance(direction, np.ndarray):
+    #     raise TypeError('Direction should be a numpy array type')
 
-    if any([d not in [-1, 1] for d in direction]):
-        raise ValueError('Direction vector should contain only values 1 or -1')
+    Validator.is_in_list(direction, [-1, 1])
+    # if any([d not in [-1, 1] for d in direction]):
+    #     raise ValueError('Direction vector should contain only values 1 or -1')
 
-    if matrix.ndim != 2:
-        raise ValueError('Matrix should be a 2D array')
+    Validator.is_dimension_valid(matrix, 2)
+    # if matrix.ndim != 2:
+    #     raise ValueError('Matrix should be a 2D array')
 
-    if matrix.shape[0] != initial_ranking.shape[0]:
-        raise ValueError("Number of alternatives in matrix and positions in initial ranking should be the same")
+    Validator.is_shape_equal(matrix.shape[0], initial_ranking.shape[0])
+    # if matrix.shape[0] != initial_ranking.shape[0]:
+    #     raise ValueError("Number of alternatives in matrix and positions in initial ranking should be the same")
     
-    if matrix.shape[1] != direction.shape[0]:
-        raise ValueError("Number of alternatives in matrix and length of direction should be the same")
+    Validator.is_shape_equal(matrix.shape[0], direction.shape[0])
+    # if matrix.shape[1] != direction.shape[0]:
+    #     raise ValueError("Number of alternatives in matrix and length of direction should be the same")
 
-    if bounds is not None and not isinstance(bounds, np.ndarray):
-        raise TypeError('Bounds should be a numpy array type')
+    Validator.is_type_valid(bounds, (None, np.ndarray))
+    # if bounds is not None and not isinstance(bounds, np.ndarray):
+    #     raise TypeError('Bounds should be a numpy array type')
     
     if bounds is None and max_modification is None:
-        raise TypeError('`max_modification` parameter must be given when `bounds` is None')
+        raise TypeError("'max_modification' parameter must be given when 'bounds' is None")
 
+    Validator.is_type_valid(positions, (None, np.ndarray))
     if positions is not None:
-        if not isinstance(positions, np.ndarray):
-            raise TypeError('Positions should be a numpy array type')
-    
-        if matrix.shape[0] != positions.shape[0]:
-            raise ValueError("Number of alternatives in matrix and length of positions should be the same")
+        # if not isinstance(positions, np.ndarray):
+        #     raise TypeError('Positions should be a numpy array type')
 
-        if any([p <= 0 or p > positions.shape[0] for p in positions]):
-            raise ValueError('Values in positions should not exceed possible ranking placements')
+        Validator.is_shape_equal(matrix.shape[0], positions.shape[0])
+        # if matrix.shape[0] != positions.shape[0]:
+        #     raise ValueError("Number of alternatives in matrix and length of positions should be the same")
 
-    if 'matrix' not in list(call_kwargs.keys()):
-        raise ValueError('Call kwargs dictionary should include `matrix` as one of the keys')
+        Validator.is_in_range(positions, 1, positions.shape[0])
+        # if any([p <= 0 or p > positions.shape[0] for p in positions]):
+        #     raise ValueError('Values in positions should not exceed possible ranking placements')
+
+    Validator.is_type_valid(call_kwargs, dict)
+    Validator.is_key_in_dict(['matrix'], call_kwargs)
+    # if 'matrix' not in list(call_kwargs.keys()):
+    #     raise ValueError('Call kwargs dictionary should include `matrix` as one of the keys')
 
     # store promoted positions and changes that caused the promotions
     new_positions = np.full((matrix.shape), 0, dtype=int)
