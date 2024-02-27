@@ -1,6 +1,7 @@
 # Copyright (C) 2024 Jakub Więckowski
 
 import numpy as np
+from ..validator import Validator
 
 def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, perturbation_scale: float | np.ndarray = 0.1):
     """
@@ -64,28 +65,37 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
     ...     print(r)
     """
 
+    Validator.is_type_valid(matrix, np.ndarray)
+    # if not isinstance(matrix, np.ndarray):
+    #     raise TypeError("Matrix should be given as a numpy array")
 
-    if not isinstance(matrix, np.ndarray):
-        raise TypeError("Matrix should be given as a numpy array")
+    Validator.is_dimension_valid(matrix, 2)
+    # if matrix.ndim != 2:
+    #     raise ValueError("Matrix should be a 2D array")
 
-    if matrix.ndim != 2:
-        raise ValueError("Matrix should be a 2D array")
+    Validator.is_type_valid(simulations, int)
+    Validator.is_positive_value(simulations)
+    # if not isinstance(simulations, int) or simulations <= 0:
+    #     raise ValueError("Number of simulations should be a positive integer")
 
-    if not isinstance(simulations, int) or simulations <= 0:
-        raise ValueError("Number of simulations should be a positive integer")
+    Validator.is_type_valid(precision, int)
+    Validator.is_positive_value(precision)
+    # if not isinstance(precision, int) or precision < 0:
+    #     raise ValueError("Precision should be a non-negative integer")
 
-    if not isinstance(precision, int) or precision < 0:
-        raise ValueError("Precision should be a non-negative integer")
+    Validator.is_type_valid(perturbation, (int, float, np.ndarray))
 
     if isinstance(perturbation_scale, (float, int)):
         perturbation_scale = np.full(matrix.shape[0], perturbation_scale)
     elif isinstance(perturbation_scale, np.ndarray):
         if perturbation_scale.ndim == 1:
-            if perturbation_scale.shape[0] != matrix.shape[0]:
-                raise ValueError("Length of perturbation_scale should be equal to the number of criteria")
+            # if perturbation_scale.shape[0] != matrix.shape[0]:
+            #     raise ValueError("Length of perturbation_scale should be equal to the number of criteria")
+            Validator.is_shape_equal(matrix.shape[0], perturbation_scale.shape[0])
         elif perturbation_scale.ndim == 2:
-            if perturbation_scale.shape[0] != matrix.shape[0] and perturbation_scale.shape[1] != matrix.shape[1]:
-                raise ValueError("Shape of perturbation_scale and matrix should be equal")
+            Validator.is_shape_equal(matrix.shape, perturbation_scale.shape)
+            # if perturbation_scale.shape[0] != matrix.shape[0] and perturbation_scale.shape[1] != matrix.shape[1]:
+            #     raise ValueError("Shape of perturbation_scale and matrix should be equal")
 
     modified_matrices = []
 

@@ -2,8 +2,9 @@
 
 import numpy as np
 from ..criteria import random_distribution as dist
+from ..validator import Validator
 
-def monte_carlo_weights(n: int, distribution='uniform', num_samples=1000, params=None):
+def monte_carlo_weights(n: int, distribution: str, params: dict, num_samples: int =1000):
     """
     Generate criteria weights probabilistically using Monte Carlo simulation.
 
@@ -12,15 +13,15 @@ def monte_carlo_weights(n: int, distribution='uniform', num_samples=1000, params
     n : int
         Number of weights to generate.
 
-    num_samples : int, optional, default=1000
-        Number of samples to generate in the Monte Carlo simulation.
-
-    distribution : str, optional, default='uniform'
+    distribution : str
         Probability distribution for weight modification.
         Options: 'chisquare', 'laplace', 'normal', 'random', 'triangular', 'uniform'.
 
-    params : dict, optional
+    params : dict
         Parameters for the chosen distribution. Check NumPy documentation for details.
+
+    num_samples : int, optional, default=1000
+        Number of samples to generate in the Monte Carlo simulation.
 
     Returns
     -------
@@ -34,12 +35,14 @@ def monte_carlo_weights(n: int, distribution='uniform', num_samples=1000, params
     >>> print(modified_weights)
     """
 
+    Validator.is_type_valid(n, int)
+    Validator.is_type_valid(distribution, str)
     allowed_distributions = ['chisquare', 'laplace', 'normal', 'random', 'triangular', 'uniform']
-    if distribution not in allowed_distributions:
-        raise ValueError(f'Invalid distribution. Choose from: {allowed_distributions}')
-
-    if params is None:
-        params = {}
+    Validator.is_in_list(distribution, allowed_distributions)
+    Validator.is_type_valid(num_samples, int)
+    Validator.is_type_valid(params, dict)
+    # if distribution not in allowed_distributions:
+    #     raise ValueError(f'Invalid distribution. Choose from: {allowed_distributions}')
 
     modified_weights = []
 
