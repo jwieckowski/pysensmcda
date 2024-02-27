@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from ..compromise.ICRA import ICRAResults
+from ..validator import Validator
 
 def preference_distribution(g: sns.FacetGrid, xlabel: str):
     """
@@ -31,6 +32,10 @@ def preference_distribution(g: sns.FacetGrid, xlabel: str):
     >>>     plt.suptitle('Preference distribution')
     >>>     plt.show()
     """
+
+    Validator.is_type_valid(g, sns.FacetGrid)
+    Validator.is_type_valid(xlabel, str)
+
     g.map(sns.kdeplot, xlabel, bw_adjust=.5, clip_on=False, fill=True, alpha=1, linewidth=1.5)
     g.map(sns.kdeplot, xlabel, clip_on=False, color="w", lw=2, bw_adjust=.5)
 
@@ -124,9 +129,21 @@ def ICRA_pref_distribution(results: ICRAResults, methods: list[str], palettes: l
     >>>     palettes.append(sns.cubehelix_palette(5, rot=-.25, start=0.3*idx, hue=1))
     >>> ICRA_pref_distribution(result, methods, by='methods', indexes=[0, 2], palettes=palettes)
     """
-    if not isinstance(results, ICRAResults):
-        raise ValueError('"results" parameter should be of type ICRAResults')
-    
+
+    Validator.is_type_valid(results, ICRAResults)
+    # if not isinstance(results, ICRAResults):
+    #     raise ValueError('"results" parameter should be of type ICRAResults')
+    Validator.is_type_valid(methods, list)
+    Validator.is_type_valid(palettes, list)
+    Validator.is_type_valid(by, str)
+    Validator.is_in_list(by, ['methods', 'iters'])
+    Validator.is_type_valid(file_name, str)
+    Validator.is_type_valid(save, bool)
+    Validator.is_type_valid(format, str)
+    Validator.is_type_valid(show, bool)
+    Validator.is_type_valid(indexes, (None, list))
+    Validator.is_type_valid(FacetGrid_kwargs, dict)
+
     df = pd.concat([pd.DataFrame(arr, columns=methods) 
                         for arr in results.all_preferences], 
                         keys=[f'Iter. {i+1}' for i in range(len(results.all_preferences))])
@@ -140,8 +157,6 @@ def ICRA_pref_distribution(results: ICRAResults, methods: list[str], palettes: l
         dist_by = [f'Iter. {i+1}' for i in range(iters_number)]
     elif by == 'methods':
         dist_by = methods
-    else:
-        raise ValueError('Unsupported "by" parameter value')
     
     if indexes is None:
         indexes = np.arange(len(dist_by))

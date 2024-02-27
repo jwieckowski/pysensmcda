@@ -1,10 +1,11 @@
-# Copyright (C) 2024 Bartosz Paradowski
+# Copyright (C) 2024 Bartosz Paradowski, Jakub Więckowski
 
 import seaborn as sns
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+from ..validator import Validator
 
 def rankings_distribution(rankings: np.ndarray, ax: mpl.axes.Axes|None=None, title: str='', methods: list[str]|None=None, legend_loc:str='upper', plot_type:str='box',
                            plot_kwargs:dict=dict(), xlabel:str='Alternative', ylabel:str='Position', show_legend:bool=True):
@@ -106,8 +107,21 @@ def rankings_distribution(rankings: np.ndarray, ax: mpl.axes.Axes|None=None, tit
             df['Method'] = method
         return df
     
-    if not isinstance(rankings, np.ndarray):
-        raise ValueError('Parameter rankings needs to be of type np.ndarray')
+    Validator.is_type_valid(rankings, np.ndarray)
+    Validator.is_type_valid(ax, (None, mpl.axes.Axes))
+    Validator.is_type_valid(title, str)
+    Validator.is_type_valid(methods, (list, None))
+    Validator.is_type_valid(legend_loc, str)
+    Validator.is_in_list(legend_loc, ['upper', 'lower', 'right'])
+    Validator.is_type_valid(plot_type, str)
+    Validator.is_in_list(plot_type, ['box', 'boxen', 'violin'])
+    Validator.is_type_valid(plot_kwargs, dict)
+    Validator.is_type_valid(xlabel, str)
+    Validator.is_type_valid(ylabel, str)
+    Validator.is_type_valid(show_legend, bool)  
+
+    # if not isinstance(rankings, np.ndarray):
+    #     raise ValueError('Parameter rankings needs to be of type np.ndarray')
     
     if ax is None:
         ax = plt.gca()
