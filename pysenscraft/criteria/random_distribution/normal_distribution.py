@@ -1,6 +1,7 @@
 # Copyright (C) 2024 Jakub Więckowski
 
 import numpy as np
+from ...validator import Validator
 
 def normal_distribution(size: int, loc: float = 0.0, scale: float = 1.0):
     """
@@ -33,8 +34,13 @@ def normal_distribution(size: int, loc: float = 0.0, scale: float = 1.0):
     >>> print(weights)
     """
 
-    if scale < 0:
-        raise ValueError('Standard deviation (scale) must be non-negative')
+    Validator.is_type_valid(size, int)
+    Validator.is_positive_value(size)
+    Validator.is_type_valid(loc, float)
+    Validator.is_type_valid(scale, float)
+    Validator.is_positive_value(scale)
+    # if scale < 0:
+    #     raise ValueError('Standard deviation (scale) must be non-negative')
 
 
     weights = np.abs(np.random.normal(loc, scale, size=size))

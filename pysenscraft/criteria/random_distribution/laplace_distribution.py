@@ -1,6 +1,7 @@
 # Copyright (C) 2024 Jakub Więckowski
 
 import numpy as np
+from ...validator import Validator
 
 def laplace_distribution(size: int, loc: float = 0.0, scale: float = 1.0):
     """
@@ -33,8 +34,13 @@ def laplace_distribution(size: int, loc: float = 0.0, scale: float = 1.0):
     >>> print(weights)
     """
 
-    if scale < 0:
-        raise ValueError('The exponential decay (scale) must be non-negative')
+    Validator.is_type_valid(size, int)
+    Validator.is_positive_value(size)
+    Validator.is_type_valid(loc, float)
+    Validator.is_type_valid(scale, float)
+    Validator.is_positive_value(scale)
+    # if scale < 0:
+    #     raise ValueError('The exponential decay (scale) must be non-negative')
 
     weights = np.abs(np.random.laplace(loc, scale, size=size))
     return np.array(weights) / np.sum(weights)

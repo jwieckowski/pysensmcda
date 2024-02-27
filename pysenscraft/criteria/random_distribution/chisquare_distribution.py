@@ -1,6 +1,7 @@
 # Copyright (C) 2024 Jakub Więckowski
 
 import numpy as np
+from ...validator import Validator
 
 def chisquare_distribution(size: int, df: float = 1.0):
     """
@@ -30,8 +31,12 @@ def chisquare_distribution(size: int, df: float = 1.0):
     >>> print(weights)
     """
 
-    if df <= 0:
-        raise ValueError('Number of degrees of freedom must be greater than 0')
+    Validator.is_type_valid(size, int)
+    Validator.is_positive_value(size)
+    Validator.is_type_valid(df, float)
+    Validator.is_positive_value(df)
+    # if df <= 0:
+    #     raise ValueError('Number of degrees of freedom must be greater than 0')
 
     weights = np.abs(np.random.chisquare(df, size=size))
     return np.array(weights) / np.sum(weights)

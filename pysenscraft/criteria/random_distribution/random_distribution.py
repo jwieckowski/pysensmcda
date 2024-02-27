@@ -1,6 +1,7 @@
 # Copyright (C) 2024 Jakub Więckowski
 
 import numpy as np
+from ...validator import Validator
 
 def random_distribution(size: int):
     """
@@ -22,6 +23,9 @@ def random_distribution(size: int):
     >>> weights = random_distribution(3)
     >>> print(weights)
     """
+
+    Validator.is_type_valid(size, int)
+    Validator.is_positive_value(size)
 
     weights = np.abs(np.random.random(size=size))
     return np.array(weights) / np.sum(weights)

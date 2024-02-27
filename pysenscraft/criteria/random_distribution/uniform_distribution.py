@@ -1,6 +1,7 @@
 # Copyright (C) 2024 Jakub Więckowski
 
 import numpy as np
+from ...validator import Validator
 
 def uniform_distribution(size: int, low: float = 0.0, high: float = 1.0):
     """
@@ -32,6 +33,11 @@ def uniform_distribution(size: int, low: float = 0.0, high: float = 1.0):
     >>> weights = uniform_distribution(3, 2, 5)
     >>> print(weights)
     """
+
+    Validator.is_type_valid(size, int)
+    Validator.is_positive_value(size)
+    if low < high:
+        raise ValueError('Parameters should follow the condition low < high')
 
     weights = np.abs(np.random.uniform(low, high, size=size))
     return np.array(weights) / np.sum(weights)

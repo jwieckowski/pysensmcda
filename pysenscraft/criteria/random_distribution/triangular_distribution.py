@@ -1,6 +1,7 @@
 # Copyright (C) 2024 Jakub Więckowski
 
 import numpy as np
+from ...validator import Validator
 
 def triangular_distribution(size: int, left: float = 0.0, mode: float = 0.5, right: float = 1.0):
     """
@@ -36,9 +37,12 @@ def triangular_distribution(size: int, left: float = 0.0, mode: float = 0.5, rig
     >>> print(weights)
     """
 
+    
+    Validator.is_type_valid(size, int)
+    Validator.is_positive_value(size)
+
     if left > mode or mode > right or left > right:
         raise ValueError('Parameters should follow the condition left <= mode <= right')
-
 
     weights = np.abs(np.random.triangular(left, mode, right, size=size))
     return np.array(weights) / np.sum(weights)
