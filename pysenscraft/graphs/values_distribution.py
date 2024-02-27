@@ -1,10 +1,12 @@
+# Copyright (C) 2024 Bartosz Paradowski
+
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.widgets import Slider
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-def hist_dist(data, ax=None, fig=None, xlabel='Value', kind='hist+kde', show_slider=True, title='', slider_label='Number\nof bins', slider_pad=None, bins_count='auto', slider_size='5%'):
+def hist_dist(data, ax=None, fig=None, xlabel='Value', kind='hist+kde', show_slider=True, title='', slider_label='Number\nof bins', slider_pad=None, bins_count='auto', slider_size='5%', min_bins=1, max_bins=20):
     """
     Parameters
     ----------
@@ -30,25 +32,33 @@ def hist_dist(data, ax=None, fig=None, xlabel='Value', kind='hist+kde', show_sli
             Number of initial bins.
         slider_size: float|str, optional, default='5%'
             The value of how much of space the slider should take.
+        min_bins: int, optional, default=1
+            Minimum amount of bins available to select with slider.
+        max_bins: int, optional, default=20
+            Maximum amount of bins available to select with slider.
 
     Examples
     --------
     ### Example 1: hist with slider
     >>> fig, ax = plt.subplots()
     >>> results = np.array([0.294, 0.306, 0.288, 0.312, 0.282, 0.318, 0.304, 0.296, 0.308, 0.292, 0.312, 0.288, 0.316, 0.284])
-    >>> bins_slider = hist_dist(results, ax, fig=fig, slider_label='Number\nof bins', kind='hist', xlabel='Value', title='Criterion value distribution')
+    >>> # In the case of using sliders, the reference should be kept, so Python wouldn't GC
+    >>> _, bins_slider = hist_dist(results, ax, fig=fig, slider_label='Number\nof bins', kind='hist', xlabel='Value', title='Criterion value distribution')
     >>> plt.show()
 
     ### Example 2: hist+kde without slider
     >>> fig, ax = plt.subplots()
     >>> results = np.array([0.294, 0.306, 0.288, 0.312, 0.282, 0.318, 0.304, 0.296, 0.308, 0.292, 0.312, 0.288, 0.316, 0.284])
-    >>> bins_slider = hist_dist(results, ax, fig=fig, slider_label='Number\nof bins', show_slider=False, xlabel='Value', title='Criterion value distribution')
+    >>> hist_dist(results, ax, fig=fig, slider_label='Number\nof bins', show_slider=False, xlabel='Value', title='Criterion value distribution')
     >>> plt.show()
     
     Returns
     -------
+        tuple(ax, slider) if show_slider=True else ax
         ax: matplotlib.Axes
             Axes object or list of Axes objects on which plots were drawn.
+        slider: matplotlib.widgets.Slider
+            Slider object used in plot
     """
     
     if not isinstance(data, np.ndarray):
@@ -77,9 +87,9 @@ def hist_dist(data, ax=None, fig=None, xlabel='Value', kind='hist+kde', show_sli
         bins_slider = Slider(
             ax=cax,
             label=slider_label,
-            valmin=1,
+            valmin=min_bins,
             valstep=1,
-            valmax=20,
+            valmax=max_bins,
             valinit=init_bins,
         )
         bins_slider.on_changed(update)
@@ -101,7 +111,7 @@ def hist_dist(data, ax=None, fig=None, xlabel='Value', kind='hist+kde', show_sli
     ax.set_title(title)
     ax.set_xlabel(xlabel)
     if show_slider:
-        return bins_slider
+        return (ax, bins_slider)
     else:
         return ax
     
@@ -163,15 +173,21 @@ def mutli_hist_dist(data: np.ndarray, nrows: int, ncols:int, figsize: tuple[int]
         >>>     [2, -0.08, np.array([0.316, 0.316, 0.368])],
         >>>     [2, 0.08, np.array([0.284, 0.284, 0.432])]], dtype=object)
         >>> critera_values = np.array([*results[:, 2]], dtype=float)
-        >>> mutli_hist_dist(critera_values, title_pos=0.5, nrows=1, ncols=3, figsize=(8, 4))
+        >>> # In the case of using sliders, the reference should be kept, so Python wouldn't GC
+        >>> _, _, sliders, main_slider = mutli_hist_dist(critera_values, title_pos=0.5, nrows=1, ncols=3, figsize=(8, 4))
         >>> plt.show()
 
     Returns
     -------
+        tuple(ax, fig, main_slider, sliders) if show_slider=True else tuple(ax, fig)
         ax: matplotlib.Axes
             Axes object or list of Axes objects on which plots were drawn.
         fig: matplotlib.Figure
             Figure object on which axes were drawn.
+        main_slider: matplotlib.widgets.Slider
+            Slider object that controlls bins count for all subplots
+        sliders: list[matplotlib.widgets.Slider]
+            Slider objects that controlls bins count for each subplot individually
     """
     
     if not isinstance(data, np.ndarray):
@@ -184,9 +200,10 @@ def mutli_hist_dist(data: np.ndarray, nrows: int, ncols:int, figsize: tuple[int]
         axes_title = f'Crit {idx+1}' if ax_title else ''
         s_label = f'$C_{{{idx+1}}}$ bins' if slider_label else ''
         if show_slider:
-            sliders.append(hist_dist(data[:, idx], ax[idx], fig=fig, title=axes_title, slider_label=s_label, pad=slider_pad, slider_size=slider_size, show_slider=show_slider, bins_count=bins_count, kind=kind, xlabel=xlabel))
+            _, ax_slider = hist_dist(data[:, idx], ax[idx], fig=fig, title=axes_title, slider_label=s_label, slider_pad=slider_pad, slider_size=slider_size, show_slider=show_slider, bins_count=bins_count, kind=kind, xlabel=xlabel, min_bins=min_bins, max_bins=max_bins)
+            sliders.append(ax_slider)
         else:
-            hist_dist(data[:, idx], ax[idx], fig=fig, title=axes_title, slider_label=s_label, pad=slider_pad, slider_size=slider_size, show_slider=show_slider, bins_count=bins_count, kind=kind, xlabel=xlabel)
+            hist_dist(data[:, idx], ax[idx], fig=fig, title=axes_title, slider_label=s_label, slider_pad=slider_pad, slider_size=slider_size, show_slider=show_slider, bins_count=bins_count, kind=kind, xlabel=xlabel, min_bins=min_bins, max_bins=max_bins)
     plt.suptitle(title, x=title_pos)
     plt.tight_layout(w_pad=w_pad)
     
@@ -198,5 +215,7 @@ def mutli_hist_dist(data: np.ndarray, nrows: int, ncols:int, figsize: tuple[int]
             for slider in sliders:
                 slider.set_val(val)
         main_slider.on_changed(update_all_sliders)
-
-    return fig, ax
+    if show_slider:
+        return (fig, ax, sliders, main_slider)
+    else:
+        return (fig, ax)
