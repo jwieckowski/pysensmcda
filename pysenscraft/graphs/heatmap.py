@@ -1,28 +1,31 @@
 # Copyright (C) 2024 Jakub Więckowski
 
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+from ..validator import Validator
 
-def heatmap(fuzzy_ranking_matrix, 
-                             title="Fuzzy Ranking Matrix",
-                             xlabel="Alternatives",
-                             ylabel="Positions",
-                             cmap="Blues",
-                             annot=True,
-                             fmt=".2f",
-                             linewidths=.5,
-                             cbar_kws={'label': 'Membership Degree'},
-                             figsize=(8, 6),
-                             label_fontsize=10,
-                             title_fontsize=12,
-                             ax=None):
+def heatmap(matrix: np.ndarray, 
+                title: str="Fuzzy Ranking Matrix",
+                xlabel: str="Alternatives",
+                ylabel: str="Positions",
+                cmap: str="Blues",
+                annotate: bool=True,
+                fmt: str=".2f",
+                linewidths: float=.5,
+                cbar_kwargs: dict={'label': 'Membership Degree'},
+                figsize: tuple=(8, 6),
+                label_fontsize: int=10,
+                title_fontsize: int=12,
+                ax: None | mpl.axes.Axes=None):
     """
     Visualize the fuzzy ranking matrix using a heatmap.
 
     Parameters
     ----------
-    fuzzy_ranking_matrix : np.ndarray
-        Fuzzy ranking matrix obtained from the `fuzzy_ranking` function.
+    matrix : np.ndarray
+        2D matrix, for example, obtained from the 'fuzzy_ranking' function.
 
     title : str, optional
         Title for the visualization.
@@ -36,7 +39,7 @@ def heatmap(fuzzy_ranking_matrix,
     cmap : str or Colormap, optional
         Colormap for the heatmap.
 
-    annot : bool, optional
+    annotate : bool, optional
         If True, write the data values in each cell.
 
     fmt : str, optional
@@ -45,7 +48,7 @@ def heatmap(fuzzy_ranking_matrix,
     linewidths : float, optional
         Width of the lines that will divide each cell.
 
-    cbar_kws : dict, optional
+    cbar_kwargs : dict, optional
         Additional keyword arguments for the colorbar.
 
     figsize : tuple, optional
@@ -77,15 +80,29 @@ def heatmap(fuzzy_ranking_matrix,
 
     """
     
+    Validator.is_type_valid(matrix, np.ndarray)
+    Validator.is_type_valid(title, str)
+    Validator.is_type_valid(xlabel, str)
+    Validator.is_type_valid(ylabel, str)
+    Validator.is_type_valid(cmap, str)
+    Validator.is_type_valid(annotate, bool)
+    Validator.is_type_valid(fmt, str)
+    Validator.is_type_valid(linewidths, float)
+    Validator.is_type_valid(cbar_kwargs, dict)
+    Validator.is_type_valid(figsize, tuple)
+    Validator.is_type_valid(label_fontsize, int)
+    Validator.is_type_valid(title_fontsize, int)
+    Validator.is_type_valid(ax, (None, mpl.axes.Axes))
+
     if ax is None:
         plt.figure(figsize=figsize)
-        axs = plt.gca()
+        ax = plt.gca()
     else:
-        axs = ax
+        ax = ax
 
-    sns.heatmap(fuzzy_ranking_matrix, cmap=cmap, annot=annot, fmt=fmt, linewidths=linewidths, cbar_kws=cbar_kws, ax=axs)
-    axs.set_title(title, fontsize=title_fontsize)
-    axs.set_xlabel(xlabel, fontsize=label_fontsize)
-    axs.set_ylabel(ylabel, fontsize=label_fontsize)
+    sns.heatmap(matrix, cmap=cmap, annot=annotate, fmt=fmt, linewidths=linewidths, cbar_kws=cbar_kwargs, ax=ax)
+    ax.set_title(title, fontsize=title_fontsize)
+    ax.set_xlabel(xlabel, fontsize=label_fontsize)
+    ax.set_ylabel(ylabel, fontsize=label_fontsize)
 
-    return axs
+    return ax
