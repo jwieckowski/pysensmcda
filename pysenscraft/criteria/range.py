@@ -3,7 +3,9 @@
 import numpy as np
 from itertools import product
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: float = 0.01):
     """
     Modify a set of criteria weights based on specified range values, directions, and indexes.

@@ -3,7 +3,9 @@
 import numpy as np
 from scipy.stats import rankdata
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def borda(rankings: np.ndarray):
     """
     Calculates compromised ranking using borda voting rule.

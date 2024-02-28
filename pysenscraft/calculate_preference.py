@@ -5,7 +5,9 @@ from . import criteria
 from . import probabilistic 
 import numpy as np
 from scipy.stats import rankdata
+from .utils import memory_guard
 
+@memory_guard
 def calculate_preference(func: callable, results, method: callable, call_kwargs: dict, only_preference: bool=True, method_type: int|None=None):
     """
     Wrapper for calculating preference depening on the sensitivity analysis function.

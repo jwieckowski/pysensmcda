@@ -3,7 +3,9 @@
 import numpy as np
 from scipy.stats import rankdata
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def rank_position(rankings: np.ndarray):
     """
     Calculates compromised ranking using rank position method.

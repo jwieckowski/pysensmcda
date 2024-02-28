@@ -10,7 +10,9 @@ import tempfile
 import tqdm
 import pickle
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, cores_num: int|None = None, file_name: str|None = None, return_array: bool = False, sequential: bool = False, save_zeros: bool = True):
     """
     Generate scenarios for examining criteria weights based on given criteria number and step of weights space exploration

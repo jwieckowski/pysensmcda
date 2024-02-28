@@ -2,7 +2,9 @@
 
 import numpy as np
 from ...validator import Validator
+from ...utils import memory_guard
 
+@memory_guard
 def laplace_distribution(size: int, loc: float = 0.0, scale: float = 1.0):
     """
     Generate a set of normalized weights sampled from a laplace distribution.

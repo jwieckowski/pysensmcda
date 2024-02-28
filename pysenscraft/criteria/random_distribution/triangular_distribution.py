@@ -2,7 +2,9 @@
 
 import numpy as np
 from ...validator import Validator
+from ...utils import memory_guard
 
+@memory_guard
 def triangular_distribution(size: int, left: float = 0.0, mode: float = 0.5, right: float = 1.0):
     """
     Generate a set of normalized weights sampled from a triangular distribution.

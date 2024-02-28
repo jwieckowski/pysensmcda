@@ -3,7 +3,9 @@
 import numpy as np
 from itertools import product
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | np.ndarray = 1):
     """
     Modify a decision matrix based on specified percentage changes, directions, indexes, and steps of percentage modifications.

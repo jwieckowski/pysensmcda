@@ -2,7 +2,9 @@
 
 import numpy as np
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = None):
     """
     Remove one or more alternatives from a decision matrix.

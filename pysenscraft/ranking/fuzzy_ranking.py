@@ -3,7 +3,9 @@
 import numpy as np
 import pandas as pd
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None):
     """
     Generate fuzzy ranking matrix based on positional rankings.

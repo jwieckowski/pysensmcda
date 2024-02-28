@@ -4,7 +4,9 @@ import numpy as np
 from numpy.linalg import matrix_power
 from scipy.stats import rankdata
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def dominance_directed_graph(rankings: np.ndarray):
     """
     Calculates compromised ranking using dominance directed graph.

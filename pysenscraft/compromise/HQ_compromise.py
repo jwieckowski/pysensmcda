@@ -1,4 +1,8 @@
+# Copyright (C) 2024 Bartosz Paradowski, Jakub Więckowski
+
 import numpy as np
+from ..validator import Validator
+from ..utils import memory_guard
 
 def __welsch_minimizer__(s: float, sigma: float) -> float:
     return np.exp(-(s**2)/(2*sigma**2))
@@ -23,11 +27,22 @@ def __indicators__(rankings: np.ndarray, R_avg: np.ndarray, sigma: float, w: np.
         trust += w[m]*s
     return consensus/(K * M), trust/K
 
-def HQ_compromise(R: np.ndarray, max_iters:int = 1000, tol:float = 10e-10) -> tuple[tuple[float, float], np.ndarray, np.ndarray]:
+@memory_guard
+def HQ_compromise(rankings: np.ndarray, max_iters:int = 1000, tol:float = 10e-10) -> tuple[tuple[float, float], np.ndarray, np.ndarray]:
     """
+    Perform HQ (Half-Quadratic) compromise on a set of rankings.
+
     Parameters
     ----------
-        R: ndarray
+    rankings : np.ndarray
+        2D array representing the rankings. Each row corresponds to an alternative,
+        and each column corresponds to a criterion.
+
+    max_iters : int, optional, default=1000
+        Maximum number of iterations for the compromise algorithm.
+
+    tol : float, optional, default=10e-10
+        Tolerance for convergence.
 
     Returns
     -------
@@ -60,6 +75,13 @@ def HQ_compromise(R: np.ndarray, max_iters:int = 1000, tol:float = 10e-10) -> tu
 
     """
 
+    Validator.is_type_valid(rankings, np.ndarray)
+    Validator.is_type_valid(max_iters, int)
+    Validator.is_positive_value(max_iters)
+    Validator.is_type_valid(tol, float)
+    Validator.is_positive_value(tol)
+
+    R = rankings
     M = R.shape[1]
 
     R_star = 1/M * np.sum(R, axis=1)

@@ -6,6 +6,7 @@ from scipy.stats import rankdata
 from dataclasses import dataclass
 from pymcdm.correlations import weighted_spearman
 from ..validator import Validator
+from ..utils import memory_guard
 
 @dataclass
 class ICRAResults:
@@ -19,6 +20,7 @@ class ICRAResults:
     all_rankings: np.ndarray
     all_corrs: np.ndarray
 
+@memory_guard
 def iterative_compromise(methods: dict, preferences: np.ndarray, types: np.ndarray, corr_coef: callable=weighted_spearman, max_iters: int=1000, compromise_weights: np.ndarray | None=None) -> ICRAResults:
     """ Iterative Compromise Ranking Analysis (ICRA).
         ---------------------------------------------

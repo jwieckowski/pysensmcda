@@ -3,7 +3,9 @@
 import numpy as np
 from itertools import product
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | float = 1):
     """
     Modify a set of criteria weights based on specified percentage changes, directions, and indexes.

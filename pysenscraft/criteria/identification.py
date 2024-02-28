@@ -6,7 +6,9 @@ import pymcdm
 from pymcdm.correlations import weighted_spearman
 from pymcdm.weights import equal_weights
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def relevance_identification(method: callable, call_kwargs: dict, ranking_descending: bool, excluded_criteria: int = 1, corr_coef: Union[Callable, List[Callable]] = weighted_spearman, precision: int = 6):
     """
     The core idea behind this method is to iteratively exclude a specified number of criteria and evaluate the impact on the ranking of alternatives. 

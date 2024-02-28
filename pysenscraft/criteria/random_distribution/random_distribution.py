@@ -2,7 +2,9 @@
 
 import numpy as np
 from ...validator import Validator
+from ...utils import memory_guard
 
+@memory_guard
 def random_distribution(size: int):
     """
     Generate a set of normalized weights sampled from a random distribution ( from half-open interval [0.0, 1.0) ).

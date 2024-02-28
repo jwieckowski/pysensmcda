@@ -3,7 +3,9 @@
 import numpy as np
 import pymcdm
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def ranking_demotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: callable, call_kwargs: dict, ranking_descending: bool, direction: np.ndarray, step: int | float, bounds: None | np.ndarray = None, positions: None | np.ndarray = None, return_zeros: bool = True, max_modification: None | int = None):
     """
     Demote alternatives in a decision matrix by adjusting specific criteria values, considering constraints on rankings. 

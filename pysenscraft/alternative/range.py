@@ -3,7 +3,9 @@
 import numpy as np
 from itertools import product
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: int | float | np.ndarray = 1):
     """
     Modify a decision matrix based on specified range values, indexes representing the combination of columns to be modified, and steps of range modifications.

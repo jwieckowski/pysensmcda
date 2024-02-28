@@ -3,7 +3,9 @@
 import numpy as np
 from itertools import product
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, indexes: None | np.ndarray = None):
     """
     Modify a decision matrix based on specified discrete values and indexes combinations representing the columns modified at the time.

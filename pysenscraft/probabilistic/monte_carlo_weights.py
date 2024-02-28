@@ -3,7 +3,9 @@
 import numpy as np
 from ..criteria import random_distribution as dist
 from ..validator import Validator
+from ..utils import memory_guard
 
+@memory_guard
 def monte_carlo_weights(n: int, distribution: str, params: dict, num_samples: int =1000):
     """
     Generate criteria weights probabilistically using Monte Carlo simulation.
