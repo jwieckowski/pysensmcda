@@ -5,7 +5,7 @@ from ..validator import Validator
 from ..utils import memory_guard
 
 @memory_guard
-def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6, perturbation_scale: float | np.ndarray = 0.1):
+def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6, perturbation_scale: float | np.ndarray = 0.1) -> np.ndarray:
     """
     Generate perturbed weights based on the given initial criteria weights based on the given perturbation scale and uniform distribution.
 

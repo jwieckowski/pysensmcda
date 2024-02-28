@@ -6,7 +6,7 @@ from ..validator import Validator
 from ..utils import memory_guard
 
 @memory_guard
-def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | np.ndarray = 1):
+def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | np.ndarray = 1) -> list[tuple[int, int | tuple, tuple, np.ndarray]]:
     """
     Modify a decision matrix based on specified percentage changes, directions, indexes, and steps of percentage modifications.
 
@@ -99,7 +99,7 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     ...     print(r)
     """
 
-    def modify_matrix(matrix, alt_idx, crit_idx, diff, direction_val):
+    def modify_matrix(matrix: np.ndarray, alt_idx: int, crit_idx: int, diff: float, direction_val: int) -> np.ndarray:
         new_matrix = matrix.copy().astype(float)
 
         new_matrix[alt_idx, crit_idx] = matrix[alt_idx, crit_idx] + diff * direction_val

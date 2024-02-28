@@ -6,7 +6,7 @@ from ..validator import Validator
 from ..utils import memory_guard
 
 @memory_guard
-def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: float = 0.01):
+def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: float = 0.01) -> list[tuple[int, float | tuple[float], np.ndarray]]:
     """
     Modify a set of criteria weights based on specified range values, directions, and indexes.
 

@@ -31,7 +31,7 @@ def vector_normalization(x: np.ndarray, cost: bool=True) -> np.ndarray:
     return x / np.sqrt(np.sum(x ** 2))
 
 @memory_guard
-def improved_borda(preferences: np.ndarray, preference_types: np.ndarray | list=[], normalization: callable=vector_normalization, utility_funcs: list[callable]=[], norm_types: np.ndarray | list=[]):
+def improved_borda(preferences: np.ndarray, preference_types: np.ndarray | list= [], normalization: callable = vector_normalization, utility_funcs: list[callable] = [], norm_types: np.ndarray | list = []) -> np.ndarray:
     """
     Improved borda was presented along Probabilistic Linguistic MULTIMOORA, where authors used specific utility functions. This implementation relyes on the concept proposed by author, however it does provide freedom for the user.
 

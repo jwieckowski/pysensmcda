@@ -6,7 +6,7 @@ from ..validator import Validator
 from ..utils import memory_guard
 
 @memory_guard
-def borda(rankings: np.ndarray):
+def borda(rankings: np.ndarray) -> np.ndarray:
     """
     Calculates compromised ranking using borda voting rule.
 

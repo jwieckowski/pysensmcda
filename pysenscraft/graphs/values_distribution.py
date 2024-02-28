@@ -7,7 +7,19 @@ from matplotlib.widgets import Slider
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from ..validator import Validator
 
-def hist_dist(data: np.ndarray, ax: plt.Axes|None=None, fig: plt.Figure=None, xlabel:str='Value', kind:str='hist+kde', show_slider:bool=True, title:str='', slider_label:str='Number\nof bins', slider_pad:float|None=None, bins_count:str|int='auto', slider_size:str|float='5%', min_bins:int=1, max_bins:int=20):
+def hist_dist(data: np.ndarray, 
+            ax: plt.Axes | None = None, 
+            fig: plt.Figure = None, 
+            xlabel: str = 'Value', 
+            kind: str = 'hist+kde', 
+            show_slider: bool = True, 
+            title: str = '', 
+            slider_label: str = 'Number\nof bins', 
+            slider_pad: float | None = None, 
+            bins_count: str | int = 'auto', 
+            slider_size: str | float = '5%', 
+            min_bins: int = 1, 
+            max_bins: int = 20) -> tuple[plt.Axes, Slider] | plt.Axes:
     """
     Parameters
     ----------
@@ -89,8 +101,8 @@ def hist_dist(data: np.ndarray, ax: plt.Axes|None=None, fig: plt.Figure=None, xl
         divider = make_axes_locatable(ax)
         cax = divider.append_axes('bottom', size=slider_size, pad=slider_pad)
 
-    def create_slider(init_bins):
-        def update(val):
+    def create_slider(init_bins: int) -> Slider:
+        def update(val: float | int) -> None:
             ax.clear()
             sns.histplot(data, ax=ax, bins=val)
             if kind == 'hist+kde':
@@ -130,7 +142,24 @@ def hist_dist(data: np.ndarray, ax: plt.Axes|None=None, fig: plt.Figure=None, xl
     else:
         return ax
     
-def mutli_hist_dist(data: np.ndarray, nrows: int, ncols:int, figsize: tuple[int], ax_title: bool=True, slider_label:bool=True, slider_pad:float=0.5, slider_size:str|float='5%', title:str='Distribution of criteria values', kind:str='hist+kde', title_pos:float=0.5, w_pad:float=1.5, min_bins:int=1, max_bins:int=20, show_slider:bool=True, bins_count:str|int='auto', main_slider_label:str='Number\nof bins', xlabel:str='Value'):
+def mutli_hist_dist(data: np.ndarray, 
+                    nrows: int, 
+                    ncols:int, 
+                    figsize: tuple[int], 
+                    ax_title: bool = True, 
+                    slider_label: bool = True, 
+                    slider_pad: float = 0.5, 
+                    slider_size: str | float = '5%', 
+                    title: str = 'Distribution of criteria values', 
+                    kind: str = 'hist+kde', 
+                    title_pos: float = 0.5, 
+                    w_pad: float = 1.5, 
+                    min_bins: int = 1, 
+                    max_bins: int = 20, 
+                    show_slider: bool = True, 
+                    bins_count: str | int = 'auto', 
+                    main_slider_label: str = 'Number\nof bins', 
+                    xlabel: str = 'Value') -> tuple[plt.Axes, plt.Figure, Slider, list[Slider]] | tuple[plt.Axes, plt.Figure]:
     """
     Parameters
     ----------

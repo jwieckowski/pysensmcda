@@ -21,7 +21,7 @@ class ICRAResults:
     all_corrs: np.ndarray
 
 @memory_guard
-def iterative_compromise(methods: dict, preferences: np.ndarray, types: np.ndarray, corr_coef: callable=weighted_spearman, max_iters: int=1000, compromise_weights: np.ndarray | None=None) -> ICRAResults:
+def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coef: callable = weighted_spearman, max_iters: int = 1000, compromise_weights: np.ndarray | None = None) -> ICRAResults:
     """ Iterative Compromise Ranking Analysis (ICRA).
         ---------------------------------------------
 
@@ -93,14 +93,14 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types: np.ndarr
         >>> print(result.all_rankings)
     """
 
-    def assign_results(results: ICRAResults, new_preferences: list, new_rankings: list, all_preferences: list, all_rankings: list, all_corrs: list):
+    def assign_results(results: ICRAResults, new_preferences: list, new_rankings: list, all_preferences: list, all_rankings: list, all_corrs: list) -> None:
         results.final_preferences = np.array(new_preferences)
         results.final_rankings = np.array(new_rankings)
         results.all_preferences = np.array(all_preferences)
         results.all_rankings = np.array(all_rankings)
         results.all_corrs = np.array(all_corrs)
 
-    def rank(pref, rank_type):
+    def rank(pref: np.ndarray, rank_type: int) -> np.ndarray:
         return rankdata(pref * -1) if rank_type == 1 else rankdata(pref)
 
     Validator.is_type_valid(methods, dict)

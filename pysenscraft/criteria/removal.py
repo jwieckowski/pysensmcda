@@ -5,7 +5,7 @@ from ..validator import Validator
 from ..utils import memory_guard
 
 @memory_guard
-def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int | np.ndarray = None):
+def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int | np.ndarray = None) -> list[tuple[int, np.ndarray, np.ndarray]]:
     """
     Remove one or more criteria from a decision matrix and adjust corresponding criteria weights.
 

@@ -6,7 +6,7 @@ from ..validator import Validator
 from ..utils import memory_guard
 
 @memory_guard
-def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None):
+def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None) -> np.ndarray:
     """
     Generate fuzzy ranking matrix based on positional rankings.
 

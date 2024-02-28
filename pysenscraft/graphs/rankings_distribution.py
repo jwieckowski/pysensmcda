@@ -4,17 +4,24 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 from ..validator import Validator
 
-def rankings_distribution(rankings: np.ndarray, ax: mpl.axes.Axes|None=None, title: str='', methods: list[str]|None=None, legend_loc:str='upper', plot_type:str='box',
-                           plot_kwargs:dict=dict(), xlabel:str='Alternative', ylabel:str='Position', show_legend:bool=True):
+def rankings_distribution(rankings: np.ndarray, 
+                        ax: plt.Axes | None = None, 
+                        title: str = '', 
+                        methods: list[str] | None = None, 
+                        legend_loc: str = 'upper', 
+                        plot_type: str = 'box', 
+                        plot_kwargs: dict = dict(), 
+                        xlabel: str = 'Alternative', 
+                        ylabel: str = 'Position', 
+                        show_legend: bool = True) -> plt.Axes:
     """
     Parameters
     ----------
     rankings: np.ndarray
         3d or 2d array of rankings to plot distribution for.
-    ax: Axis | None, optional, default=None
+    ax: plt.Axes | None, optional, default=None
         Matplotlib Axis to draw on. If None, current axis is used.
     title: str, optional, default=''
         Plot title.
@@ -76,7 +83,7 @@ def rankings_distribution(rankings: np.ndarray, ax: mpl.axes.Axes|None=None, tit
     ax: Axis
         Axis on which plot was drawn.
     """
-    def create_df(rankings: np.ndarray, method: str|None=None):
+    def create_df(rankings: np.ndarray, method: str | None = None) -> pd.DataFrame:
         """
         Internal function for dataframe creation for the purpose of plotting rankings distribution
 
@@ -108,7 +115,7 @@ def rankings_distribution(rankings: np.ndarray, ax: mpl.axes.Axes|None=None, tit
         return df
     
     Validator.is_type_valid(rankings, np.ndarray)
-    Validator.is_type_valid(ax, (None, mpl.axes.Axes))
+    Validator.is_type_valid(ax, (None, plt.Axes))
     Validator.is_type_valid(title, str)
     Validator.is_type_valid(methods, (list, None))
     Validator.is_type_valid(legend_loc, str)

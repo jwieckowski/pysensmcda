@@ -5,7 +5,7 @@ from ...validator import Validator
 from ...utils import memory_guard
 
 @memory_guard
-def chisquare_distribution(size: int, df: float = 1.0):
+def chisquare_distribution(size: int, df: float = 1.0) -> np.ndarray:
     """
     Generate a set of normalized weights sampled from a normal distribution.
 
