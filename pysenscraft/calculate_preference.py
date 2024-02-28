@@ -5,6 +5,7 @@ from . import criteria
 from . import probabilistic 
 import numpy as np
 from scipy.stats import rankdata
+from .validator import Validator
 from .utils import memory_guard
 
 @memory_guard
@@ -15,7 +16,7 @@ def calculate_preference(func: callable,
                             only_preference: bool = True, 
                             method_type: int | None = None) -> np.ndarray | tuple:
     """
-    Wrapper for calculating preference depening on the sensitivity analysis function.
+    Wrapper for calculating preference depending on the sensitivity analysis function.
 
     Parameters
     ----------
@@ -95,6 +96,16 @@ def calculate_preference(func: callable,
             If only_preference=True, array of preferences calculated for different matrices / weights depending on the type of sensitivity analysis is returned. Else the preferences are appended to results as last column. If `method_type` is set, the rankings are appended to column after preferences.
     """
 
+    Validator.is_callable(func)
+    Validator.is_type_valid(results, (np.ndarray, tuple))
+    Validator.is_callable(method)
+    Validator.is_type_valid(call_kwargs, dict)
+    Validator.is_key_in_dict(['matrix', 'weights'], call_kwargs)
+    Validator.is_type_valid(only_preference, bool)
+    Validator.is_type_valid(method_type, (None, int))
+    if isinstance(method_type, int):
+        Validator.is_in_list(method_type, [-1, 1])
+
     def preference_aggregator(results: tuple, 
                                 val_list: np.ndarray, 
                                 method: callable, 
@@ -117,8 +128,6 @@ def calculate_preference(func: callable,
                 preferences.append([pref, rankdata(-pref)])
             elif method_type == -1:
                 preferences.append([pref, rankdata(pref)])
-            else:
-                raise ValueError('Unsupported `method_type`.')
 
         if only_preference:
             return np.asarray(preferences)
