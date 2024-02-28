@@ -2,8 +2,10 @@
 
 import numpy as np
 from ...validator import Validator
+from ...utils import memory_guard
 
-def chisquare_distribution(size: int, df: float = 1.0):
+@memory_guard
+def chisquare_distribution(size: int, df: float = 1.0) -> np.ndarray:
     """
     Generate a set of normalized weights sampled from a normal distribution.
 
@@ -35,8 +37,6 @@ def chisquare_distribution(size: int, df: float = 1.0):
     Validator.is_positive_value(size)
     Validator.is_type_valid(df, float)
     Validator.is_positive_value(df)
-    # if df <= 0:
-    #     raise ValueError('Number of degrees of freedom must be greater than 0')
 
     weights = np.abs(np.random.chisquare(df, size=size))
     return np.array(weights) / np.sum(weights)

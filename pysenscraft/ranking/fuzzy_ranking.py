@@ -3,8 +3,10 @@
 import numpy as np
 import pandas as pd
 from ..validator import Validator
+from ..utils import memory_guard
 
-def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None):
+@memory_guard
+def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None) -> np.ndarray:
     """
     Generate fuzzy ranking matrix based on positional rankings.
 
@@ -37,19 +39,11 @@ def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None):
     """
 
     Validator.is_type_valid(rankings, np.ndarray)
-    # if not isinstance(rankings, np.ndarray):
-    #     raise TypeError('Rankings should be given as numpy array type')
-    
     Validator.is_dimension_valid(rankings, 2)
-    # if rankings.ndim != 2:
-    #     raise ValueError('Rankings should be given as 2D array')
-
     Validator.is_type_valid(normalization_axis, (None, int))
     if normalization_axis is not None:
         Validator.is_in_list(normalization_axis, [0, 1])
-        # if normalization_axis not in [0, 1]:
-        #     raise ValueError('Normalization axis should equal 1 or 0')
-
+        
     ALT = len(rankings[0])
 
     columns_labels = [f'A{i+1}' for i in range(ALT)]

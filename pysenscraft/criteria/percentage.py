@@ -3,8 +3,10 @@
 import numpy as np
 from itertools import product
 from ..validator import Validator
+from ..utils import memory_guard
 
-def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | float = 1):
+@memory_guard
+def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | float = 1) -> list[tuple[int | tuple[int], tuple[float], np.ndarray]]:
     """
     Modify a set of criteria weights based on specified percentage changes, directions, and indexes.
 
@@ -70,7 +72,7 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
     ...     print(r)
     """
 
-    def modify_weights(weights, crit_idx, diff, direction_val):
+    def modify_weights(weights: np.ndarray, crit_idx: int, diff: float, direction_val: int) -> np.ndarray:
         new_weights = weights.copy()
 
         modified_criteria = 1
@@ -92,42 +94,18 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
         
         return new_weights / np.sum(new_weights)
 
-    # # weights dimension
-    # if weights.ndim != 1:
-    #     raise ValueError('Weights should be given as one dimensional array')
     Validator.is_type_valid(weights, np.ndarray)
     Validator.is_dimension_valid(weights, 1)
-
-    # weights sum to 1
-    # if np.round(np.sum(weights), 3) != 1:
-    #     raise ValueError('Weights vector should sum up to 1')
     Validator.is_sum_valid(weights, 1)
-
     Validator.is_type_valid(percentages, np.ndarray)
-    # if isinstance(percentages, np.ndarray):
-    #     # check if weights and percentages have the same length
-    #     if weights.shape[0] != percentages.shape[0]:
-    #         raise ValueError('Weights and percentages have different length')
-    Validator.is_shape_equal(weights.shape, percentages.shape)
-
+    Validator.is_shape_equal(weights.shape, percentages.shape, custom_message="Shapes of 'weights' and 'percentages' are different")
     Validator.is_type_valid(direction, (None, np.ndarray))
-    # if direction is not None:
-    #     # check if weights and direction have the same length
-    #     if weights.shape[0] != direction.shape[0]:
-    #         raise ValueError('Weights and direction have different length')
-    Validator.is_shape_equal(weights.shape, direction.shape)
+    Validator.is_shape_equal(weights.shape, direction.shape, custom_message="Shapes of 'weights' and 'direction' are different")
+    
     if direction is not None:
         Validator.is_in_list(direction, [-1, 1])
 
     Validator.is_type_valid(indexes, (None, np.ndarray))
-    # if indexes is not None:
-    #     for c_idx in indexes:
-    #         if isinstance(c_idx, (int, np.integer)):
-    #             if c_idx < 0 or c_idx >= weights.shape[0]:
-    #                 raise IndexError(f'Given index ({c_idx}) out of range')
-    #         elif isinstance(c_idx, list):
-    #             if any([idx < 0 or idx >= weights.shape[0] for idx in c_idx]):
-    #                 raise IndexError(f'Given indexes ({c_idx}) out of range')
     Validator.are_indexes_valid(indexes, weights.shape[0])
 
     results = []
@@ -180,3 +158,4 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
                         results.append((tuple(crit_idx), change_val, new_weights))
 
     return results
+

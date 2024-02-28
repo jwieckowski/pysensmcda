@@ -3,22 +3,21 @@
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 from ..validator import Validator
 
 def heatmap(matrix: np.ndarray, 
-                title: str="Fuzzy Ranking Matrix",
-                xlabel: str="Alternatives",
-                ylabel: str="Positions",
-                cmap: str="Blues",
-                annotate: bool=True,
-                fmt: str=".2f",
-                linewidths: float=.5,
-                cbar_kwargs: dict={'label': 'Membership Degree'},
-                figsize: tuple=(8, 6),
-                label_fontsize: int=10,
-                title_fontsize: int=12,
-                ax: None | mpl.axes.Axes=None):
+                title: str = "Fuzzy Ranking Matrix",
+                xlabel: str = "Alternatives",
+                ylabel: str = "Positions",
+                cmap: str | list = "Blues",
+                annotate: bool = True,
+                fmt: str = ".2f",
+                linewidths: float = .5,
+                cbar_kwargs: dict = {'label': 'Membership Degree'},
+                figsize: tuple = (8, 6),
+                label_fontsize: int = 10,
+                title_fontsize: int = 12,
+                ax: plt.Axes = None) -> plt.Axes:
     """
     Visualize the fuzzy ranking matrix using a heatmap.
 
@@ -60,12 +59,12 @@ def heatmap(matrix: np.ndarray,
     title_fontsize : int, optional
         Font size for the title.
 
-    ax : matplotlib.axes.Axes, optional
+    ax : plt.Axes, optional
         The axes on which to draw the heatmap. If not provided, a new figure will be created.
 
     Returns
     -------
-        ax
+    plt.Axes
 
     Examples
     --------
@@ -92,7 +91,7 @@ def heatmap(matrix: np.ndarray,
     Validator.is_type_valid(figsize, tuple)
     Validator.is_type_valid(label_fontsize, int)
     Validator.is_type_valid(title_fontsize, int)
-    Validator.is_type_valid(ax, (None, mpl.axes.Axes))
+    Validator.is_type_valid(ax, (None, plt.Axes))
 
     if ax is None:
         plt.figure(figsize=figsize)

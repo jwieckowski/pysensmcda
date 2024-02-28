@@ -3,8 +3,10 @@
 import numpy as np
 from itertools import product
 from ..validator import Validator
+from ..utils import memory_guard
 
-def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: float = 0.01):
+@memory_guard
+def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: float = 0.01) -> list[tuple[int, float | tuple[float], np.ndarray]]:
     """
     Modify a set of criteria weights based on specified range values, directions, and indexes.
 
@@ -84,42 +86,14 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
 
         return new_weights / np.sum(new_weights)
 
-    
-    # weights dimension
-    # if weights.ndim != 1:
-    #     raise ValueError('Weights should be given as one dimensional array')
     Validator.is_type_valid(weights, np.ndarray)
     Validator.is_dimension_valid(weights, 1)
-
-    # weights sum to 1
-    # if np.round(np.sum(weights), 3) != 1:
-    #     raise ValueError('Weights vector should sum up to 1')
     Validator.is_sum_valid(weights, 1)
-
     Validator.is_type_valid(range_values, np.ndarray)
-    # if not isinstance(range_values, np.ndarray):
-    #     raise TypeError('Range values should be given as np array')
-    
     Validator.is_dimension_valid(range_values, 2)
-    # # check if all range values given as list
-    # if range_values.ndim != 2:
-    #     raise ValueError('Range values should be given as two dimensional array')
-    
-    # check if weights and range values have the same length
-    # if weights.shape[0] != range_values.shape[0]:
-    #     raise ValueError('Weights and range values have different length')
-    Validator.is_shape_equal(weights.shape[0], range_values.shape[0])
-
+    Validator.is_shape_equal(weights.shape[0], range_values.shape[0], custom_message="Length of 'weights' and 'range_values' are different")
     Validator.is_type_valid(indexes, (None, np.ndarray))
     Validator.are_indexes_valid(indexes, weights.shape[0])
-    # if indexes is not None:
-    #     for c_idx in indexes:
-    #         if isinstance(c_idx, (int, np.integer)):
-    #             if c_idx < 0 or c_idx >= weights.shape[0]:
-    #                 raise IndexError(f'Given index ({c_idx}) out of range')
-    #         elif isinstance(c_idx, list):
-    #             if any([idx < 0 or idx >= weights.shape[0] for idx in c_idx]):
-    #                 raise IndexError(f'Given indexes ({c_idx}) out of range')
 
     results = []
 

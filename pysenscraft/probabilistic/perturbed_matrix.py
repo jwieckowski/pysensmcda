@@ -2,8 +2,10 @@
 
 import numpy as np
 from ..validator import Validator
+from ..utils import memory_guard
 
-def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, perturbation_scale: float | np.ndarray = 0.1):
+@memory_guard
+def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, perturbation_scale: float | np.ndarray = 0.1) -> np.ndarray:
     """
     Generate perturbed decision matrices based on the given initial decision matrix using random perturbation based on uniform distribution.
 
@@ -66,37 +68,21 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
     """
 
     Validator.is_type_valid(matrix, np.ndarray)
-    # if not isinstance(matrix, np.ndarray):
-    #     raise TypeError("Matrix should be given as a numpy array")
-
     Validator.is_dimension_valid(matrix, 2)
-    # if matrix.ndim != 2:
-    #     raise ValueError("Matrix should be a 2D array")
-
     Validator.is_type_valid(simulations, int)
     Validator.is_positive_value(simulations)
-    # if not isinstance(simulations, int) or simulations <= 0:
-    #     raise ValueError("Number of simulations should be a positive integer")
-
     Validator.is_type_valid(precision, int)
     Validator.is_positive_value(precision)
-    # if not isinstance(precision, int) or precision < 0:
-    #     raise ValueError("Precision should be a non-negative integer")
-
     Validator.is_type_valid(perturbation, (int, float, np.ndarray))
 
     if isinstance(perturbation_scale, (float, int)):
         perturbation_scale = np.full(matrix.shape[0], perturbation_scale)
     elif isinstance(perturbation_scale, np.ndarray):
         if perturbation_scale.ndim == 1:
-            # if perturbation_scale.shape[0] != matrix.shape[0]:
-            #     raise ValueError("Length of perturbation_scale should be equal to the number of criteria")
-            Validator.is_shape_equal(matrix.shape[0], perturbation_scale.shape[0])
+            Validator.is_shape_equal(matrix.shape[1], perturbation_scale.shape[0], custom_message="Number of columns in 'matrix' and length of 'perturbation_scale' are different")
         elif perturbation_scale.ndim == 2:
-            Validator.is_shape_equal(matrix.shape, perturbation_scale.shape)
-            # if perturbation_scale.shape[0] != matrix.shape[0] and perturbation_scale.shape[1] != matrix.shape[1]:
-            #     raise ValueError("Shape of perturbation_scale and matrix should be equal")
-
+            Validator.is_shape_equal(matrix.shape, perturbation_scale.shape, custom_message="Shapes of 'matrix' and 'perturbation_scale' are different")
+            
     modified_matrices = []
 
     for _ in range(simulations):

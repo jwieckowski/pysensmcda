@@ -3,8 +3,10 @@
 import numpy as np
 from ..criteria import random_distribution as dist
 from ..validator import Validator
+from ..utils import memory_guard
 
-def monte_carlo_weights(n: int, distribution: str, params: dict, num_samples: int =1000):
+@memory_guard
+def monte_carlo_weights(n: int, distribution: str = 'uniform', num_samples: int = 1000, params: dict | None = None) -> np.ndarray:
     """
     Generate criteria weights probabilistically using Monte Carlo simulation.
 
@@ -41,8 +43,6 @@ def monte_carlo_weights(n: int, distribution: str, params: dict, num_samples: in
     Validator.is_in_list(distribution, allowed_distributions)
     Validator.is_type_valid(num_samples, int)
     Validator.is_type_valid(params, dict)
-    # if distribution not in allowed_distributions:
-    #     raise ValueError(f'Invalid distribution. Choose from: {allowed_distributions}')
 
     modified_weights = []
 

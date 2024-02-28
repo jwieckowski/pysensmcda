@@ -2,8 +2,10 @@
 
 import numpy as np
 from ...validator import Validator
+from ...utils import memory_guard
 
-def uniform_distribution(size: int, low: float = 0.0, high: float = 1.0):
+@memory_guard
+def uniform_distribution(size: int, low: float = 0.0, high: float = 1.0) -> np.ndarray:
     """
     Generate a set of normalized weights sampled from a uniform distribution.
 
@@ -36,6 +38,7 @@ def uniform_distribution(size: int, low: float = 0.0, high: float = 1.0):
 
     Validator.is_type_valid(size, int)
     Validator.is_positive_value(size)
+    
     if low < high:
         raise ValueError('Parameters should follow the condition low < high')
 

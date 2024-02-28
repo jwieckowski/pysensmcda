@@ -2,8 +2,10 @@
 
 import numpy as np
 from ..validator import Validator
+from ..utils import memory_guard
 
-def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6, perturbation_scale: float | np.ndarray = 0.1):
+@memory_guard
+def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6, perturbation_scale: float | np.ndarray = 0.1) -> np.ndarray:
     """
     Generate perturbed weights based on the given initial criteria weights based on the given perturbation scale and uniform distribution.
 
@@ -58,34 +60,17 @@ def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6,
     """
 
     Validator.is_type_valid(weights, np.ndarray)
-    # if not isinstance(weights, np.ndarray):
-    #     raise TypeError("Weights should be given as a numpy array")
-
     Validator.is_dimension_valid(weights, 1)
-    # if weights.ndim != 1:
-    #     raise ValueError("Weights should be a 1D vector")
-
     Validator.is_sum_valid(weights, 1)
-    # if not np.isclose(np.sum(weights), 1.0):
-    #     raise ValueError("Sum of weights should be equal to 1")
-
     Validator.is_type_valid(simulations, int)
     Validator.is_positive_value(simulations)
-    # if not isinstance(simulations, int) or simulations <= 0:
-    #     raise ValueError("Number of simulations should be a positive integer")
-
     Validator.is_type_valid(precision, int)
     Validator.is_positive_value(precision)
-    # if not isinstance(precision, int) or precision < 0:
-    #     raise ValueError("Precision should be a non-negative integer")
-
     Validator.is_type_valid(perturbation_scale, (float, np.ndarray))
     if isinstance(perturbation_scale, (float)):
         perturbation_scale = np.full(weights.shape[0], perturbation_scale)
     elif isinstance(perturbation_scale, np.ndarray):
-        Validator.is_shape_equal(weights.shape[0], perturbation_scale.shape[0])
-        # if perturbation_scale.shape[0] != weights.shape[0]:
-        #     raise ValueError("Length of perturbation_scale should be equal to the number of criteria")
+        Validator.is_shape_equal(weights.shape[0], perturbation_scale.shape[0], custom_message="Length of 'weights' and 'perturbation_scale' are different")
 
     modified_weights = []
 

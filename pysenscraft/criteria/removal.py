@@ -2,8 +2,10 @@
 
 import numpy as np
 from ..validator import Validator
+from ..utils import memory_guard
 
-def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int | np.ndarray = None):
+@memory_guard
+def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int | np.ndarray = None) -> list[tuple[int, np.ndarray, np.ndarray]]:
     """
     Remove one or more criteria from a decision matrix and adjust corresponding criteria weights.
 
@@ -74,26 +76,12 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
     
     Validator.is_type_valid(matrix, np.ndarray)
     Validator.is_type_valid(weights, np.ndarray)
-    # matrix = np.array(matrix)
-    # weights = np.array(weights)
-
     Validator.is_dimension_valid(matrix, 2)
-    # # matrix dimension
-    # if matrix.ndim != 2:
-    #     raise ValueError('Matrix should be given as at two dimensional array')
-    
     Validator.is_dimension_valid(weights, 1)
-    # # weights dimension
-    # if weights.ndim != 1:
-    #     raise ValueError('Weights should be given as one dimensional array')
-
-    # check if matrix and weights the same length
-    # if matrix.shape[1] != weights.shape[0]:
-    #     raise ValueError('Matrix and weights have different length')
-    Validator.is_shape_equal(matrix.shape[1], weights.shape[0])
-
+    Validator.is_shape_equal(matrix.shape[1], weights.shape[0], custom_message="Number of columns in 'matrix' and length of 'weights' are different")
     Validator.is_type_valid(indexes, (None, int, np.ndarray))
     Validator.are_indexes_valid(indexes, weights.shape[0])
+
     crit_indexes = None
     if indexes is None:
         crit_indexes = np.arange(0, matrix.shape[1])
@@ -101,21 +89,6 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
         crit_indexes = np.array([indexes])
     else:
         crit_indexes = indexes
-    # if isinstance(indexes, int):
-    #     if indexes >= weights.shape[0] or indexes < 0:
-    #         raise IndexError(f'Given index ({indexes}) out of range')
-    #     crit_indexes = np.array([indexes])
-
-    # if isinstance(indexes, np.ndarray):
-    #     for c_idx in indexes:
-    #         if isinstance(c_idx, int):
-    #             if c_idx < 0 or c_idx >= weights.shape[0]:
-    #                 raise IndexError(f'Given index ({c_idx}) out of range')
-    #         elif isinstance(c_idx, list):
-    #             if any([idx < 0 or idx >= weights.shape[0] for idx in c_idx]):
-    #                 raise IndexError(f'Given indexes ({c_idx}) out of range')
-
-    #     crit_indexes = indexes
 
     data = []
     # remove column in decision matrix and adjust criteria weights values

@@ -2,8 +2,10 @@
 
 import numpy as np
 from ...validator import Validator
+from ...utils import memory_guard
 
-def laplace_distribution(size: int, loc: float = 0.0, scale: float = 1.0):
+@memory_guard
+def laplace_distribution(size: int, loc: float = 0.0, scale: float = 1.0) -> np.ndarray:
     """
     Generate a set of normalized weights sampled from a laplace distribution.
 
@@ -39,8 +41,6 @@ def laplace_distribution(size: int, loc: float = 0.0, scale: float = 1.0):
     Validator.is_type_valid(loc, float)
     Validator.is_type_valid(scale, float)
     Validator.is_positive_value(scale)
-    # if scale < 0:
-    #     raise ValueError('The exponential decay (scale) must be non-negative')
 
     weights = np.abs(np.random.laplace(loc, scale, size=size))
     return np.array(weights) / np.sum(weights)

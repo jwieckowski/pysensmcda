@@ -2,11 +2,16 @@
 
 import matplotlib.ticker as mtick
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 import numpy as np
 from ..validator import Validator
 
-def percentage_graph(percentage_changes: list, new_positions: list, ax: mpl.axes.Axes|None=None, xticks: list|None=None, percentage_kwargs: dict=dict(), kind: str='bar', palette: dict=dict()):
+def percentage_graph(percentage_changes: list, 
+                    new_positions: list, 
+                    ax: plt.Axes | None = None, 
+                    xticks: list | None = None, 
+                    percentage_kwargs: dict = dict(), 
+                    kind: str = 'bar', 
+                    palette: dict = dict()) -> plt.Axes:
     """
     Graph for showing percentage changes in criteria values and changes in alternative rank.
 
@@ -16,7 +21,7 @@ def percentage_graph(percentage_changes: list, new_positions: list, ax: mpl.axes
         Changes of values of criteria in percentage values.
     new_positions: list
         List of positions acquired in promotion or demotion process.
-    ax: Axes, optional, default=None
+    ax: plt.Axes, optional, default=None
         Axes object on which the graphs will be drawn.
     xticks: list, optional, default=None
     percentage_kwargs: dict, optional, default=dict()
@@ -49,20 +54,15 @@ def percentage_graph(percentage_changes: list, new_positions: list, ax: mpl.axes
     """
     Validator.is_type_valid(percentage_changes, list)
     Validator.is_type_valid(new_positions, list)
-    Validator.is_type_valid(ax, (None, mpl.axes.Axes))
+    Validator.is_type_valid(ax, (None, plt.Axes))
     Validator.is_type_valid(xticks, (None, list))
     Validator.is_type_valid(percentage_kwargs, dict)
     Validator.is_type_valid(kind, str)
     Validator.is_in_list(kind, ['bar', 'line'])
     Validator.is_type_valid(palette, dict)
 
-    # if kind not in ['bar', 'line']:
-    #     raise ValueError('Accepted kind parameter values are: `bar`, `kind`.')
-    
-    # if xticks is not None and len(xticks) != len(percentage_changes):
-    #     raise ValueError('`xticks` should contain the same number of values as `percentage_changes`')
     if xticks is not None:
-        Validator.is_shape_equal(len(xticks), len(percentage_changes))
+        Validator.is_shape_equal(len(xticks), len(percentage_changes), custom_message="Length of 'xticks' and 'percentage_changes' are different")
 
     if ax is None:
         ax = plt.gca()
@@ -119,7 +119,11 @@ def percentage_graph(percentage_changes: list, new_positions: list, ax: mpl.axes
 
     return ax
 
-def rank_graph(initial_rank: int|float, new_positions: list, ax: mpl.axes.Axes|None=None, palette: dict=dict(), rank_kwargs: dict=dict()):
+def rank_graph(initial_rank: int | float, 
+            new_positions: list, 
+            ax: plt.Axes | None = None, 
+            palette: dict = dict(), 
+            rank_kwargs: dict = dict()) -> plt.Axes:
     """
     Graph for showing promotion / demotion of position of specific alternative.
 
@@ -129,7 +133,7 @@ def rank_graph(initial_rank: int|float, new_positions: list, ax: mpl.axes.Axes|N
         Initial position of the alternative.
     new_positions: list
         List of positions acquired in promotion or demotion process.
-    ax: Axes, optional, default=None
+    ax: plt.Axes, optional, default=None
         Axes object on which the graphs will be drawn.
     palette: dict, optional, default=dict()
         Sets colors for specific part of the plot. Available keys: 'positive', 'neutral', 'negative'.
@@ -160,7 +164,7 @@ def rank_graph(initial_rank: int|float, new_positions: list, ax: mpl.axes.Axes|N
     """
     Validator.is_type_valid(initial_rank, (int, float))
     Validator.is_type_valid(new_positions, list)
-    Validator.is_type_valid(ax, (None, mpl.axes.Axes))
+    Validator.is_type_valid(ax, (None, plt.Axes))
     Validator.is_type_valid(palette, dict)
     Validator.is_type_valid(rank_kwargs, dict)
 
@@ -190,7 +194,18 @@ def rank_graph(initial_rank: int|float, new_positions: list, ax: mpl.axes.Axes|N
 
     return ax
 
-def pd_rankings_graph(initial_rank: int|float, new_positions: list, percentage_changes: list, xticks: None | list =None, kind: str='bar', title: str='', ax: mpl.axes.Axes|None=None, draw_ranking_change: bool=True, height_ratio: list=[1, 3], percentage_kwargs:dict=dict(), rank_kwargs:dict=dict(), palette:dict=dict()):
+def pd_rankings_graph(initial_rank: int | float, 
+                    new_positions: list, 
+                    percentage_changes: list, 
+                    xticks: list | None = None, 
+                    kind: str = 'bar', 
+                    title: str = '', 
+                    ax: plt.Axes | None = None, 
+                    draw_ranking_change: bool = True, 
+                    height_ratio: list[int] = [1, 3], 
+                    percentage_kwargs: dict = dict(), 
+                    rank_kwargs: dict = dict(), 
+                    palette: dict = dict()) -> plt.Axes:
     """
     Graph for plotting results of promotion / demotion ranking procedure
 
@@ -206,7 +221,7 @@ def pd_rankings_graph(initial_rank: int|float, new_positions: list, percentage_c
         Changes style of the plot. Available options: 'bar', 'line'.
     title: str, optional, default=''
         Title that will be displayed as suptitle.
-    ax: Axes, optional, default=None
+    ax: plt.Axes, optional, default=None
         Axes object on which the graphs will be drawn.
     draw_ranking_change: bool, optional, default=True
         If True changes in ranking will be additionally drawn on second axis.
@@ -254,22 +269,15 @@ def pd_rankings_graph(initial_rank: int|float, new_positions: list, percentage_c
     Validator.is_type_valid(kind, str)
     Validator.is_in_list(kind, ['bar', 'line'])
     Validator.is_type_valid(title, str)
-    Validator.is_type_valid(ax, (None, mpl.axes.Axes))
+    Validator.is_type_valid(ax, (None, plt.Axes))
     Validator.is_type_valid(draw_ranking_change, bool)
     Validator.is_type_valid(height_ratio, list)
     Validator.is_type_valid(percentage_kwargs, dict)
     Validator.is_type_valid(rank_kwargs, dict)
     Validator.is_type_valid(palette, dict)
 
-
-    # if kind not in ['bar', 'line']:
-    #     raise ValueError('Accepted kind parameter values are: `bar`, `kind`.')
-    
-    # if xticks is not None and len(xticks) != len(percentage_changes):
-    #     raise ValueError('`xticks` should contain the same number of values as `percentage_changes`')
     if xticks is not None:
-        Validator.is_shape_equal(len(xticks), len(percentage_changes))
-
+        Validator.is_shape_equal(len(xticks), len(percentage_changes), custom_message="Length of 'xticks' and 'percentage_changes' are different")
 
     if not palette:
         palette = {
@@ -298,7 +306,7 @@ def pd_rankings_graph(initial_rank: int|float, new_positions: list, percentage_c
             try:
                 (cax, main_ax) = ax
             except TypeError:
-                raise TypeError("If 'draw_ranking_change'='True', the ax parameter needs to consist of two axes")
+                raise TypeError("If 'draw_ranking_change'='True', the 'ax' parameter needs to consist of two axes")
         else:
             main_ax = ax
 

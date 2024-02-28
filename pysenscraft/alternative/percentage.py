@@ -3,8 +3,10 @@
 import numpy as np
 from itertools import product
 from ..validator import Validator
+from ..utils import memory_guard
 
-def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | np.ndarray = 1):
+@memory_guard
+def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | np.ndarray = 1) -> list[tuple[int, int | tuple, tuple, np.ndarray]]:
     """
     Modify a decision matrix based on specified percentage changes, directions, indexes, and steps of percentage modifications.
 
@@ -97,51 +99,33 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     ...     print(r)
     """
 
-    def modify_matrix(matrix, alt_idx, crit_idx, diff, direction_val):
+    def modify_matrix(matrix: np.ndarray, alt_idx: int, crit_idx: int, diff: float, direction_val: int) -> np.ndarray:
         new_matrix = matrix.copy().astype(float)
 
         new_matrix[alt_idx, crit_idx] = matrix[alt_idx, crit_idx] + diff * direction_val
 
         return new_matrix
 
-    # if not isinstance(matrix, np.ndarray):
-    #     raise TypeError('Matrix should be given as numpy array')
     Validator.is_type_valid(matrix, np.ndarray)
-
-    # if matrix.ndim != 2:
-    #     raise ValueError('Matrix should be given as 2D array')
     Validator.is_dimension_valid(matrix, 2)
 
     Validator.is_type_valid(percentages, (int, np.ndarray))
     if isinstance(percentages, np.ndarray):
         # check if matrix and percentages have the same length
-        # if matrix.shape[1] != percentages.shape[0]:
-        #     raise ValueError('Matrix columns and percentages have different length')
-        Validator.is_shape_equal(matrix.shape[1], percentages.shape[0])
+        Validator.is_shape_equal(matrix.shape[1], percentages.shape[0], custom_message="Number of columns in 'matrix' and length of 'percentages' are different")
 
     Validator.is_type_valid(direction, (None, np.ndarray))
     if isinstance(direction, np.ndarray):
         # check if matrix and direction have the same length
-        # if matrix.shape[1] != direction.shape[0]:
-        #     raise ValueError('Matrix columns and direction have different length')
-        Validator.is_shape_equal(matrix.shape[1], direction.shape[0])
+        Validator.is_shape_equal(matrix.shape[1], direction.shape[0], custom_message="Number of columns in 'matrix' and length of 'direction' are different")
 
     Validator.is_type_valid(step, (int, np.ndarray))
     if isinstance(step, np.ndarray):
         # check if matrix and step have the same length
-        # if matrix.shape[1] != step.shape[0]:
-        #     raise ValueError('Matrix columns and step have different length')
-        Validator.is_shape_equal(matrix.shape[1], step.shape[0])
+        Validator.is_shape_equal(matrix.shape[1], step.shape[0], custom_message="Number of columns in 'matrix' and length of 'step' are different")
 
     Validator.is_type_valid(indexes, (None, np.ndarray))
     if isinstance(indexes, np.ndarray):
-        # for c_idx in indexes:
-        #     if isinstance(c_idx, (int, np.integer)):
-        #         if c_idx < 0 or c_idx >= matrix.shape[1]:
-        #             raise IndexError(f'Given index ({c_idx}) out of range')
-        #     elif isinstance(c_idx, list):
-        #         if any([idx < 0 or idx >= matrix.shape[1] for idx in c_idx]):
-        #             raise IndexError(f'Given indexes ({c_idx}) out of range')
         Validator.are_indexes_valid(indexes, matrix.shape[1])
 
     results = []

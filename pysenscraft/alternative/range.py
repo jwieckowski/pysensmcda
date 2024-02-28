@@ -3,8 +3,10 @@
 import numpy as np
 from itertools import product
 from ..validator import Validator
+from ..utils import memory_guard
 
-def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: int | float | np.ndarray = 1):
+@memory_guard
+def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: int | float | np.ndarray = 1) -> list[tuple[int, int | tuple, tuple, np.ndarray]]:
     """
     Modify a decision matrix based on specified range values, indexes representing the combination of columns to be modified, and steps of range modifications.
 
@@ -97,56 +99,30 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
     ...     print(r)
     """
 
-    def modify_matrix(matrix, alt_idx, crit_idx, change):
+    def modify_matrix(matrix: np.ndarray, alt_idx: int, crit_idx: int, change: float):
         new_matrix = matrix.copy().astype(float)
 
         new_matrix[alt_idx, crit_idx] = change
 
         return new_matrix
 
-    # if not isinstance(matrix, np.ndarray):
-    #     raise TypeError('Matrix should be given as numpy array')
     Validator.is_type_valid(matrix, np.ndarray)
-    # if matrix.ndim != 2:
-    #     raise ValueError('Matrix should be given as 2D array')
     Validator.is_dimension_valid(matrix, 2)
-
-    # if not isinstance(range_values, np.ndarray):
-    #     raise TypeError('Range values should be given as numpy array')
     Validator.is_type_valid(range_values, np.ndarray)
-    
-    # if not isinstance(step, (int, float, np.ndarray)):
-    #     raise TypeError('Step should be type of integer, float or ndarray')
     Validator.is_type_valid(step, (int, float, np.ndarray))
 
-    # check if matrix and range values have the same length
-    # if range_values.ndim == 2:
-    #     if matrix.shape[1] != range_values.shape[0]:
-    #         raise ValueError('Matrix and range values have different length')
-    # elif range_values.ndim == 3:
-    #     if matrix.shape[0] != range_values.shape[0] and matrix.shape[1] != range_values.shape[1]:
-    #         raise ValueError('Matrix and range values have different length')
     if range_values.ndim == 2:
-        Validator.is_shape_equal(matrix.shape[1], range_values.shape[0])
+        Validator.is_shape_equal(matrix.shape[1], range_values.shape[0], custom_message="Number of columns in 'matrix' and length of 'range_values' are different")
     elif range_values.ndim == 3:
-        Validator.is_shape_equal(matrix.shape, range_values.shape)
+        Validator.is_shape_equal(matrix.shape, range_values.shape, custom_message="Shapes 'matrix' and 'range_values' are different")
 
     Validator.is_type_valid(indexes, (None, np.ndarray))
     if indexes is not None:
         Validator.are_indexes_valid(indexes, matrix.shape[1])
-        # for c_idx in indexes:
-        #     if isinstance(c_idx, (int, np.integer)):
-        #         if c_idx < 0 or c_idx >= matrix.shape[1]:
-        #             raise IndexError(f'Given index ({c_idx}) out of range')
-        #     elif isinstance(c_idx, (list, np.ndarray)):
-        #         if any([idx < 0 or idx >= matrix.shape[1] for idx in c_idx]):
-        #             raise IndexError(f'Given indexes ({c_idx}) out of range')
 
     if isinstance(step, np.ndarray):
         # check if matrix and step have the same length
-        # if matrix.shape[1] != step.shape[0]:
-        #     raise ValueError('Matrix columns and step have different length')
-        Validator.is_shape_equal(matrix.shape[1], step.shape[0])
+        Validator.is_shape_equal(matrix.shape[1], step.shape[0], custom_message="Number of columns in 'matrix' and length of 'step' are different")
 
     results = []
 
