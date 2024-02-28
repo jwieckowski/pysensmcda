@@ -6,7 +6,7 @@ import pandas as pd
 import seaborn as sns
 from ..compromise.ICRA import ICRAResults
 
-def preference_distribution(g: sns.FacetGrid, xlabel: str):
+def preference_distribution(g: sns.FacetGrid, xlabel: str) -> None:
     """
     Function for kde distribution based on `sns.FacetGrid`
     Code from https://seaborn.pydata.org/examples/kde_ridgeplot.html Adapted for ICRA approach, however can be used separately
@@ -17,6 +17,10 @@ def preference_distribution(g: sns.FacetGrid, xlabel: str):
         `See provided link`
     xlabel: str
         Label of x axis
+
+    Retruns
+    -------
+        None
 
     Example
     -------
@@ -49,8 +53,16 @@ def preference_distribution(g: sns.FacetGrid, xlabel: str):
     g.set(yticks=[], ylabel="")
     g.despine(bottom=True, left=True)
 
-def ICRA_pref_distribution(results: ICRAResults, methods: list[str], palettes: list|None=None, by: str='methods', file_name: str='ICRA_pref', 
-                           save: bool=False, format: str='png', show: bool=True, indexes: list|None=None, FacetGrid_kwargs: dict=dict()):
+def ICRA_pref_distribution(results: ICRAResults, 
+                           methods: list[str], 
+                           palettes: list | None = None, 
+                           by: str = 'methods', 
+                           file_name: str = 'ICRA_pref', 
+                           save: bool = False, 
+                           format: str = 'png', 
+                           show: bool = True, 
+                           indexes: list | None = None, 
+                           FacetGrid_kwargs: dict = dict()) -> None:
     """
     Function for plotting distibution of preferences for ICRA approach across different methods or iterations.
 
@@ -77,6 +89,10 @@ def ICRA_pref_distribution(results: ICRAResults, methods: list[str], palettes: l
         Indexes of iterations or methods for which distribution should be plotted
     FacetGrid_kwargs: dict, optional, default=dict()
         Keyword arguments to pass into `sns.FacetGrid()`.
+
+    Returns
+    -------
+        None
         
     Examples
     --------

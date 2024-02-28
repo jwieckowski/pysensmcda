@@ -2,7 +2,7 @@
 
 import numpy as np
 
-def random_distribution(size: int):
+def random_distribution(size: int) -> np.ndarray:
     """
     Generate a set of normalized weights sampled from a random distribution ( from half-open interval [0.0, 1.0) ).
 

@@ -3,7 +3,7 @@
 import numpy as np
 from itertools import product
 
-def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | float = 1):
+def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, direction: None | np.ndarray = None, indexes: None | np.ndarray = None, step: int | float = 1) -> list[tuple[int | tuple[int], tuple[float], np.ndarray]]:
     """
     Modify a set of criteria weights based on specified percentage changes, directions, and indexes.
 
@@ -69,7 +69,7 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
     ...     print(r)
     """
 
-    def modify_weights(weights, crit_idx, diff, direction_val):
+    def modify_weights(weights: np.ndarray, crit_idx: int, diff: float, direction_val: int) -> np.ndarray:
         new_weights = weights.copy()
 
         modified_criteria = 1

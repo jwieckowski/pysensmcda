@@ -2,20 +2,21 @@
 
 import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 
-def heatmap(fuzzy_ranking_matrix, 
-                             title="Fuzzy Ranking Matrix",
-                             xlabel="Alternatives",
-                             ylabel="Positions",
-                             cmap="Blues",
-                             annot=True,
-                             fmt=".2f",
-                             linewidths=.5,
-                             cbar_kws={'label': 'Membership Degree'},
-                             figsize=(8, 6),
-                             label_fontsize=10,
-                             title_fontsize=12,
-                             ax=None):
+def heatmap(fuzzy_ranking_matrix: np.ndarray, 
+                             title: str = "Fuzzy Ranking Matrix",
+                             xlabel: str = "Alternatives",
+                             ylabel: str = "Positions",
+                             cmap: str | list = "Blues",
+                             annot: bool = True,
+                             fmt: str = ".2f",
+                             linewidths: float = .5,
+                             cbar_kws: dict = {'label': 'Membership Degree'},
+                             figsize: tuple = (8, 6),
+                             label_fontsize: int = 10,
+                             title_fontsize: int = 12,
+                             ax: plt.Axes = None) -> plt.Axes:
     """
     Visualize the fuzzy ranking matrix using a heatmap.
 
@@ -62,7 +63,7 @@ def heatmap(fuzzy_ranking_matrix,
 
     Returns
     -------
-    None
+    matplotlib.axes.Axes
 
     Examples
     --------

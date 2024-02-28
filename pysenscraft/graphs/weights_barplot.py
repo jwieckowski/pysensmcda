@@ -5,7 +5,14 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib.widgets import Slider
 
-def weights_barplot(weights: np.ndarray, title: str, ax: None | mpl.axes.Axes = None, width: float = 0.8, color: str = 'dodgerblue', alpha: int = 1, grid_on: bool = False, annotate_bars: bool = False):
+def weights_barplot(weights: np.ndarray, 
+                    title: str, 
+                    ax: None | mpl.axes.Axes = None, 
+                    width: float = 0.8, 
+                    color: str = 'dodgerblue', 
+                    alpha: int = 1, 
+                    grid_on: bool = False, 
+                    annotate_bars: bool = False) -> plt.Axes:
     """
     Generate a bar plot to visualize criteria weights.
 
@@ -75,7 +82,15 @@ def weights_barplot(weights: np.ndarray, title: str, ax: None | mpl.axes.Axes = 
     return ax, bars
 
 
-def slider_weights_barplot(initial_weights: np.ndarray, results: list[tuple[int | tuple, tuple, np.ndarray]], ax: None | mpl.axes.Axes = None, width: float = 0.8, color: str = 'dodgerblue', sort_values: bool = True, grid_on: bool = False, percentage_change: bool = False, annotate_bars: bool = False):
+def slider_weights_barplot(initial_weights: np.ndarray, 
+                           results: list[tuple[int | tuple, tuple, np.ndarray]], 
+                           ax: None | mpl.axes.Axes = None, 
+                           width: float = 0.8, 
+                           color: str = 'dodgerblue', 
+                           sort_values: bool = True, 
+                           grid_on: bool = False, 
+                           percentage_change: bool = False, 
+                           annotate_bars: bool = False) -> tuple[plt.Axes, Slider, Slider]:
     """
     Create an interactive slider-based bar plot to visualize changes in criteria weights.
 
@@ -176,7 +191,7 @@ def slider_weights_barplot(initial_weights: np.ndarray, results: list[tuple[int 
     change_slider_ax = plt.axes([0.12, 0.3, 0.05, 0.6])
     change_slider = Slider(change_slider_ax, 'Change', 0, 1, valinit=0, valstep=1, orientation='vertical')
 
-    def update_criteria(val):
+    def update_criteria(val: float | int) -> None:
         ax.clear()
         
         # get criteria idx
@@ -187,7 +202,7 @@ def slider_weights_barplot(initial_weights: np.ndarray, results: list[tuple[int 
         change_slider.valmax = change_values_sizes[criteria_idx]-1
         change_slider.ax.set_ylim(0, change_slider.valmax)
 
-    def update_change(val):
+    def update_change(val: float | int) -> None:
         ax.clear()
         
         # get criteria idx

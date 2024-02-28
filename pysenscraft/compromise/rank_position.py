@@ -3,7 +3,7 @@
 import numpy as np
 from scipy.stats import rankdata
 
-def rank_position(rankings: np.ndarray):
+def rank_position(rankings: np.ndarray) -> np.ndarray:
     """
     Calculates compromised ranking using rank position method.
 

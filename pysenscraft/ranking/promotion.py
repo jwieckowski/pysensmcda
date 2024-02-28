@@ -2,8 +2,19 @@
 
 import numpy as np
 import pymcdm
+from collections.abc import Generator
 
-def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: callable, call_kwargs: dict, ranking_descending: bool, direction: np.ndarray, step: int | float, bounds: None | np.ndarray = None, positions: None | np.ndarray = None, return_zeros: bool = True, max_modification: None | int = None):
+def ranking_promotion(matrix: np.ndarray, 
+                      initial_ranking: np.ndarray, 
+                      method: callable, 
+                      call_kwargs: dict, 
+                      ranking_descending: bool, 
+                      direction: np.ndarray, 
+                      step: int | float, 
+                      bounds: None | np.ndarray = None, 
+                      positions: None | np.ndarray = None, 
+                      return_zeros: bool = True, 
+                      max_modification: None | int = None) -> list[tuple[int, int, float, int]]:
     """
     Promote alternatives in a decision matrix by adjusting specific criteria values, considering constraints on rankings. 
     With only required parameters given, the analysis is looking for changes that cause promotion for 1st position in ranking.
@@ -152,7 +163,13 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
     ...     print(r)
     """
     
-    def generate_crit_changes(matrix, alt_idx, crit_idx, direction, step, bounds, max_modification):
+    def generate_crit_changes(matrix: np.ndarray, 
+                              alt_idx: int, 
+                              crit_idx: int, 
+                              direction: int, 
+                              step: float, 
+                              bounds: np.ndarray, 
+                              max_modification: float) -> Generator[float]:
         # set modification bounds
         if bounds is None:
             limit = matrix[alt_idx, crit_idx] * max_modification * direction[crit_idx]

@@ -4,7 +4,7 @@ import numpy as np
 from numpy.linalg import matrix_power
 from scipy.stats import rankdata
 
-def dominance_directed_graph(rankings: np.ndarray):
+def dominance_directed_graph(rankings: np.ndarray) -> np.ndarray:
     """
     Calculates compromised ranking using dominance directed graph.
 

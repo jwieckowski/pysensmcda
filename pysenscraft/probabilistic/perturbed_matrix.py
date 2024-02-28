@@ -2,7 +2,7 @@
 
 import numpy as np
 
-def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, perturbation_scale: float | np.ndarray = 0.1):
+def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, perturbation_scale: float | np.ndarray = 0.1) -> np.ndarray:
     """
     Generate perturbed decision matrices based on the given initial decision matrix using random perturbation based on uniform distribution.
 

@@ -6,8 +6,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-def rankings_distribution(rankings: np.ndarray, ax: mpl.axes.Axes|None=None, title: str='', methods: list[str]|None=None, legend_loc:str='upper', plot_type:str='box',
-                           plot_kwargs:dict=dict(), xlabel:str='Alternative', ylabel:str='Position', show_legend:bool=True):
+def rankings_distribution(rankings: np.ndarray, 
+                          ax: mpl.axes.Axes | None = None, 
+                          title: str = '', 
+                          methods: list[str] | None = None, 
+                          legend_loc: str = 'upper', 
+                          plot_type: str = 'box', 
+                          plot_kwargs: dict = dict(), 
+                          xlabel: str = 'Alternative', 
+                          ylabel: str = 'Position', 
+                          show_legend: bool = True) -> plt.Axes:
     """
     Parameters
     ----------
@@ -75,7 +83,7 @@ def rankings_distribution(rankings: np.ndarray, ax: mpl.axes.Axes|None=None, tit
     ax: Axis
         Axis on which plot was drawn.
     """
-    def create_df(rankings: np.ndarray, method: str|None=None):
+    def create_df(rankings: np.ndarray, method: str | None = None) -> pd.DataFrame:
         """
         Internal function for dataframe creation for the purpose of plotting rankings distribution
 

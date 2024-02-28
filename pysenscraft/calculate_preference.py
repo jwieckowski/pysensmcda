@@ -6,7 +6,12 @@ from . import probabilistic
 import numpy as np
 from scipy.stats import rankdata
 
-def calculate_preference(func: callable, results, method: callable, call_kwargs: dict, only_preference: bool=True, method_type: int|None=None):
+def calculate_preference(func: callable, 
+                         results: np.ndarray | tuple, 
+                         method: callable, 
+                         call_kwargs: dict, 
+                         only_preference: bool = True, 
+                         method_type: int | None = None) -> np.ndarray | tuple:
     """
     Wrapper for calculating preference depening on the sensitivity analysis function.
 
@@ -88,7 +93,13 @@ def calculate_preference(func: callable, results, method: callable, call_kwargs:
             If only_preference=True, array of preferences calculated for different matrices / weights depending on the type of sensitivity analysis is returned. Else the preferences are appended to results as last column. If `method_type` is set, the rankings are appended to column after preferences.
     """
 
-    def preference_aggregator(results, val_list, method: callable, call_kwargs: dict, param_name: str|list[str], only_preference: bool=True, method_type: int|None=None):
+    def preference_aggregator(results: tuple, 
+                              val_list: np.ndarray, 
+                              method: callable, 
+                              call_kwargs: dict, 
+                              param_name: str | list[str], 
+                              only_preference: bool = True, 
+                              method_type: int | None = None) -> tuple | np.ndarray:
         preferences = []
         for val in val_list:
             if isinstance(param_name, list):

@@ -2,7 +2,7 @@
 
 import numpy as np
 
-def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = None):
+def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = None) -> list[tuple[int, np.ndarray]]:
     """
     Remove one or more alternatives from a decision matrix.
 

@@ -2,7 +2,7 @@
 
 import numpy as np
 
-def uniform_distribution(size: int, low: float = 0.0, high: float = 1.0):
+def uniform_distribution(size: int, low: float = 0.0, high: float = 1.0) -> np.ndarray:
     """
     Generate a set of normalized weights sampled from a uniform distribution.
 
