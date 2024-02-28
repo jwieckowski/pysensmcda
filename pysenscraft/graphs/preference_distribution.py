@@ -1,4 +1,4 @@
-# Copyright (C) 2024 Bartosz Paradowski
+# Copyright (C) 2024 Bartosz Paradowski, Jakub Więckowski
 
 import matplotlib.pyplot as plt
 import numpy as np

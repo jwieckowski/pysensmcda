@@ -1,10 +1,11 @@
-# Copyright (C) 2024 Bartosz Paradowski
+# Copyright (C) 2024 Bartosz Paradowski, Jakub Więckowski
 
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.widgets import Slider
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+from ..validator import Validator
 
 def hist_dist(data: np.ndarray, ax: plt.Axes|None=None, fig: plt.Figure=None, xlabel:str='Value', kind:str='hist+kde', show_slider:bool=True, title:str='', slider_label:str='Number\nof bins', slider_pad:float|None=None, bins_count:str|int='auto', slider_size:str|float='5%', min_bins:int=1, max_bins:int=20):
     """
@@ -61,14 +62,30 @@ def hist_dist(data: np.ndarray, ax: plt.Axes|None=None, fig: plt.Figure=None, xl
             Slider object used in plot
     """
     
-    if not isinstance(data, np.ndarray):
-        raise TypeError('Parameter `data` should be of type ndarray.')
+    Validator.is_type_valid(data, np.ndarray)
+    Validator.is_type_valid(ax, (None, plt.Axes))
+    Validator.is_type_valid(fig, (None, plt.Figure))
+    Validator.is_type_valid(xlabel, str)
+    Validator.is_type_valid(kind, str)
+    Validator.is_in_list(kind, ['hist+kde', 'hist', 'kde'])
+    Validator.is_type_valid(show_slider, bool)
+    Validator.is_type_valid(title, str)
+    Validator.is_type_valid(slider_label, str)
+    Validator.is_type_valid(slider_pad, (None, float))
+    Validator.is_type_valid(bins_count, (str, int))
+    Validator.is_type_valid(slider_size, (str, float))
+    Validator.is_type_valid(min_bins, int)
+    Validator.is_positive_value(min_bins)
+    Validator.is_type_valid(max_bins, int)
+    Validator.is_positive_value(max_bins)
+    # if not isinstance(data, np.ndarray):
+    #     raise TypeError('Parameter `data` should be of type ndarray.')
 
     if ax is None:
         fig, ax = plt.subplots()
     else:
         if fig is None and show_slider:
-            raise ValueError('Parameter `fig` needs to be passed when `ax` is passed.')
+            raise ValueError("Parameter 'fig' needs to be passed when 'ax' is passed.")
 
     if show_slider:
         divider = make_axes_locatable(ax)
@@ -190,8 +207,31 @@ def mutli_hist_dist(data: np.ndarray, nrows: int, ncols:int, figsize: tuple[int]
             Slider objects that controlls bins count for each subplot individually
     """
     
-    if not isinstance(data, np.ndarray):
-        raise TypeError('Parameter `results` should be of type ndarray.')
+    Validator.is_type_valid(data, np.ndarray)
+    Validator.is_type_valid(nrows, int)
+    Validator.is_positive_value(nrows, int)
+    Validator.is_type_valid(ncols, int)
+    Validator.is_positive_value(ncols, int)
+    Validator.is_type_valid(figsize, tuple)
+    Validator.is_type_valid(ax_title, bool)
+    Validator.is_type_valid(slider_label, bool)
+    Validator.is_type_valid(slider_pad, float)
+    Validator.is_type_valid(slider_size, (str, float))
+    Validator.is_type_valid(title, str)
+    Validator.is_type_valid(kind, str)
+    Validator.is_in_list(kind, ['hist+kde', 'hist', 'kde'])
+    Validator.is_type_valid(title_pos, float)
+    Validator.is_type_valid(w_pad, float)
+    Validator.is_type_valid(min_bins, int)
+    Validator.is_positive_value(min_bins)
+    Validator.is_type_valid(max_bins, int)
+    Validator.is_positive_value(max_bins)
+    Validator.is_type_valid(show_slider, bool)
+    Validator.is_type_valid(bins_count, (str, int))
+    Validator.is_type_valid(main_slider_label, str)
+    Validator.is_type_valid(xlabel, str)
+    # if not isinstance(data, np.ndarray):
+    #     raise TypeError('Parameter `results` should be of type ndarray.')
     
     fig, ax = plt.subplots(nrows, ncols, figsize=figsize)
     ax = ax.flatten()
