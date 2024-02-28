@@ -1,5 +1,5 @@
 joblib==1.3.2
-matplotlib==3.8.0
+matplotlib==3.8.3
 npy_append_array==0.9.16
 numpy==1.23.1
 pandas==2.2.0
@@ -10,3 +10,4 @@ pytest==7.1.2
 thread6==0.2.0
 seaborn==0.13.2
 tqdm==4.65.0
+setuptools==63.2.0

@@ -103,7 +103,7 @@ class Validator:
                 else:
                     raise ValueError(f"All values from '{get_var_name(var)}' should be in range [{min_val}, {max_val}]")
         else:
-            if min_val < var or var > max_val:
+            if min_val > var or var > max_val:
                 if custom_message:
                     raise ValueError(custom_message)
                 else:
@@ -130,14 +130,14 @@ class Validator:
         return True
         
     @staticmethod
-    def is_dtype_object_shape_valid(var, ref_var, custom_message = None):
+    def is_array_2D_3D(var, ref_var, custom_message = None):
         dim = 0
         try: # 2D
             if isinstance(var[0][0], (int, np.integer, float)):
                 shapes = tuple(len(dv) for dv in var)
                 if ref_var.shape[1] != len(shapes):
                     if custom_message:
-                        raise ValueError(custom_message)
+                        raise TypeError(custom_message)
                     else:
                         raise TypeError(f"'{get_var_name(ref_var)}' and '{get_var_name(var)}' have different shapes")
                 dim = 2
@@ -145,13 +145,13 @@ class Validator:
                 dv_shape = [len(tuple(len(vals) for vals in dv)) for dv in var]
                 if len(np.unique(dv_shape)) != 1 or ref_var.shape[0] != dv_shape[0] and ref_var.shape[1] != dv_shape[1]:
                     if custom_message:
-                        raise ValueError(custom_message)
+                        raise TypeError(custom_message)
                     else:
                         raise TypeError(f"'{get_var_name(ref_var)}' and '{get_var_name(var)}' have different shapes")
                 dim = 3
         except TypeError: 
             if custom_message:
-                raise ValueError(custom_message)
+                raise TypeError(custom_message)
             else:
                 raise TypeError(f"'{get_var_name(var)}' should be given as 2D or 3D array")
 
@@ -165,7 +165,3 @@ class Validator:
             else:
                 raise TypeError(f"'{key}' in '{get_var_name(dict)}' should be given as {type}")
         return True
-
-# examples
-# range_values = 1
-# print(Validator.is_type_valid(range_values, float))
