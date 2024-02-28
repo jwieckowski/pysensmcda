@@ -123,7 +123,7 @@ if __name__ == '__main__':
         [4, 2, 5, 5],
     ])
     print('Example 4 ---------------------')
-    results = remove_alternatives(matrix, np.array([[0, 5], 2, 3], dtype='object'))
+    results = remove_alternatives(matrix, np.array([[0, 4], 2, 3], dtype='object'))
     for result in results:
         print(result)
 

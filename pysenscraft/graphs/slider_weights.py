@@ -70,7 +70,7 @@ def weights_barplot(weights: np.ndarray, title: str, ax: None | mpl.axes.Axes = 
         ax.grid(which='both', alpha=0.7)
         ax.set_axisbelow(True)
     
-    ax.set_title(f'{title}')
+    ax.set_title(title)
 
     return ax, bars
 
@@ -220,7 +220,7 @@ def slider_weights_barplot(initial_weights: np.ndarray, results: list[tuple[int 
                 change_value = change_values[criteria_idx][change] * 100 if percentage_change else change_values[criteria_idx][change]
                 title = f'$C_{{{criteria_idx+1}}}$ {change_value} {change_label}'
         
-        ax.set_title(f'{title}')
+        ax.set_title(title)
 
         plt.draw()
 
