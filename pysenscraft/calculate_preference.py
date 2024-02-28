@@ -1,8 +1,12 @@
 # Copyright (C) 2024 Bartosz Paradowski
-from .alternative import discrete_modification, percentage_modification, range_modification, remove_alternatives
-import numpy as np
 
-def calculate_preference(func: callable, results, method: callable, kwargs: dict):
+from . import alternative 
+from . import criteria 
+from . import probabilistic 
+import numpy as np
+from scipy.stats import rankdata
+
+def calculate_preference(func: callable, results, method: callable, call_kwargs: dict, only_preference: bool=True, method_type: int|None=None):
     """
     Wrapper for calculating preference depening on the sensitivity analysis function.
 
@@ -14,12 +18,19 @@ def calculate_preference(func: callable, results, method: callable, kwargs: dict
             Results of the function which should be given as `func`.
         method: callable
             Method that should be used to calculate preferences.
-        kwargs: dict
+        call_kwargs: dict
             Parameters that should be passed to `method` in order to calculate preferences.
+            Used internally:
+                `matrix` for decision matrix
+                `weights` for criteria weights
+        only_preference: bool, optional, default=True
+            If `True` only preferences are returned in `ndarray`. If `False` list of tuples that resembles results is returned, where preferences are in the last column.
+        method_type: int or None, optional, default=None
+            If set, rankings are returned. Supported values: -1 for ascending ranking; 1 for descending ranking
 
     Examples
     --------
-    ### Example 1: Alternative sensitivity analysis
+    ### Example 1: Alternative sensitivity analysis - return only preferences
         >>> from pymcdm.methods import TOPSIS
         >>> 
         >>> topsis = TOPSIS()
@@ -43,23 +54,82 @@ def calculate_preference(func: callable, results, method: callable, kwargs: dict
         >>> 
         >>> calculate_preference(discrete_modification, results, topsis, kwargs)
 
+    ### Example 2: Criteria sensitivity analysis - return preferences and rankings
+        >>> from pysenscraft.criteria import percentage_modification
+        >>> 
+        >>> weights = np.array([0.3, 0.3, 0.4])
+        >>> percentage = 5
+        >>> results = percentage_modification(weights, percentage)
+        >>> 
+        >>> kwargs = {
+        >>>     'matrix': np.random.random((10, 3)),
+        >>>     'types': np.ones(3)
+        >>> }
+        >>> 
+        >>> calculate_preference(percentage_modification, results, topsis, kwargs, method_type=1)
+
+    ### Example 3: Criteria sensitivity analysis - return rankings and aggregated results
+        >>> from pysenscraft.criteria import percentage_modification
+        >>> 
+        >>> weights = np.array([0.3, 0.3, 0.4])
+        >>> percentage = 5
+        >>> results = percentage_modification(weights, percentage)
+        >>> 
+        >>> kwargs = {
+        >>>     'matrix': np.random.random((10, 3)),
+        >>>     'types': np.ones(3)
+        >>> }
+        >>> 
+        >>> calculate_preference(percentage_modification, results, topsis, kwargs, only_preference=False, method_type=1)
+
     Returns
     -------
-        ndarray
-            Array of preferences calculated for different matrices / weights depending on the type of sensitivity analysis.
-    
+        ndarray or list[tuple]
+            If only_preference=True, array of preferences calculated for different matrices / weights depending on the type of sensitivity analysis is returned. Else the preferences are appended to results as last column. If `method_type` is set, the rankings are appended to column after preferences.
     """
-    def preference_aggregator(val_list, method: callable, kwargs: dict, param_name: str):
+
+    def preference_aggregator(results, val_list, method: callable, call_kwargs: dict, param_name: str|list[str], only_preference: bool=True, method_type: int|None=None):
         preferences = []
         for val in val_list:
-            kwargs[param_name] = val
-            preferences.append(method(**kwargs))
-        return np.asarray(preferences)
+            if isinstance(param_name, list):
+                for p, v in zip(param_name, val):
+                    call_kwargs[p] = v
+            else:
+                call_kwargs[param_name] = val
+            pref = method(**call_kwargs)
 
-    if func in [discrete_modification, percentage_modification, range_modification]:
-        matrices = np.asarray(results, dtype='object')[:, 3]
-        return preference_aggregator(matrices, method, kwargs, 'matrix')
-    elif func in [remove_alternatives]:
-        matrices = np.asarray(results, dtype='object')[:, 1]
-        return preference_aggregator(matrices, method, kwargs, 'matrix')
+            if method_type is None:
+                preferences.append(pref)
+            elif method_type == 1:
+                preferences.append([pref, rankdata(-pref)])
+            elif method_type == -1:
+                preferences.append([pref, rankdata(pref)])
+            else:
+                raise ValueError('Unsupported `method_type`.')
+
+        if only_preference:
+            return np.asarray(preferences)
+        else:
+            for idx, pref in enumerate(preferences):
+                results[idx] = tuple([*results[idx], *pref])
+            return results
+
+    if func in [alternative.discrete_modification, alternative.percentage_modification, alternative.range_modification]:
+        val_list = np.asarray(results, dtype='object')[:, 3]
+        params = 'matrix'
+    elif func in [alternative.remove_alternatives]:
+        val_list = np.asarray(results, dtype='object')[:, 1]
+        params = 'matrix'
+    elif func in [criteria.percentage_modification, criteria.range_modification]:
+        val_list = np.array(results, dtype='object')[:, 2]
+        params = 'weights'
+    elif func in [probabilistic.monte_carlo_weights, probabilistic.perturbed_weights]:
+        val_list = np.array(results)
+        params = 'weights'
+    elif func in [probabilistic.perturbed_matrix]:
+        val_list = np.array(results)
+        params = 'matrix'
+    else:
+        raise ValueError(f'Function {func.__name__} is not supported for preference calculation.')
+    return preference_aggregator(results, val_list, method, call_kwargs, params, only_preference, method_type)
 
