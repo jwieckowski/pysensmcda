@@ -75,14 +75,13 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
     """
     
     Validator.is_type_valid(matrix, np.ndarray)
-    Validator.is_type_valid(indexes, (None, int, np.ndarray))
 
     alt_indexes = None
-
     if indexes is None:
         # generate vector of subsequent alternative indexes to remove
         alt_indexes = np.arange(0, matrix.shape[1])
     else:
+        Validator.is_type_valid(indexes, (int, np.ndarray))
         Validator.are_indexes_valid(indexes, matrix.shape[0])
 
         if isinstance(indexes, int):

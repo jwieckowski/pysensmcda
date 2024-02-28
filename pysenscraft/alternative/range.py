@@ -114,10 +114,10 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
     if range_values.ndim == 2:
         Validator.is_shape_equal(matrix.shape[1], range_values.shape[0], custom_message="Number of columns in 'matrix' and length of 'range_values' are different")
     elif range_values.ndim == 3:
-        Validator.is_shape_equal(matrix.shape, range_values.shape, custom_message="Shapes 'matrix' and 'range_values' are different")
+        Validator.is_shape_equal(matrix.shape, (range_values.shape[0], range_values.shape[1]), custom_message="Shapes of 'matrix' and 'range_values' are different")
 
-    Validator.is_type_valid(indexes, (None, np.ndarray))
     if indexes is not None:
+        Validator.is_type_valid(indexes, np.ndarray)
         Validator.are_indexes_valid(indexes, matrix.shape[1])
 
     if isinstance(step, np.ndarray):

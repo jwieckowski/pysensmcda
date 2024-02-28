@@ -114,8 +114,8 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
         # check if matrix and percentages have the same length
         Validator.is_shape_equal(matrix.shape[1], percentages.shape[0], custom_message="Number of columns in 'matrix' and length of 'percentages' are different")
 
-    Validator.is_type_valid(direction, (None, np.ndarray))
-    if isinstance(direction, np.ndarray):
+    if direction is not None:
+        Validator.is_type_valid(direction, np.ndarray)
         # check if matrix and direction have the same length
         Validator.is_shape_equal(matrix.shape[1], direction.shape[0], custom_message="Number of columns in 'matrix' and length of 'direction' are different")
 
@@ -124,10 +124,10 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
         # check if matrix and step have the same length
         Validator.is_shape_equal(matrix.shape[1], step.shape[0], custom_message="Number of columns in 'matrix' and length of 'step' are different")
 
-    Validator.is_type_valid(indexes, (None, np.ndarray))
-    if isinstance(indexes, np.ndarray):
+    if indexes is not None:
+        Validator.is_type_valid(indexes, np.ndarray)
         Validator.are_indexes_valid(indexes, matrix.shape[1])
-
+        
     results = []
 
     # size of changes of matrix values

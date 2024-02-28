@@ -3,7 +3,7 @@
 def memory_guard(func):
     def wrapper(*args, **kwargs):
         try:
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
 
         except MemoryError:
             print("Insufficient memory to perform the operation. Please try with different parameters")

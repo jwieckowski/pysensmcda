@@ -106,7 +106,7 @@ def test_is_array_2D_3D():
 def test_is_type_in_dict_valid():
     # Should not raise an exception
     test_dict = {'key': 42}
-    Validator.is_type_in_dict_valid('key', test_dict, int)  # Should not raise an exception
+    Validator.is_type_in_dict_valid('key', test_dict, int)
     # Should raise an exception
     with raises(TypeError):
         Validator.is_type_in_dict_valid('key', test_dict, str)
