@@ -56,13 +56,8 @@ def percentage_graph(percentage_changes: list, new_positions: list, ax: mpl.axes
     Validator.is_in_list(kind, ['bar', 'line'])
     Validator.is_type_valid(palette, dict)
 
-    # if kind not in ['bar', 'line']:
-    #     raise ValueError('Accepted kind parameter values are: `bar`, `kind`.')
-    
-    # if xticks is not None and len(xticks) != len(percentage_changes):
-    #     raise ValueError('`xticks` should contain the same number of values as `percentage_changes`')
     if xticks is not None:
-        Validator.is_shape_equal(len(xticks), len(percentage_changes))
+        Validator.is_shape_equal(len(xticks), len(percentage_changes), custom_message="Length of 'xticks' and 'percentage_changes' are different")
 
     if ax is None:
         ax = plt.gca()
@@ -261,14 +256,8 @@ def pd_rankings_graph(initial_rank: int|float, new_positions: list, percentage_c
     Validator.is_type_valid(rank_kwargs, dict)
     Validator.is_type_valid(palette, dict)
 
-
-    # if kind not in ['bar', 'line']:
-    #     raise ValueError('Accepted kind parameter values are: `bar`, `kind`.')
-    
-    # if xticks is not None and len(xticks) != len(percentage_changes):
-    #     raise ValueError('`xticks` should contain the same number of values as `percentage_changes`')
     if xticks is not None:
-        Validator.is_shape_equal(len(xticks), len(percentage_changes))
+        Validator.is_shape_equal(len(xticks), len(percentage_changes), custom_message="Length of 'xticks' and 'percentage_changes' are different")
 
 
     if not palette:
@@ -298,7 +287,7 @@ def pd_rankings_graph(initial_rank: int|float, new_positions: list, percentage_c
             try:
                 (cax, main_ax) = ax
             except TypeError:
-                raise TypeError("If 'draw_ranking_change'='True', the ax parameter needs to consist of two axes")
+                raise TypeError("If 'draw_ranking_change'='True', the 'ax' parameter needs to consist of two axes")
         else:
             main_ax = ax
 

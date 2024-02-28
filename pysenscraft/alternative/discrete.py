@@ -92,58 +92,24 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
 
         return new_matrix
 
-    # if not isinstance(matrix, np.ndarray):
-    #     raise TypeError('Matrix should be given as numpy array')
     Validator.is_type_valid(matrix, np.ndarray)
-
-    # if matrix.ndim != 2:
-    #     raise ValueError('Matrix should be given as 2D array')
     Validator.is_dimension_valid(matrix, 2)
-
-    # if not isinstance(discrete_values, np.ndarray):
-    #     raise TypeError('Discrete values should be given as numpy array')
     Validator.is_type_valid(discrete_values, np.ndarray)
 
     dv_dim = 0
     # check if matrix and discrete values have the same length
     if discrete_values.dtype == 'object':
-        Validator.is_dtype_object_shape_valid(discrete_values, matrix)
-        # try:
-        #     # 2D
-        #     if isinstance(discrete_values[0][0], (int, np.integer, float)):
-        #         shapes = tuple(len(dv) for dv in discrete_values)
-        #         if matrix.shape[1] != len(shapes):
-        #             raise ValueError('Matrix and discrete values have different length')
-        #         dv_dim = 2
-        #     # 3D
-        #     else:
-        #         dv_shape = [len(tuple(len(vals) for vals in dv)) for dv in discrete_values]
-        #         if len(np.unique(dv_shape)) != 1 or matrix.shape[0] != dv_shape[0] and matrix.shape[1] != dv_shape[1]:
-        #             raise ValueError('Matrix and discrete values have different length')
-        #         dv_dim = 3
-        # except TypeError: 
-        #     raise TypeError('Discrete values should be given as 2D or 3D array')
+        Validator.is_array_2D_3D(discrete_values, matrix)
     else:
         if discrete_values.ndim == 2:
-            Validator.is_shape_equal(matrix.shape[1], discrete_values.shape[0])
-            # if matrix.shape[1] != discrete_values.shape[0]:
-            #     raise ValueError('Matrix and discrete values have different length')
+            Validator.is_shape_equal(matrix.shape[1], discrete_values.shape[0], custom_message="Number of columns in 'matrix' and length of 'discrete_values' are different")
         elif discrete_values.ndim == 3:
-            Validator.is_shape_equal(matrix.shape, discrete_values)
-            # if matrix.shape[0] != discrete_values.shape[0] and matrix.shape[1] != discrete_values.shape[1]:
-            #     raise ValueError('Matrix and discrete values have different length')
+            Validator.is_shape_equal(matrix.shape, discrete_values.shape, custom_message="Shapes of 'matrix' and 'discrete_values' are different")
         dv_dim = discrete_values.ndim
 
     Validator.is_type_valid(indexes, (None, np.ndarray))
     if indexes is not None:
         Validator.are_indexes_valid(indexes, matrix.shape[1])
-        # for c_idx in indexes:
-        #     if isinstance(c_idx, (int, np.integer)):
-        #         if c_idx < 0 or c_idx >= matrix.shape[1]:
-        #             raise IndexError(f'Given index ({c_idx}) out of range')
-        #     elif isinstance(c_idx, (list, np.ndarray)):
-        #         if any([idx < 0 or idx >= matrix.shape[1] for idx in c_idx]):
-        #             raise IndexError(f'Given indexes ({c_idx}) out of range')
 
     results = []
     

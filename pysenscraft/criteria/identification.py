@@ -92,54 +92,23 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     ...     print(r)
     """
     
-    # if not callable(method):
-    #     raise TypeError('Method should be callable')
     Validator.is_callable(method)
-
-    # if not isinstance(excluded_criteria, int) or excluded_criteria <= 0:
-    #     raise ValueError('`excluded_criteria` should be a positive integer')
     Validator.is_type_valid(excluded_criteria, int)
     Validator.is_positive_value(excluded_criteria)
-
-    # for key in ['matrix', 'weights', 'types']:
-    #     if key not in list(call_kwargs.keys()):
-    #         raise ValueError(f'Call kwargs dictionary should include `{key}` as one of the keys')
     Validator.is_key_in_dict(['matrix', 'weights', 'types'], call_kwargs)
-
-    # try:
-    #     initial_matrix = np.array(call_kwargs['matrix'].copy())
-    # except:
-    #     raise TypeError('Matrix in `call_kwargs` should be given as numpy array')
     Validator.is_type_in_dict_valid('matrix', call_kwargs, np.ndarray)
     initial_matrix = call_kwargs['matrix'].copy()
-
-    # if initial_matrix.ndim != 2:
-    #     raise ValueError('Matrix in `call_kwargs` should be a 2D array')
-    Validator.is_dimension_valid(initial_matrix, 2, "'matrix' in 'call_kwargs' should be a 2D array'")
+    Validator.is_dimension_valid(initial_matrix, 2, custom_message="'matrix' in 'call_kwargs' should be a 2D array'")
 
     if excluded_criteria > initial_matrix.shape[1]:
         raise ValueError('`excluded_criteria` should not exceed the number of columns in matrix')
-
-    # try:
-    #     types = np.array(call_kwargs['types'].copy())
-    # except:
-    #     raise TypeError('Types in `call_kwargs` should be given as numpy array')
+    
     Validator.is_type_in_dict_valid('types', call_kwargs, np.ndarray)
     types = call_kwargs['types'].copy()
 
-    # if types.ndim != 1:
-    #     raise ValueError('Types in `call_kwargs` should be a 2D array')
-    Validator.is_dimension_valid(types, 1, "'types' in 'call_kwargs' should be a 1D vector'")
-
+    Validator.is_dimension_valid(types, 1, custom_message="'types' in 'call_kwargs' should be a 1D vector'")
     call_kwargs['weights'] = equal_weights(initial_matrix)
 
-    # if isinstance(corr_coef, list):
-    #     if any([not callable(coef) for coef in corr_coef]):
-    #         raise TypeError('`corr_coef` should be a list of callable')
-    # else:
-    #     if not callable(corr_coef):
-    #         raise TypeError('`corr_coef` should be callable')
-    #     corr_coef = [corr_coef]
     Validator.is_callable(corr_coef)
     if not isinstance(corr_coef, list):
         corr_coef = [corr_coef]

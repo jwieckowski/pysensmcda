@@ -39,8 +39,6 @@ def laplace_distribution(size: int, loc: float = 0.0, scale: float = 1.0):
     Validator.is_type_valid(loc, float)
     Validator.is_type_valid(scale, float)
     Validator.is_positive_value(scale)
-    # if scale < 0:
-    #     raise ValueError('The exponential decay (scale) must be non-negative')
 
     weights = np.abs(np.random.laplace(loc, scale, size=size))
     return np.array(weights) / np.sum(weights)

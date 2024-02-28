@@ -78,8 +78,6 @@ def hist_dist(data: np.ndarray, ax: plt.Axes|None=None, fig: plt.Figure=None, xl
     Validator.is_positive_value(min_bins)
     Validator.is_type_valid(max_bins, int)
     Validator.is_positive_value(max_bins)
-    # if not isinstance(data, np.ndarray):
-    #     raise TypeError('Parameter `data` should be of type ndarray.')
 
     if ax is None:
         fig, ax = plt.subplots()
@@ -230,9 +228,7 @@ def mutli_hist_dist(data: np.ndarray, nrows: int, ncols:int, figsize: tuple[int]
     Validator.is_type_valid(bins_count, (str, int))
     Validator.is_type_valid(main_slider_label, str)
     Validator.is_type_valid(xlabel, str)
-    # if not isinstance(data, np.ndarray):
-    #     raise TypeError('Parameter `results` should be of type ndarray.')
-    
+
     fig, ax = plt.subplots(nrows, ncols, figsize=figsize)
     ax = ax.flatten()
     sliders = []

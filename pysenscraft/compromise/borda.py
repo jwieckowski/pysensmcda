@@ -1,9 +1,12 @@
+# Copyright (C) 2024 Bartosz Paradowski, Jakub Więckowski
+
 import numpy as np
 from scipy.stats import rankdata
+from ..validator import Validator
 
 def borda(rankings: np.ndarray):
     """
-    Calcualtes compromised ranking using broda voting rule.
+    Calculates compromised ranking using borda voting rule.
 
     Parameters
     ----------
@@ -23,6 +26,8 @@ def borda(rankings: np.ndarray):
         ndarray
             Numpy array containing compromised ranking.
     """
+
+    Validator.is_type_valid(rankings, np.ndarray)
 
     alt_num = rankings.shape[0]
     count = np.sum((alt_num + 1) - rankings, axis=1)

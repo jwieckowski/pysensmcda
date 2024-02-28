@@ -216,7 +216,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
     if cores_num is None:
         num_cores = multiprocessing.cpu_count()
     else:
-        num_cores = cores_num
+        num_cores = min(cores_num, multiprocessing.cpu_count())
     temp_dir = tempfile.gettempdir()
     if sequential:
         return run_sequential(file_name, save_zeros, return_array)

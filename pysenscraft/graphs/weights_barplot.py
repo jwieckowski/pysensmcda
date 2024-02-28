@@ -4,8 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib.widgets import Slider
+from ..validator import Validator
 
-def weights_barplot(weights: np.ndarray, title: str, ax: None | mpl.axes.Axes = None, width: float = 0.8, color: str = 'dodgerblue', alpha: int = 1, grid_on: bool = False, annotate_bars: bool = False):
+def weights_barplot(weights: np.ndarray, title: str, ax: None | mpl.axes.Axes = None, width: float = 0.8, color: str = 'dodgerblue', alpha: int | float = 1, grid_on: bool = False, annotate_bars: bool = False):
     """
     Generate a bar plot to visualize criteria weights.
 
@@ -26,8 +27,8 @@ def weights_barplot(weights: np.ndarray, title: str, ax: None | mpl.axes.Axes = 
     color : str, optional, default='dodgerblue'
         Color of the bars in the bar plot.
 
-    alpha : int, optional, default=1
-        Opacity of the bars in the bar plot.
+    alpha : float, optional, default=1
+        Opacity of the bars in the bar plot. Should be in range [0, 1].
 
     grid_on : bool, optional, default=False
         If True, display grid lines on the plot.
@@ -54,6 +55,16 @@ def weights_barplot(weights: np.ndarray, title: str, ax: None | mpl.axes.Axes = 
     >>> ax, bars = weights_barplot(weights, title, color='green', width=0.5, alpha=0.7, grid_on=True, annotate_bars=True)
     >>> plt.show()
     """
+    Validator.is_type_valid(weights, np.ndarray)
+    Validator.is_type_valid(title, str)
+    Validator.is_type_valid(ax, (None, mpl.axes.Axes))
+    Validator.is_type_valid(width, float)
+    Validator.is_type_valid(color, str)
+    Validator.is_type_valid(alpha, (int, float))
+    Validator.is_in_range(alpha, 0, 1)
+    Validator.is_type_valid(grid_on, bool)
+    Validator.is_type_valid(annotate_bars, bool)
+
     if ax is None:
         ax = plt.gca()
 
@@ -104,7 +115,7 @@ def slider_weights_barplot(initial_weights: np.ndarray, results: list[tuple[int 
         If True, display grid lines on the plot.
 
     percentage_change : bool, optional, default=False
-        If True, interpret changes as percentages.
+        If True, interpret changes as percentages and add '%' in labels.
 
     annotate_bars : bool, optional, default=False
         If True, annotate each bar with its corresponding weight value.
@@ -143,6 +154,17 @@ def slider_weights_barplot(initial_weights: np.ndarray, results: list[tuple[int 
     >>> ax, criteria_slider, change_slider = slider_weights_barplot(weights, results, annotate_bars=True, grid_on=True)
     >>> plt.show()
     """
+    Validator.is_type_valid(initial_weights, np.ndarray)
+    Validator.is_type_valid(results, list)
+    Validator.is_type_valid(width, float)
+    Validator.is_type_valid(color, str)
+    Validator.is_type_valid(width, float)
+    Validator.is_type_valid(sort_values, bool)
+    Validator.is_type_valid(grid_on, bool)
+    Validator.is_type_valid(percentage_change, bool)
+    Validator.is_type_valid(annotate_bars, bool)
+    Validator.is_type_valid(ax, (None, mpl.axes.Axes))
+
     if ax is None:
         fig, ax = plt.subplots()
     plt.subplots_adjust(left=0.25, right=0.9, top=0.9, bottom=0.25)

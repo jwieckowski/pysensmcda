@@ -85,23 +85,8 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
 
         if isinstance(indexes, int):
             alt_indexes = np.array([indexes])
-        else: alt_indexes = indexes
-
-    # if isinstance(indexes, int):
-    #     if indexes >= matrix.shape[0] or indexes < 0:
-    #         raise IndexError(f'Given index ({indexes}) out of range')
-    #     alt_indexes = np.array([indexes])
-
-    # if isinstance(indexes, np.ndarray):
-    #     for c_idx in indexes:
-    #         if isinstance(c_idx, int):
-    #             if c_idx < 0 or c_idx >= matrix.shape[0]:
-    #                 raise IndexError(f'Given index ({indexes}) out of range')
-    #         elif isinstance(c_idx, list):
-    #             if any([idx < 0 or idx >= matrix.shape[0] for idx in c_idx]):
-    #                 raise IndexError(f'Given indexes ({c_idx}) out of range')
-
-        # alt_indexes = indexes
+        else: 
+            alt_indexes = indexes
 
     data = []
     # remove row in decision matrix

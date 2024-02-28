@@ -41,8 +41,6 @@ def monte_carlo_weights(n: int, distribution: str, params: dict, num_samples: in
     Validator.is_in_list(distribution, allowed_distributions)
     Validator.is_type_valid(num_samples, int)
     Validator.is_type_valid(params, dict)
-    # if distribution not in allowed_distributions:
-    #     raise ValueError(f'Invalid distribution. Choose from: {allowed_distributions}')
 
     modified_weights = []
 

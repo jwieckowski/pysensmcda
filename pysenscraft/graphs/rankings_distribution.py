@@ -120,9 +120,6 @@ def rankings_distribution(rankings: np.ndarray, ax: mpl.axes.Axes|None=None, tit
     Validator.is_type_valid(ylabel, str)
     Validator.is_type_valid(show_legend, bool)  
 
-    # if not isinstance(rankings, np.ndarray):
-    #     raise ValueError('Parameter rankings needs to be of type np.ndarray')
-    
     if ax is None:
         ax = plt.gca()
 

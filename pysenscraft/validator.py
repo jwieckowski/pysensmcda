@@ -130,7 +130,7 @@ class Validator:
         return True
         
     @staticmethod
-    def is_dtype_object_shape_valid(var, ref_var, custom_message = None):
+    def is_array_2D_3D(var, ref_var, custom_message = None):
         dim = 0
         try: # 2D
             if isinstance(var[0][0], (int, np.integer, float)):

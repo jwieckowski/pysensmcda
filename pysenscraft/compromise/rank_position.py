@@ -1,7 +1,8 @@
-# Copyright (C) 2024 Bartosz Paradowski
+# Copyright (C) 2024 Bartosz Paradowski, Jakub Więckowski
 
 import numpy as np
 from scipy.stats import rankdata
+from ..validator import Validator
 
 def rank_position(rankings: np.ndarray):
     """
@@ -25,6 +26,7 @@ def rank_position(rankings: np.ndarray):
         ndarray
             Vector including compromise ranking.
     """
+    Validator.is_type_valid(rankings, np.ndarray)
 
     preference = 1 / (np.sum((1 / rankings), axis = 1))
     

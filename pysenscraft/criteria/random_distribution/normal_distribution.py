@@ -39,9 +39,6 @@ def normal_distribution(size: int, loc: float = 0.0, scale: float = 1.0):
     Validator.is_type_valid(loc, float)
     Validator.is_type_valid(scale, float)
     Validator.is_positive_value(scale)
-    # if scale < 0:
-    #     raise ValueError('Standard deviation (scale) must be non-negative')
-
 
     weights = np.abs(np.random.normal(loc, scale, size=size))
     return np.array(weights) / np.sum(weights)

@@ -131,8 +131,6 @@ def ICRA_pref_distribution(results: ICRAResults, methods: list[str], palettes: l
     """
 
     Validator.is_type_valid(results, ICRAResults)
-    # if not isinstance(results, ICRAResults):
-    #     raise ValueError('"results" parameter should be of type ICRAResults')
     Validator.is_type_valid(methods, list)
     Validator.is_type_valid(palettes, list)
     Validator.is_type_valid(by, str)

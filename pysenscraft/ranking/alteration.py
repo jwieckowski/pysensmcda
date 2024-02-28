@@ -84,26 +84,14 @@ def ranking_alteration(weights: np.ndarray, initial_ranking: np.ndarray, method:
     """
     
     Validator.is_callable(method)
-    # if not callable(method):
-    #     raise TypeError('`method` should be callable')
-
     Validator.is_type_valid(weights, np.ndarray)
-    # if not isinstance(weights, np.ndarray):
-    #     raise TypeError('`weights` should be a numpy array type')
     Validator.is_dimension_valid(weights, 1)
-    # if weights.ndim != 1:
-    #     raise ValueError('`weights` should be a 1D vector')
-        
     Validator.is_type_valid(initial_ranking, np.ndarray)
-    # if not isinstance(initial_ranking, np.ndarray):
-    #     raise TypeError('`initial_ranking` should be a numpy array type')
-    
     Validator.is_type_valid(call_kwargs, dict)
     Validator.is_key_in_dict(['matrix', 'weights'], call_kwargs)
-    # if 'matrix' not in list(call_kwargs.keys()) or 'weights' not in list(call_kwargs.keys()):
-    #     raise ValueError('`call_kwargs` dictionary should include `matrix` and `weights` as one of the keys')
     Validator.is_type_valid(ranking_descending, bool)
     Validator.is_type_valid(step, float)
+    Validator.is_positive_value(step)
 
     results = []
 

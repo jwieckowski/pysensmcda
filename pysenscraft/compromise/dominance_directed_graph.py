@@ -1,8 +1,9 @@
-# Copyright (C) 2024 Bartosz Paradowski
+# Copyright (C) 2024 Bartosz Paradowski, Jakub Więckowski
 
 import numpy as np
 from numpy.linalg import matrix_power
 from scipy.stats import rankdata
+from ..validator import Validator
 
 def dominance_directed_graph(rankings: np.ndarray):
     """
@@ -26,6 +27,7 @@ def dominance_directed_graph(rankings: np.ndarray):
         ndarray
             Numpy array containing compromised ranking.
     """
+    Validator.is_type_valid(rankings, np.ndarray)
 
     alt_num = rankings.shape[0]
 
