@@ -3,10 +3,10 @@
 import numpy as np
 import pymcdm
 
-def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: callable, call_kwargs: dict, ranking_descending: bool, direction: np.ndarray, step: int | float, bounds: None | np.ndarray = None, positions: None | np.ndarray = None, return_zeros: bool = True, max_modification: None | int = None):
+def ranking_demotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: callable, call_kwargs: dict, ranking_descending: bool, direction: np.ndarray, step: int | float, bounds: None | np.ndarray = None, positions: None | np.ndarray = None, return_zeros: bool = True, max_modification: None | int = None):
     """
-    Promote alternatives in a decision matrix by adjusting specific criteria values, considering constraints on rankings. 
-    With only required parameters given, the analysis is looking for changes that cause promotion for 1st position in ranking.
+    Demote alternatives in a decision matrix by adjusting specific criteria values, considering constraints on rankings. 
+    With only required parameters given, the analysis is looking for changes that cause demotion for last position in ranking.
 
     Parameters
     ----------
@@ -35,14 +35,14 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
         Step size for the modification.
 
     bounds : None | ndarray, optional, default=None
-        Bounds representing the size of the modifications for columns in decision matrix. If None, then modifications are introduced in decision matrix until the 1st position in the ranking is achieved for a given alternative.
+        Bounds representing the size of the modifications for columns in decision matrix. If None, then modifications are introduced in decision matrix until the last position in the ranking is achieved for a given alternative.
 
     positions : None | ndarray, optional, default=None
         Target positions for the alternatives in the ranking after modification. 
-        If None, the positions are not constrained and the 1st position is targeted.
+        If None, the positions are not constrained and the last position is targeted.
 
     return_zeros : bool, optional, default=True
-        Flag determining whether results without noticed promotion in ranking will be returned.
+        Flag determining whether results without noticed demotion in ranking will be returned.
 
     max_modification : None | int, optional, default=None
         Value determining maximum modification size represented as percent of initial value.
@@ -52,11 +52,11 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
     -------
     List[Tuple[int, int, float, int]]
         A list of tuples containing information about alternative index, criterion index, size of change,
-        and achieved new positions based on promotion analysis.
+        and achieved new positions based on demotion analysis.
 
     ## Examples
     --------
-    ### Example 1: Promotion analysis based on the COPRAS method with only required parameters
+    ### Example 1: Demotion analysis based on the COPRAS method with only required parameters
     >>> matrix = np.array([
     ...     [4, 2, 6],
     ...     [7, 3, 2],
@@ -73,14 +73,14 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
     ...     "types": types
     ... }
     >>> ranking_descending = True
-    >>> direction = np.array([-1, 1, -1])
+    >>> direction = np.array([1, -1, 1])
     >>> step = 0.5
-    >>> max_modification = 1000
-    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, max_modification=max_modification)
+    >>> max_modification = 100
+    >>> results = ranking_demotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, max_modification=max_modification)
     >>> for r in results:
     ...     print(r)
 
-    ### Example 2: Promotion analysis based on the COPRAS method with explicitly defined modification bounds
+    ### Example 2: Demotion analysis based on the COPRAS method with explicitly defined modification bounds
     >>> matrix = np.array([
     ...     [4, 2, 6],
     ...     [7, 3, 2],
@@ -96,14 +96,14 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
     ...     "types": types
     ... }
     >>> ranking_descending = True
-    >>> direction = np.array([-1, 1, -1])
+    >>> direction = np.array([1, -1, 1])
     >>> step = 0.5
-    >>> bounds = np.array([1, 15, 0])
-    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, bounds)
+    >>> bounds = np.array([15, 0, 20])
+    >>> results = ranking_demotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, bounds)
     >>> for r in results:
     ...     print(r)
 
-    ### Example 3: Promotion analysis based on the COPRAS method with explicitly defined modification bounds and targeted positions
+    ### Example 3: Demotion analysis based on the COPRAS method with explicitly defined modification bounds and targeted positions
     >>> matrix = np.array([
     ...     [4, 2, 6],
     ...     [7, 3, 2],
@@ -119,15 +119,15 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
     ...     "types": types
     ... }
     >>> ranking_descending = True
-    >>> direction = np.array([-1, 1, -1])
+    >>> direction = types * -1
     >>> step = 0.5
-    >>> bounds = np.array([1, 15, 0])
-    >>> positions = np.array([1, 2, 1])
-    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, bounds, positions)
+    >>> bounds = np.array([15, 0, 20])
+    >>> positions = np.array([3, 3, 1])
+    >>> results = ranking_demotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, bounds, positions)
     >>> for r in results:
     ...     print(r)
 
-    ### Example 4: Promotion analysis based on the COPRAS method with not returned values without noticed promotion
+    ### Example 4: Demotion analysis based on the COPRAS method with not returned values without noticed demotion
     >>> matrix = np.array([
     ...     [4, 2, 6],
     ...     [7, 3, 2],
@@ -143,15 +143,15 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
     ...     "types": types
     ... }
     >>> ranking_descending = True
-    >>> direction = np.array([-1, 1, -1])
+    >>> direction = types * -1
     >>> step = 0.5
-    >>> max_modification = 50
+    >>> max_modification = 10
     >>> return_zeros = False
-    >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, max_modification=max_modification, return_zeros=return_zeros)
+    >>> results = ranking_demotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, max_modification=max_modification, return_zeros=return_zeros)
     >>> for r in results:
     ...     print(r)
     """
-    
+
     def generate_crit_changes(matrix, alt_idx, crit_idx, direction, step, bounds, max_modification):
         # set modification bounds
         if bounds is None:
@@ -206,7 +206,7 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
     if 'matrix' not in list(call_kwargs.keys()):
         raise ValueError('Call kwargs dictionary should include `matrix` as one of the keys')
 
-    # store promoted positions and changes that caused the promotions
+    # store demoted positions and changes that caused the demotions
     new_positions = np.full((matrix.shape), 0, dtype=int)
     changes = np.full((matrix.shape), 0, dtype=float)
 
@@ -214,7 +214,7 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
 
     for alt_idx in range(matrix.shape[0]):
         for crit_idx in range(matrix.shape[1]):
-            # set desired position to promote given alternative
+            # set desired position to demote given alternative
             if positions is None:
                 new_positions[alt_idx, crit_idx] = initial_ranking[alt_idx]
             else:
@@ -234,20 +234,20 @@ def ranking_promotion(matrix: np.ndarray, initial_ranking: np.ndarray, method: c
                 except Exception as err:
                     raise ValueError(err)
 
-                # check if position changed and adjust values which cause promotion
-                if new_ranking[alt_idx] < new_positions[alt_idx, crit_idx]:
+                # check if position changed and adjust values which cause demotion
+                if new_ranking[alt_idx] > new_positions[alt_idx, crit_idx]:
                     new_positions[alt_idx, crit_idx] = new_ranking[alt_idx]
                     changes[alt_idx, crit_idx] = change
 
                 if positions is None:
-                    # if first in new ranking then end analysis for given alternative and criterion
-                    if new_ranking[alt_idx] == 1:
+                    # if last in new ranking then end analysis for given alternative and criterion
+                    if new_ranking[alt_idx] == matrix.shape[0]:
                         break
                 else:
                     # check if desired position achieved
                     if new_ranking[alt_idx] == positions[alt_idx]:
                         # update values that cause changes
-                        if initial_ranking[alt_idx] != 1:
+                        if initial_ranking[alt_idx] != matrix.shape[0]:
                             new_positions[alt_idx, crit_idx] = new_ranking[alt_idx]
                             changes[alt_idx, crit_idx] = change
                         break

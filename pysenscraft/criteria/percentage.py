@@ -170,10 +170,3 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
 
     return results
 
-
-weights = np.array([0.3, 0.3, 0.4])
-percentages = np.array([5, 5, 5])
-indexes = np.array([[0, 1], 2], dtype='object')
-results = percentage_modification(weights, percentages, indexes=indexes)
-for r in results:
-    print(r)
