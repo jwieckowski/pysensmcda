@@ -66,7 +66,7 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
     ...     [3, 5, 3, 2],
     ...     [4, 2, 5, 5],
     ... ])
-    >>> results = remove_alternatives(matrix, np.array([[0, 5], 2, 3], dtype='object'))
+    >>> results = remove_alternatives(matrix, np.array([[0, 4], 2, 3], dtype='object'))
     >>> for result in results:
     ...     print(result)
     """
@@ -110,4 +110,3 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
             raise ValueError(f'Calculation error. Check elements in {i} index')
 
     return data
-    
