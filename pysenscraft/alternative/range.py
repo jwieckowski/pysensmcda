@@ -3,7 +3,7 @@
 import numpy as np
 from itertools import product
 
-def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: int | float | np.ndarray = 1):
+def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: None | np.ndarray = None, step: int | float | np.ndarray = 1) -> list[tuple[int, int | tuple, tuple, np.ndarray]]:
     """
     Modify a decision matrix based on specified range values, indexes representing the combination of columns to be modified, and steps of range modifications.
 
@@ -96,7 +96,7 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
     ...     print(r)
     """
 
-    def modify_matrix(matrix, alt_idx, crit_idx, change):
+    def modify_matrix(matrix: np.ndarray, alt_idx: int, crit_idx: int, change: float):
         new_matrix = matrix.copy().astype(float)
 
         new_matrix[alt_idx, crit_idx] = change

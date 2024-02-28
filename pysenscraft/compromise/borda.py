@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.stats import rankdata
 
-def borda(rankings: np.ndarray):
+def borda(rankings: np.ndarray) -> np.ndarray:
     """
     Calcualtes compromised ranking using broda voting rule.
 

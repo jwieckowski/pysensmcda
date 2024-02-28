@@ -1,12 +1,16 @@
 # Copyright (C) 2024 Bartosz Paradowski
 
-from mpl_toolkits.axes_grid1 import make_axes_locatable
 import matplotlib.ticker as mtick
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 import numpy as np
 
-def percentage_graph(percentage_changes: list, new_positions: list, ax: mpl.axes.Axes|None=None, xticks: list|None=None, percentage_kwargs: dict=dict(), kind: str='bar', palette: dict=dict()):
+def percentage_graph(percentage_changes: list, 
+                     new_positions: list, 
+                     ax: plt.Axes | None = None, 
+                     xticks: list | None = None, 
+                     percentage_kwargs: dict = dict(), 
+                     kind: str = 'bar', 
+                     palette: dict = dict()) -> plt.Axes:
     """
     Graph for showing percentage changes in criteria values and changes in alternative rank.
 
@@ -108,7 +112,11 @@ def percentage_graph(percentage_changes: list, new_positions: list, ax: mpl.axes
 
     return ax
 
-def rank_graph(initial_rank: int|float, new_positions: list, ax: mpl.axes.Axes|None=None, palette: dict=dict(), rank_kwargs: dict=dict()):
+def rank_graph(initial_rank: int | float, 
+               new_positions: list, 
+               ax: plt.Axes | None = None, 
+               palette: dict = dict(), 
+               rank_kwargs: dict = dict()) -> plt.Axes:
     """
     Graph for showing promotion / demotion of position of specific alternative.
 
@@ -173,7 +181,18 @@ def rank_graph(initial_rank: int|float, new_positions: list, ax: mpl.axes.Axes|N
 
     return ax
 
-def pd_rankings_graph(initial_rank: int|float, new_positions: list, percentage_changes: list, xticks=None, kind='bar', title='', ax=None, draw_ranking_change=True, height_ratio=[1, 3], percentage_kwargs=dict(), rank_kwargs=dict(), palette=dict()):
+def pd_rankings_graph(initial_rank: int | float, 
+                      new_positions: list, 
+                      percentage_changes: list, 
+                      xticks: list | None = None, 
+                      kind: str = 'bar', 
+                      title: str = '', 
+                      ax: plt.Axes | None = None, 
+                      draw_ranking_change: bool = True, 
+                      height_ratio: list[int] = [1, 3], 
+                      percentage_kwargs: dict = dict(), 
+                      rank_kwargs: dict = dict(), 
+                      palette: dict = dict()) -> plt.Axes:
     """
     Graph for plotting results of promotion / demotion ranking procedure
 

@@ -6,7 +6,7 @@ import pymcdm
 from pymcdm.correlations import weighted_spearman
 from pymcdm.weights import equal_weights
 
-def relevance_identification(method: callable, call_kwargs: dict, ranking_descending: bool, excluded_criteria: int = 1, corr_coef: Union[Callable, List[Callable]] = weighted_spearman, precision: int = 6):
+def relevance_identification(method: callable, call_kwargs: dict, ranking_descending: bool, excluded_criteria: int = 1, corr_coef: Union[Callable, List[Callable]] = weighted_spearman, precision: int = 6) -> list[tuple[tuple[int] | int, tuple[float] | float, float, np.ndarray]]:
     """
     The core idea behind this method is to iteratively exclude a specified number of criteria and evaluate the impact on the ranking of alternatives. 
     By systematically excluding different criteria and analyzing the resulting changes in the ranking, the function aims to identify which criteria significantly influence the final decision.

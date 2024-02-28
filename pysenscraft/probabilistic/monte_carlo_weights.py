@@ -3,7 +3,7 @@
 import numpy as np
 from ..criteria import random_distribution as dist
 
-def monte_carlo_weights(n: int, distribution='uniform', num_samples=1000, params=None):
+def monte_carlo_weights(n: int, distribution: str = 'uniform', num_samples: int = 1000, params: dict | None = None) -> np.ndarray:
     """
     Generate criteria weights probabilistically using Monte Carlo simulation.
 

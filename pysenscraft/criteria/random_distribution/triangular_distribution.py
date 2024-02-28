@@ -2,7 +2,7 @@
 
 import numpy as np
 
-def triangular_distribution(size: int, left: float = 0.0, mode: float = 0.5, right: float = 1.0):
+def triangular_distribution(size: int, left: float = 0.0, mode: float = 0.5, right: float = 1.0) -> np.ndarray:
     """
     Generate a set of normalized weights sampled from a triangular distribution.
 

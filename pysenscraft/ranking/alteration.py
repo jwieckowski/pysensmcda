@@ -3,7 +3,12 @@
 import numpy as np
 import pymcdm
 
-def ranking_alteration(weights: np.ndarray, initial_ranking: np.ndarray, method: callable, call_kwargs: dict, ranking_descending: bool, step: float = 0.01):
+def ranking_alteration(weights: np.ndarray, 
+                       initial_ranking: np.ndarray, 
+                       method: callable, 
+                       call_kwargs: dict, 
+                       ranking_descending: bool, 
+                       step: float = 0.01) -> list[tuple[int, np.ndarray, np.ndarray]]:
     """
     Identify the minimal change in criteria weights that causes an alteration in the ranking of alternatives.
 

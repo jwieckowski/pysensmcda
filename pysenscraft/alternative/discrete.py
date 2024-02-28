@@ -3,7 +3,7 @@
 import numpy as np
 from itertools import product
 
-def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, indexes: None | np.ndarray = None):
+def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, indexes: None | np.ndarray = None) -> list[tuple[int, int | tuple, tuple, np.ndarray]]:
     """
     Modify a decision matrix based on specified discrete values and indexes combinations representing the columns modified at the time.
 
@@ -84,7 +84,7 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
     ...     print(r)
     """
 
-    def modify_matrix(matrix, alt_idx, crit_idx, change):
+    def modify_matrix(matrix: np.ndarray, alt_idx: int, crit_idx: int, change: float) -> np.ndarray:
         new_matrix = matrix.copy().astype(float)
 
         new_matrix[alt_idx, crit_idx] = change

@@ -10,7 +10,7 @@ import tempfile
 import tqdm
 import pickle
 
-def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, cores_num: int|None = None, file_name: str|None = None, return_array: bool = False, sequential: bool = False, save_zeros: bool = True):
+def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, cores_num: int | None = None, file_name: str | None = None, return_array: bool = False, sequential: bool = False, save_zeros: bool = True) -> list | None:
     """
     Generate scenarios for examining criteria weights based on given criteria number and step of weights space exploration
 
@@ -76,7 +76,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
     >>> [(0.9, 0.1, 0.0, 0.0), (0.8, 0.2, 0.0, 0.0), ...]
     >>> # results will be saved to '4crit_0.1.npy'
 """
-    def weight_gen_worker(stack, worker_list, no_crit, worker_id, temp_dir):
+    def weight_gen_worker(stack: deque, worker_list: np.ndarray, no_crit: int, worker_id: int, temp_dir: str) -> None:
         """
         Internal worker function for weights generation on multiple processes with partial results saving during runtime to temporary files
         """
@@ -99,7 +99,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
                         stack.append((n - 1, i, [max_points - i] + current))
             pickle.dump(local_results, f)
 
-    def weight_gen(stack, iters_num):
+    def weight_gen(stack: deque, iters_num: int) -> np.ndarray:
         """
         Internal sequential weights generation function.
         """
@@ -118,7 +118,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
                         stack.append((n - 1, i, [max_points - i] + current))
         return np.round(np.array(results) * step, precision)
 
-    def delete_temp_files(cores_num, temp_dir):
+    def delete_temp_files(cores_num: int, temp_dir: str) -> None:
         """
         Internal function for temporary files deletion.
         """
@@ -128,7 +128,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
             except:
                 pass
 
-    def calc_iterations(max_points):
+    def calc_iterations(max_points: int) -> int:
         """
         Internal function to calculate necessary iterations for each process. Can be used to calculate combinations number.
         """
@@ -146,7 +146,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
             s = s_copy.copy()
         return s
 
-    def run_parallel(cores_num, temp_dir, file_name, save_zeros, return_array):
+    def run_parallel(cores_num: int, temp_dir: str, file_name: str, save_zeros: bool, return_array: bool) -> None | np.ndarray:
         """
         Internal function for parallel initialization.
         """
@@ -179,7 +179,7 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
             return np.load(f'{file_name}.npy')
 
         
-    def run_sequential(file_name, save_zeros, return_array):
+    def run_sequential(file_name: str, save_zeros: bool, return_array: bool) -> None | np.ndarray:
         """
         Internal function for initialization of sequential run.
         """
