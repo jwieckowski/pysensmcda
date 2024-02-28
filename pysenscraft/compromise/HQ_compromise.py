@@ -1,18 +1,15 @@
 import numpy as np
 
-def welsch_minimizer(s, sigma):
-    # minimizer Table 1
-    return np.exp(-(s**2)/(sigma**2))
+def __welsch_minimizer__(s: float, sigma: float) -> float:
+    return np.exp(-(s**2)/(2*sigma**2))
 
-def euc_dist(R_1, R_2):
+def __euc_dist__(R_1: np.ndarray, R_2: np.ndarray) -> float:
     return np.sqrt(np.sum((R_1 - R_2)**2))
 
-def pdf(mu, sigma, x):
+def __pdf__(mu: float, sigma: float, x: float) -> float:
     return (1/(np.sqrt(2*np.pi*(sigma**2)))) * (np.e**(-((x-mu)**2)/(2*(sigma**2))))
 
-def indicators(rankings, R_avg, sigma, w):
-    # consensus Eq (14)
-    # trust Eq (15)
+def __indicators__(rankings: np.ndarray, R_avg: np.ndarray, sigma: float, w: np.ndarray) -> tuple[float, float]:
     consensus = 0
     trust = 0
     K = rankings.shape[0]
@@ -21,79 +18,76 @@ def indicators(rankings, R_avg, sigma, w):
         R = rankings[:, m]
         s = 0
         for k in range(K):
-            s += pdf(0, sigma, R[k]-R_avg[k])/pdf(0, sigma, 0)
+            s += __pdf__(0, sigma, R[k]-R_avg[k])/__pdf__(0, sigma, 0)
         consensus += s
         trust += w[m]*s
     return consensus/(K * M), trust/K
 
-def HQ_compromise(R):
+def HQ_compromise(R: np.ndarray, max_iters:int = 1000, tol:float = 10e-10) -> tuple[tuple[float, float], np.ndarray, np.ndarray]:
     """
-    Test case 1:
-    >>> rankings = np.array([[2, 2, 2],
-    >>>                     [3, 4, 5],
-    >>>                     [1, 1, 4],
-    >>>                     [4, 3, 1],
-    >>>                     [7, 5, 7],
-    >>>                     [8, 8, 8],
-    >>>                     [5, 6, 3],
-    >>>                     [6, 7, 6]])
-    Should return: ((0.85, 0.95), array([0.4997, 0.4946, 0.0057]), array([2, 4, 1, 3, 6, 8, 5, 7]))
+    Parameters
+    ----------
+        R: ndarray
 
-    Test case 2:
-    >>> rankings = np.array([[1, 1, 1],
-    >>>                     [2, 2, 2],
-    >>>                     [7, 6, 6],
-    >>>                     [3, 3, 4],
-    >>>                     [6, 7, 7],
-    >>>                     [4, 4, 3],
-    >>>                     [5, 5, 5]])
-    Should return: ((0.8, 1.0), array([0, 1, 0]), array([1, 2, 6, 3, 7, 4, 5]))
+    Returns
+    -------
+        tuple
+            Tuple that contains (consensus_index, trust_index), weights of rankings, compromised ranking
     
-    Test case 3:
-    >>> rankings = np.array([[6, 5, 5],
-    >>>                     [1, 1, 1],
-    >>>                     [7, 7, 6],
-    >>>                     [2, 2, 4],
-    >>>                     [3, 6, 7],
-    >>>                     [5, 4, 3],
-    >>>                     [4, 3, 2]])
-    Should return: ((0.8, 0.98), array([0.0056, 0.9502, 0.0442]), array([5, 1, 7, 2, 6, 4, 3]))
+    Examples
+    --------
+    ### Example 1
+        >>> rankings = np.array([[2, 2, 2],
+        >>>                     [3, 4, 5],
+        >>>                     [1, 1, 4],
+        >>>                     [4, 3, 1],
+        >>>                     [7, 5, 7],
+        >>>                     [8, 8, 8],
+        >>>                     [5, 6, 3],
+        >>>                     [6, 7, 6]])
+        >>> HQ_compromise(rankings)
+    
+    ### Example 2 - set tolerance on convergance and change maximum number of iterations
+        >>> rankings = np.array([[2, 2, 2],
+        >>>                     [3, 4, 5],
+        >>>                     [1, 1, 4],
+        >>>                     [4, 3, 1],
+        >>>                     [7, 5, 7],
+        >>>                     [8, 8, 8],
+        >>>                     [5, 6, 3],
+        >>>                     [6, 7, 6]])
+        >>> HQ_compromise(rankings, max_iters=100, tol=10e-6)
+
     """
-    K = R.shape[0]
+
     M = R.shape[1]
 
-    # R_avg = R*; Eq (6)
-    R_avg = 1/M * np.sum(R, axis=1)
+    R_star = 1/M * np.sum(R, axis=1)
 
     alpha = np.zeros(R.shape[1])
-    change = 1
-    while change != 0:
-        # Eq (13)
+    iter = 0
+
+    while iter < max_iters:
         sigma = 0
         for i in range(M):
-            sigma += euc_dist(R[:, i], R_avg)**2
-        sigma = (sigma) / (2 * (K**2))
+            sigma += __euc_dist__(R[:, i], R_star)**2
+        sigma = (sigma) / (2 * (M**2))
 
-        # minimizer Table 1
-        # alpha Eq (9)
+        old_alpha = alpha.copy()
         for i in range(M):
-            alpha[i] = welsch_minimizer(euc_dist(R[:, i], R_avg), sigma)
-        # w Eq (10)
+            alpha[i] = __welsch_minimizer__(__euc_dist__(R[:, i], R_star), sigma)
+
         w = alpha/np.sum(alpha)
-        change = np.sum(R_avg - np.sum(w*R, axis=1))
-        # R_avg Eq (10)
-        R_avg = np.sum(w*R, axis=1)
 
-    consensus, trust = indicators(R, R_avg, sigma, w)
-    return ((consensus, trust), w, R_avg)
+        R_star_old = R_star.copy()
+        R_star = np.sum(R*w, axis=1)
+        
+        iter += 1
+        if __euc_dist__(R_star_old, R_star) <= tol and __euc_dist__(old_alpha, alpha) <= tol:
+            break
+        
+    if iter == max_iters:
+        print(f'Compromise not obtained in {max_iters} iterations.')
 
-rankings = np.array([[6, 5, 5],
-                    [1, 1, 1],
-                    [7, 7, 6],
-                    [2, 2, 4],
-                    [3, 6, 7],
-                    [5, 4, 3],
-                    [4, 3, 2]])
-
-
-HQ_compromise(rankings)
+    consensus, trust = __indicators__(R, R_star, sigma, w)
+    return ((consensus, trust), w, R_star)
