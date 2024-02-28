@@ -180,3 +180,4 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
                         results.append((tuple(crit_idx), change_val, new_weights))
 
     return results
+
