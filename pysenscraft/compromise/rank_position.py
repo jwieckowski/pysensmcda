@@ -18,7 +18,7 @@ def rank_position(rankings: np.ndarray):
         >>>                     [4, 4, 4],
         >>>                     [2, 3, 2],
         >>>                     [1, 1, 1]])
-        >>> rank = rank_position_method(matrix)
+        >>> rank = rank_position_method(rankings)
 
     Returns
     -------
