@@ -10,7 +10,7 @@ from .utils import memory_guard
 
 @memory_guard
 def calculate_preference(func: callable, 
-                            results: np.ndarray | tuple, 
+                            results: list | np.ndarray | tuple, 
                             method: callable, 
                             call_kwargs: dict, 
                             only_preference: bool = True, 
@@ -56,6 +56,7 @@ def calculate_preference(func: callable,
         >>> indexes = np.array([[0, 2], 1], dtype='object')
         >>> results = discrete_modification(matrix, discrete_values, indexes)
         >>> kwargs = {
+        >>>     'matrix': matrix,,
         >>>     'weights': np.ones(matrix.shape[0])/matrix.shape[0],
         >>>     'types': np.ones(matrix.shape[0])
         >>> }
@@ -71,6 +72,7 @@ def calculate_preference(func: callable,
         >>> 
         >>> kwargs = {
         >>>     'matrix': np.random.random((10, 3)),
+        >>>     'weights': weights,
         >>>     'types': np.ones(3)
         >>> }
         >>> 
@@ -85,6 +87,7 @@ def calculate_preference(func: callable,
         >>> 
         >>> kwargs = {
         >>>     'matrix': np.random.random((10, 3)),
+        >>>     'weights': weights,
         >>>     'types': np.ones(3)
         >>> }
         >>> 
@@ -97,13 +100,13 @@ def calculate_preference(func: callable,
     """
 
     Validator.is_callable(func)
-    Validator.is_type_valid(results, (np.ndarray, tuple))
+    Validator.is_type_valid(results, (list, np.ndarray, tuple))
     Validator.is_callable(method)
     Validator.is_type_valid(call_kwargs, dict)
     Validator.is_key_in_dict(['matrix', 'weights'], call_kwargs)
     Validator.is_type_valid(only_preference, bool)
-    Validator.is_type_valid(method_type, (None, int))
-    if isinstance(method_type, int):
+    if method_type is not None:
+        Validator.is_type_valid(method_type, int)
         Validator.is_in_list(method_type, [-1, 1])
 
     def preference_aggregator(results: tuple, 
