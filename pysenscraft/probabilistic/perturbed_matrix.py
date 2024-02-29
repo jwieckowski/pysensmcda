@@ -73,7 +73,7 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
     Validator.is_positive_value(simulations)
     Validator.is_type_valid(precision, int)
     Validator.is_positive_value(precision)
-    Validator.is_type_valid(perturbation, (int, float, np.ndarray))
+    Validator.is_type_valid(perturbation_scale, (int, float, np.ndarray))
 
     if isinstance(perturbation_scale, (float, int)):
         perturbation_scale = np.full(matrix.shape[0], perturbation_scale)

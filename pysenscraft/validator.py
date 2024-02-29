@@ -112,11 +112,18 @@ class Validator:
 
     @staticmethod
     def is_in_list(var, var_list, custom_message = None):
-        if any([v not in var_list for v in var]):
-            if custom_message:
-                raise ValueError(custom_message)
-            else:
-                raise ValueError(f"'{get_var_name(var)}' should contain only values from {var_list}")
+        if isinstance(var, (list, np.ndarray)):
+            if any([v not in var_list for v in var]):
+                if custom_message:
+                    raise ValueError(custom_message)
+                else:
+                    raise ValueError(f"'{get_var_name(var)}' should contain only values from {var_list}")
+        else:
+            if var not in var_list:
+                if custom_message:
+                    raise ValueError(custom_message)
+                else:
+                    raise ValueError(f"'{get_var_name(var)}' should be one of the values from {var_list}")
         return True
 
     @staticmethod

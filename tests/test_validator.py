@@ -65,6 +65,7 @@ def test_is_in_range():
 def test_is_in_list():
     # Should not raise an exception
     Validator.is_in_list([1, 2, 3], [1, 2, 3, 4, 5])
+    Validator.is_in_list(3, [1, 2, 3, 4, 5])
     # Should raise an exception
     with raises(ValueError):
         Validator.is_in_list([1, 6], [1, 2, 3, 4, 5])
