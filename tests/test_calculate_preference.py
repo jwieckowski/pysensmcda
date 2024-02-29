@@ -64,7 +64,6 @@ def test_calculate_preference_criteria_sensitivity_aggregated_results():
     }
 
     results= calculate_preference(percentage_modification, results, topsis, kwargs, only_preference=False, method_type=1)
-    print(results[0])
     assert len(results) == 30
     assert len(results[0]) == 5
     assert results[0][0] == 0
