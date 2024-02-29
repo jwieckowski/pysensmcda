@@ -207,10 +207,11 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
     Validator.is_type_valid(step, float)
     Validator.is_type_valid(precision, int)
     Validator.is_positive_value(precision)
-    Validator.is_type_valid(cores_num, (None, int))
     if cores_num is not None:
+        Validator.is_type_valid(cores_num, int)
         Validator.is_positive_value(cores_num)
-    Validator.is_type_valid(file_name, (None, str))
+    if file_name is not None:
+        Validator.is_type_valid(file_name, str)
     Validator.is_type_valid(return_array, bool)
     Validator.is_type_valid(sequential, bool)
     Validator.is_type_valid(save_zeros, bool)

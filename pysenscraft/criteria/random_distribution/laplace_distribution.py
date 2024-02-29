@@ -38,8 +38,8 @@ def laplace_distribution(size: int, loc: float = 0.0, scale: float = 1.0) -> np.
 
     Validator.is_type_valid(size, int)
     Validator.is_positive_value(size)
-    Validator.is_type_valid(loc, float)
-    Validator.is_type_valid(scale, float)
+    Validator.is_type_valid(loc, (int, float))
+    Validator.is_type_valid(scale, (int, float))
     Validator.is_positive_value(scale)
 
     weights = np.abs(np.random.laplace(loc, scale, size=size))

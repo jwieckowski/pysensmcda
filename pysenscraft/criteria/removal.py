@@ -69,7 +69,7 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
     ...     [4, 3, 2, 1, 4]
     ... ])
     >>> weights = np.array([0.25, 0.25, 0.2, 0.2, 0.1])
-    >>> results = remove_criteria(matrix, weights, np.array([[0, 5], 2, 3], dtype='object'))
+    >>> results = remove_criteria(matrix, weights, np.array([[0, 4], 2, 3], dtype='object'))
     >>> for result in results:
     ...     print(result)
     """
@@ -79,8 +79,9 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
     Validator.is_dimension_valid(matrix, 2)
     Validator.is_dimension_valid(weights, 1)
     Validator.is_shape_equal(matrix.shape[1], weights.shape[0], custom_message="Number of columns in 'matrix' and length of 'weights' are different")
-    Validator.is_type_valid(indexes, (None, int, np.ndarray))
-    Validator.are_indexes_valid(indexes, weights.shape[0])
+    if indexes is not None:
+        Validator.is_type_valid(indexes, (int, np.ndarray))
+        Validator.are_indexes_valid(indexes, weights.shape[0])
 
     crit_indexes = None
     if indexes is None:

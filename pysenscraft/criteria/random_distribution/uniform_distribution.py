@@ -39,7 +39,7 @@ def uniform_distribution(size: int, low: float = 0.0, high: float = 1.0) -> np.n
     Validator.is_type_valid(size, int)
     Validator.is_positive_value(size)
     
-    if low < high:
+    if low > high:
         raise ValueError('Parameters should follow the condition low < high')
 
     weights = np.abs(np.random.uniform(low, high, size=size))

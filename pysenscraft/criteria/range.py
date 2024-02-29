@@ -92,8 +92,9 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
     Validator.is_type_valid(range_values, np.ndarray)
     Validator.is_dimension_valid(range_values, 2)
     Validator.is_shape_equal(weights.shape[0], range_values.shape[0], custom_message="Length of 'weights' and 'range_values' are different")
-    Validator.is_type_valid(indexes, (None, np.ndarray))
-    Validator.are_indexes_valid(indexes, weights.shape[0])
+    if indexes is not None:
+        Validator.is_type_valid(indexes, np.ndarray)
+        Validator.are_indexes_valid(indexes, weights.shape[0])
 
     results = []
 

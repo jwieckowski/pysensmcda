@@ -7,8 +7,6 @@ from dataclasses import dataclass
 from pymcdm.correlations import weighted_spearman
 from ..validator import Validator
 from ..utils import memory_guard
-from pymcdm.methods import COMET, TOPSIS, VIKOR
-from pymcdm.methods.comet_tools import MethodExpert
 
 @dataclass
 class ICRAResults:
