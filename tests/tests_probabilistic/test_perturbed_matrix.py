@@ -37,3 +37,12 @@ def test_perturbed_matrix_2d_scale():
     results = perturbed_matrix(matrix, simulations, precision, perturbation_scale)
     assert len(results) == simulations
     assert all(np.array_equal(r.shape, matrix.shape) for r in results)
+
+def test_perturbed_matrix_error():
+    matrix = 1
+    simulations = 100
+    precision = 3
+    perturbation_scale = np.array([[0.4, 0.5, 1], [0.7, 0.3, 1.2], [0.5, 0.1, 1.5]])
+    with raises(TypeError):
+        perturbed_matrix(matrix, simulations, precision, perturbation_scale)
+        

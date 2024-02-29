@@ -185,18 +185,18 @@ def ranking_demotion(matrix: np.ndarray,
     Validator.is_in_list(direction, [-1, 1])
     Validator.is_shape_equal(matrix.shape[0], initial_ranking.shape[0], custom_message="Number of rows in 'matrix' and length of 'initial_ranking' are different")
     Validator.is_shape_equal(matrix.shape[0], direction.shape[0], custom_message="Number of rows in 'matrix' and length of 'direction' are different")
-    Validator.is_type_valid(bounds, (None, np.ndarray))    
+    if bounds is not None:
+        Validator.is_type_valid(bounds, np.ndarray)    
     Validator.is_type_valid(call_kwargs, dict)
     Validator.is_type_valid(ranking_descending, bool)
     Validator.is_type_valid(step, (int, float))
     Validator.is_type_valid(return_zeros, bool)
-    Validator.is_type_valid(max_modification, (None, int))
-    Validator.is_type_valid(positions, (None, np.ndarray))
-
+    if max_modification is not None:
+        Validator.is_type_valid(max_modification, int)
     if bounds is None and max_modification is None:
         raise TypeError("'max_modification' parameter must be given when 'bounds' is None")
-
     if positions is not None:
+        Validator.is_type_valid(positions, np.ndarray)
         Validator.is_shape_equal(matrix.shape[0], positions.shape[0], custom_message="Number of rows in 'matrix' and length of 'positions' are different")
         Validator.is_in_range(positions, 1, positions.shape[0])
     Validator.is_key_in_dict(['matrix'], call_kwargs)

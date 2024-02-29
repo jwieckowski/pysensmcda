@@ -191,13 +191,15 @@ def ranking_promotion(matrix: np.ndarray,
     Validator.is_dimension_valid(matrix, 2)
     Validator.is_shape_equal(matrix.shape[0], initial_ranking.shape[0], custom_message="Number of rows in 'matrix' and length of 'initial_ranking' are different")
     Validator.is_shape_equal(matrix.shape[0], direction.shape[0], custom_message="Number of rows in 'matrix' and length of 'direction' are different")
-    Validator.is_type_valid(bounds, (None, np.ndarray))
-
+    if bounds is not None:
+        Validator.is_type_valid(bounds, np.ndarray)
+    if max_modification is not None:
+        Validator.is_type_valid(max_modification, int)
     if bounds is None and max_modification is None:
         raise TypeError("'max_modification' parameter must be given when 'bounds' is None")
 
-    Validator.is_type_valid(positions, (None, np.ndarray))
     if positions is not None:
+        Validator.is_type_valid(positions, np.ndarray)
         Validator.is_shape_equal(matrix.shape[0], positions.shape[0], custom_message="Number of rows in 'matrix' and length of 'positions' are different")
         Validator.is_in_range(positions, 1, positions.shape[0])
     Validator.is_type_valid(call_kwargs, dict)
