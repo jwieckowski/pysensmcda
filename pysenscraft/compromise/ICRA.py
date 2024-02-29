@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from pymcdm.correlations import weighted_spearman
 from ..validator import Validator
 from ..utils import memory_guard
+from pymcdm.methods import COMET, TOPSIS, VIKOR
+from pymcdm.methods.comet_tools import MethodExpert
 
 @dataclass
 class ICRAResults:
@@ -110,8 +112,9 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
     Validator.is_callable(corr_coef)
     Validator.is_type_valid(max_iters, int)
     Validator.is_positive_value(max_iters)
-    Validator.is_type_valid(compromise_weights, (None, np.ndarray))
-    Validator.is_sum_valid(compromise_weights, 1)
+    if compromise_weights is not None:
+        Validator.is_type_valid(compromise_weights, np.ndarray)
+        Validator.is_sum_valid(compromise_weights, 1)
 
     matrix = preferences
     rankings = np.array([rank(pref, types[idx]) for idx, pref in enumerate(matrix.T)]).T
