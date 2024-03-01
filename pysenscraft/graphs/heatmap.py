@@ -91,7 +91,8 @@ def heatmap(matrix: np.ndarray,
     Validator.is_type_valid(figsize, tuple)
     Validator.is_type_valid(label_fontsize, int)
     Validator.is_type_valid(title_fontsize, int)
-    Validator.is_type_valid(ax, (None, plt.Axes))
+    if ax is not None:
+        Validator.is_type_valid(ax, plt.Axes)
 
     if ax is None:
         plt.figure(figsize=figsize)
