@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from ..validator import Validator
 
-def percentage_graph(percentage_changes: list, 
+def percentage_graph(percentage_changes: list | np.ndarray, 
                     new_positions: list, 
                     ax: plt.Axes | None = None, 
                     xticks: list | None = None, 
@@ -17,7 +17,7 @@ def percentage_graph(percentage_changes: list,
 
     Parameters
     ----------
-    percentage_changes: list
+    percentage_changes: list | ndarray
         Changes of values of criteria in percentage values.
     new_positions: list
         List of positions acquired in promotion or demotion process.
@@ -52,10 +52,12 @@ def percentage_graph(percentage_changes: list,
     ax : Axes
         Axes object on which graph was drawn.
     """
-    Validator.is_type_valid(percentage_changes, list)
+    Validator.is_type_valid(percentage_changes, (list, np.ndarray))
     Validator.is_type_valid(new_positions, list)
-    Validator.is_type_valid(ax, (None, plt.Axes))
-    Validator.is_type_valid(xticks, (None, list))
+    if ax is not None:
+        Validator.is_type_valid(ax, plt.Axes)
+    if xticks is not None:
+        Validator.is_type_valid(xticks, list)
     Validator.is_type_valid(percentage_kwargs, dict)
     Validator.is_type_valid(kind, str)
     Validator.is_in_list(kind, ['bar', 'line'])
@@ -164,7 +166,8 @@ def rank_graph(initial_rank: int | float,
     """
     Validator.is_type_valid(initial_rank, (int, float))
     Validator.is_type_valid(new_positions, list)
-    Validator.is_type_valid(ax, (None, plt.Axes))
+    if ax is not None:
+        Validator.is_type_valid(ax, plt.Axes)
     Validator.is_type_valid(palette, dict)
     Validator.is_type_valid(rank_kwargs, dict)
 
@@ -196,7 +199,7 @@ def rank_graph(initial_rank: int | float,
 
 def pd_rankings_graph(initial_rank: int | float, 
                     new_positions: list, 
-                    percentage_changes: list, 
+                    percentage_changes: list | np.ndarray, 
                     xticks: list | None = None, 
                     kind: str = 'bar', 
                     title: str = '', 
@@ -264,12 +267,14 @@ def pd_rankings_graph(initial_rank: int | float,
     """
     Validator.is_type_valid(initial_rank, (int, float))
     Validator.is_type_valid(new_positions, list)
-    Validator.is_type_valid(percentage_changes, list)
-    Validator.is_type_valid(xticks, (None, list))
+    Validator.is_type_valid(percentage_changes, (list, np.ndarray))
+    if xticks is not None:
+        Validator.is_type_valid(xticks, list)
     Validator.is_type_valid(kind, str)
     Validator.is_in_list(kind, ['bar', 'line'])
     Validator.is_type_valid(title, str)
-    Validator.is_type_valid(ax, (None, plt.Axes))
+    if ax is not None:
+        Validator.is_type_valid(ax, plt.Axes)
     Validator.is_type_valid(draw_ranking_change, bool)
     Validator.is_type_valid(height_ratio, list)
     Validator.is_type_valid(percentage_kwargs, dict)

@@ -115,9 +115,11 @@ def rankings_distribution(rankings: np.ndarray,
         return df
     
     Validator.is_type_valid(rankings, np.ndarray)
-    Validator.is_type_valid(ax, (None, plt.Axes))
+    if ax is not None:
+        Validator.is_type_valid(ax, plt.Axes)
     Validator.is_type_valid(title, str)
-    Validator.is_type_valid(methods, (list, None))
+    if methods is not None:
+        Validator.is_type_valid(methods, list)
     Validator.is_type_valid(legend_loc, str)
     Validator.is_in_list(legend_loc, ['upper', 'lower', 'right'])
     Validator.is_type_valid(plot_type, str)

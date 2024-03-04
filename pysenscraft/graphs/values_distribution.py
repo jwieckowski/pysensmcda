@@ -75,15 +75,18 @@ def hist_dist(data: np.ndarray,
     """
     
     Validator.is_type_valid(data, np.ndarray)
-    Validator.is_type_valid(ax, (None, plt.Axes))
-    Validator.is_type_valid(fig, (None, plt.Figure))
+    if ax is not None:
+        Validator.is_type_valid(ax,plt.Axes)
+    if fig is not None:
+        Validator.is_type_valid(fig, plt.Figure)
     Validator.is_type_valid(xlabel, str)
     Validator.is_type_valid(kind, str)
     Validator.is_in_list(kind, ['hist+kde', 'hist', 'kde'])
     Validator.is_type_valid(show_slider, bool)
     Validator.is_type_valid(title, str)
     Validator.is_type_valid(slider_label, str)
-    Validator.is_type_valid(slider_pad, (None, float))
+    if slider_pad is not None:
+        Validator.is_type_valid(slider_pad, float)
     Validator.is_type_valid(bins_count, (str, int))
     Validator.is_type_valid(slider_size, (str, float))
     Validator.is_type_valid(min_bins, int)
@@ -236,9 +239,9 @@ def mutli_hist_dist(data: np.ndarray,
     
     Validator.is_type_valid(data, np.ndarray)
     Validator.is_type_valid(nrows, int)
-    Validator.is_positive_value(nrows, int)
+    Validator.is_positive_value(nrows)
     Validator.is_type_valid(ncols, int)
-    Validator.is_positive_value(ncols, int)
+    Validator.is_positive_value(ncols)
     Validator.is_type_valid(figsize, tuple)
     Validator.is_type_valid(ax_title, bool)
     Validator.is_type_valid(slider_label, bool)
