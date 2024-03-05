@@ -106,10 +106,10 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
 
         return new_matrix
 
-    Validator.is_type_valid(matrix, np.ndarray)
-    Validator.is_dimension_valid(matrix, 2)
-    Validator.is_type_valid(range_values, np.ndarray)
-    Validator.is_type_valid(step, (int, float, np.ndarray))
+    Validator.is_type_valid(matrix, np.ndarray, 'matrix')
+    Validator.is_dimension_valid(matrix, 2, 'matrix')
+    Validator.is_type_valid(range_values, np.ndarray, 'range_values')
+    Validator.is_type_valid(step, (int, np.integer, float, np.floating, np.ndarray), 'step')
 
     if range_values.ndim == 2:
         Validator.is_shape_equal(matrix.shape[1], range_values.shape[0], custom_message="Number of columns in 'matrix' and length of 'range_values' are different")
@@ -117,7 +117,7 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
         Validator.is_shape_equal(matrix.shape, (range_values.shape[0], range_values.shape[1]), custom_message="Shapes of 'matrix' and 'range_values' are different")
 
     if indexes is not None:
-        Validator.is_type_valid(indexes, np.ndarray)
+        Validator.is_type_valid(indexes, np.ndarray, 'indexes')
         Validator.are_indexes_valid(indexes, matrix.shape[1])
 
     if isinstance(step, np.ndarray):
@@ -133,7 +133,7 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
     else:
         indexes_values = indexes
 
-    if isinstance(step, (int, float)):
+    if isinstance(step, (int, np.integer, float, np.floating)):
         change_steps = np.array([step] * matrix.shape[1])
     else:
         change_steps = step
@@ -163,7 +163,7 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
                     changes = list(product(*range_changes[alt_idx][crit_idx]))
 
             for change in changes:
-                change_val = np.round(change, 6) if isinstance(change, (int, np.integer, float)) else tuple(np.round(change, 6).tolist())
+                change_val = np.round(change, 6) if isinstance(change, (int, np.integer, float, np.floating)) else tuple(np.round(change, 6).tolist())
 
                 new_matrix = modify_matrix(matrix, alt_idx, crit_idx, change)
 

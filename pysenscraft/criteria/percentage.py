@@ -94,18 +94,18 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
         
         return new_weights / np.sum(new_weights)
 
-    Validator.is_type_valid(weights, np.ndarray)
-    Validator.is_dimension_valid(weights, 1)
+    Validator.is_type_valid(weights, np.ndarray, 'weights')
+    Validator.is_dimension_valid(weights, 1, 'weights')
     Validator.is_sum_valid(weights, 1)
-    Validator.is_type_valid(percentages, (int, np.ndarray))
+    Validator.is_type_valid(percentages, (int, np.integer, np.ndarray), 'percentages')
     if isinstance(percentages, np.ndarray):
         Validator.is_shape_equal(weights.shape, percentages.shape, custom_message="Shapes of 'weights' and 'percentages' are different")
     if direction is not None:
-        Validator.is_type_valid(direction, np.ndarray)
+        Validator.is_type_valid(direction, np.ndarray, 'direction')
         Validator.is_shape_equal(weights.shape, direction.shape, custom_message="Shapes of 'weights' and 'direction' are different")
-        Validator.is_in_list(direction, [-1, 1])
+        Validator.is_in_list(direction, [-1, 1], 'direction')
     if indexes is not None:    
-        Validator.is_type_valid(indexes, np.ndarray)
+        Validator.is_type_valid(indexes, np.ndarray, 'indexes')
         Validator.are_indexes_valid(indexes, weights.shape[0])
 
     results = []

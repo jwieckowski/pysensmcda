@@ -29,7 +29,7 @@ def dominance_directed_graph(rankings: np.ndarray) -> np.ndarray:
         ndarray
             Numpy array containing compromised ranking.
     """
-    Validator.is_type_valid(rankings, np.ndarray)
+    Validator.is_type_valid(rankings, np.ndarray, 'rankings')
 
     alt_num = rankings.shape[0]
 

@@ -106,26 +106,26 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
 
         return new_matrix
 
-    Validator.is_type_valid(matrix, np.ndarray)
-    Validator.is_dimension_valid(matrix, 2)
+    Validator.is_type_valid(matrix, np.ndarray, 'matrix')
+    Validator.is_dimension_valid(matrix, 2, 'matrix')
 
-    Validator.is_type_valid(percentages, (int, np.ndarray))
+    Validator.is_type_valid(percentages, (int, np.integer, np.ndarray), 'percentages')
     if isinstance(percentages, np.ndarray):
         # check if matrix and percentages have the same length
         Validator.is_shape_equal(matrix.shape[1], percentages.shape[0], custom_message="Number of columns in 'matrix' and length of 'percentages' are different")
 
     if direction is not None:
-        Validator.is_type_valid(direction, np.ndarray)
+        Validator.is_type_valid(direction, np.ndarray, 'direction')
         # check if matrix and direction have the same length
         Validator.is_shape_equal(matrix.shape[1], direction.shape[0], custom_message="Number of columns in 'matrix' and length of 'direction' are different")
 
-    Validator.is_type_valid(step, (int, np.ndarray))
+    Validator.is_type_valid(step, (int, np.integer, np.ndarray), 'step')
     if isinstance(step, np.ndarray):
         # check if matrix and step have the same length
         Validator.is_shape_equal(matrix.shape[1], step.shape[0], custom_message="Number of columns in 'matrix' and length of 'step' are different")
 
     if indexes is not None:
-        Validator.is_type_valid(indexes, np.ndarray)
+        Validator.is_type_valid(indexes, np.ndarray, 'indexes')
         Validator.are_indexes_valid(indexes, matrix.shape[1])
         
     results = []
@@ -138,7 +138,7 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
         percentages_values = percentages
 
     # vectors with subsequent changes for criteria in matrix
-    if isinstance(step, int):
+    if isinstance(step, (int, np.integer)):
         percentages_changes = np.array([np.arange(step, p+step, step) / 100 for p in percentages_values], dtype='object')
     else:
         percentages_changes = np.array([np.arange(step[idx], p+step[idx], step[idx]) / 100 for idx, p in enumerate(percentages_values)], dtype='object')

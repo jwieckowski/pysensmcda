@@ -66,12 +66,12 @@ def improved_borda(preferences: np.ndarray, preference_types: np.ndarray | list=
 
     """
     
-    Validator.is_type_valid(preferences, np.ndarray)
-    Validator.is_type_valid(preference_types, (list, np.ndarray))
-    Validator.is_callable(normalization)
-    Validator.is_callable(utility_funcs)
-    Validator.is_type_valid(norm_types, (list, np.ndarray))
-    Validator.is_in_list(norm_types, [-1, 1])
+    Validator.is_type_valid(preferences, np.ndarray, 'preferences')
+    Validator.is_type_valid(preference_types, (list, np.ndarray), 'preference_types')
+    Validator.is_callable(normalization, 'normalization')
+    Validator.is_callable(utility_funcs, 'utility_funcs')
+    Validator.is_type_valid(norm_types, (list, np.ndarray), 'norm_types')
+    Validator.is_in_list(norm_types, [-1, 1], 'norm_types')
 
     alternatives_num, methods_num = preferences.shape
 

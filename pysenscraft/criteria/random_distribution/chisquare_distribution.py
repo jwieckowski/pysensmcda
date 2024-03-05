@@ -33,10 +33,10 @@ def chisquare_distribution(size: int, df: float = 1.0) -> np.ndarray:
     >>> print(weights)
     """
 
-    Validator.is_type_valid(size, int)
-    Validator.is_positive_value(size)
-    Validator.is_type_valid(df, (int, float))
-    Validator.is_positive_value(df)
+    Validator.is_type_valid(size, (int, np.integer), 'size')
+    Validator.is_positive_value(size, 'size')
+    Validator.is_type_valid(df, (int, np.integer, float, np.floating), 'df')
+    Validator.is_positive_value(df, 'df')
 
     weights = np.abs(np.random.chisquare(df, size=size))
     return np.array(weights) / np.sum(weights)

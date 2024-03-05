@@ -86,14 +86,14 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
 
         return new_weights / np.sum(new_weights)
 
-    Validator.is_type_valid(weights, np.ndarray)
-    Validator.is_dimension_valid(weights, 1)
+    Validator.is_type_valid(weights, np.ndarray, 'weights')
+    Validator.is_dimension_valid(weights, 1, 'weights')
     Validator.is_sum_valid(weights, 1)
-    Validator.is_type_valid(range_values, np.ndarray)
-    Validator.is_dimension_valid(range_values, 2)
+    Validator.is_type_valid(range_values, np.ndarray, 'range_values')
+    Validator.is_dimension_valid(range_values, 2, 'range_values')
     Validator.is_shape_equal(weights.shape[0], range_values.shape[0], custom_message="Length of 'weights' and 'range_values' are different")
     if indexes is not None:
-        Validator.is_type_valid(indexes, np.ndarray)
+        Validator.is_type_valid(indexes, np.ndarray, 'indexes')
         Validator.are_indexes_valid(indexes, weights.shape[0])
 
     results = []

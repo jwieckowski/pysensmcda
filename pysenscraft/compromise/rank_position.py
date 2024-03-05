@@ -28,7 +28,7 @@ def rank_position(rankings: np.ndarray) -> np.ndarray:
         ndarray
             Vector including compromise ranking.
     """
-    Validator.is_type_valid(rankings, np.ndarray)
+    Validator.is_type_valid(rankings, np.ndarray, 'rankings')
 
     preference = 1 / (np.sum((1 / rankings), axis = 1))
     

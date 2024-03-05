@@ -47,7 +47,7 @@ class Validator:
         return True
 
     @staticmethod
-    def is_shape_equal(size1, size2, var_name_1, var_name_2, custom_message = None):
+    def is_shape_equal(size1, size2, var_name_1 ='', var_name_2='', custom_message = None):
         if size1 != size2:
             if custom_message:
                 raise ValueError(custom_message)

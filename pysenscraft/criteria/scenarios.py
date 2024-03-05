@@ -202,19 +202,19 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
         if return_array:
             return results
 
-    Validator.is_type_valid(crit_num, int)
-    Validator.is_positive_value(crit_num)
-    Validator.is_type_valid(step, float)
-    Validator.is_type_valid(precision, int)
-    Validator.is_positive_value(precision)
+    Validator.is_type_valid(crit_num, (int, np.integer), 'crit_num')
+    Validator.is_positive_value(crit_num, 'crit_num')
+    Validator.is_type_valid(step, (float, np.floating), 'step')
+    Validator.is_type_valid(precision, (int, np.integer), 'precision')
+    Validator.is_positive_value(precision, 'precision')
     if cores_num is not None:
-        Validator.is_type_valid(cores_num, int)
-        Validator.is_positive_value(cores_num)
+        Validator.is_type_valid(cores_num, (int, np.integer), 'cores_num')
+        Validator.is_positive_value(cores_num, 'cores_num')
     if file_name is not None:
-        Validator.is_type_valid(file_name, str)
-    Validator.is_type_valid(return_array, bool)
-    Validator.is_type_valid(sequential, bool)
-    Validator.is_type_valid(save_zeros, bool)
+        Validator.is_type_valid(file_name, str, 'file_name')
+    Validator.is_type_valid(return_array, bool, 'return_array')
+    Validator.is_type_valid(sequential, bool, 'sequential')
+    Validator.is_type_valid(save_zeros, bool, 'save_zeros')
 
     if cores_num is None:
         num_cores = multiprocessing.cpu_count()

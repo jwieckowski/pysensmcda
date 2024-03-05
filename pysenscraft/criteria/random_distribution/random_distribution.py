@@ -26,8 +26,8 @@ def random_distribution(size: int) -> np.ndarray:
     >>> print(weights)
     """
 
-    Validator.is_type_valid(size, int)
-    Validator.is_positive_value(size)
+    Validator.is_type_valid(size, (int, np.integer), 'size')
+    Validator.is_positive_value(size, 'size')
 
     weights = np.abs(np.random.random(size=size))
     return np.array(weights) / np.sum(weights)

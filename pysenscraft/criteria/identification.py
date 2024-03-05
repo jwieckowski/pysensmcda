@@ -94,24 +94,24 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     ...     print(r)
     """
     
-    Validator.is_callable(method)
-    Validator.is_type_valid(excluded_criteria, int)
-    Validator.is_positive_value(excluded_criteria)
-    Validator.is_key_in_dict(['matrix', 'weights', 'types'], call_kwargs)
-    Validator.is_type_in_dict_valid('matrix', call_kwargs, np.ndarray)
+    Validator.is_callable(method, 'method')
+    Validator.is_type_valid(excluded_criteria, (int, np.integer), 'excluded_criteria')
+    Validator.is_positive_value(excluded_criteria, 'excluded_criteria')
+    Validator.is_key_in_dict(['matrix', 'weights', 'types'], call_kwargs, 'call_kwargs')
+    Validator.is_type_in_dict_valid('matrix', call_kwargs, np.ndarray, 'call_kwargs')
     initial_matrix = call_kwargs['matrix'].copy()
     Validator.is_dimension_valid(initial_matrix, 2, custom_message="'matrix' in 'call_kwargs' should be a 2D array'")
 
     if excluded_criteria > initial_matrix.shape[1]:
         raise ValueError('`excluded_criteria` should not exceed the number of columns in matrix')
     
-    Validator.is_type_in_dict_valid('types', call_kwargs, np.ndarray)
+    Validator.is_type_in_dict_valid('types', call_kwargs, np.ndarray, 'call_kwargs')
     types = call_kwargs['types'].copy()
 
     Validator.is_dimension_valid(types, 1, custom_message="'types' in 'call_kwargs' should be a 1D vector'")
     call_kwargs['weights'] = equal_weights(initial_matrix)
 
-    Validator.is_callable(corr_coef)
+    Validator.is_callable(corr_coef, 'corr_coef')
     if not isinstance(corr_coef, list):
         corr_coef = [corr_coef]
 

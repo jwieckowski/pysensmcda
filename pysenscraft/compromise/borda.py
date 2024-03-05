@@ -29,7 +29,7 @@ def borda(rankings: np.ndarray) -> np.ndarray:
             Numpy array containing compromised ranking.
     """
 
-    Validator.is_type_valid(rankings, np.ndarray)
+    Validator.is_type_valid(rankings, np.ndarray, 'rankings')
 
     alt_num = rankings.shape[0]
     count = np.sum((alt_num + 1) - rankings, axis=1)

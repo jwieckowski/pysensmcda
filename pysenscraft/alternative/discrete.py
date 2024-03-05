@@ -94,14 +94,14 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
 
         return new_matrix
 
-    Validator.is_type_valid(matrix, np.ndarray)
+    Validator.is_type_valid(matrix, np.ndarray, 'matrix')
     Validator.is_dimension_valid(matrix, 2)
-    Validator.is_type_valid(discrete_values, np.ndarray)
+    Validator.is_type_valid(discrete_values, np.ndarray, 'discrete_values')
 
     dv_dim = 0
     # check if matrix and discrete values have the same length
     if discrete_values.dtype == 'object':
-        _, dv_dim = Validator.is_array_2D_3D(discrete_values, matrix)
+        _, dv_dim = Validator.is_array_2D_3D(discrete_values, matrix, 'discrete_values', 'matrix')
     else:
         if discrete_values.ndim == 2:
             Validator.is_shape_equal(matrix.shape[1], discrete_values.shape[0], custom_message="Number of columns in 'matrix' and length of 'discrete_values' are different")
@@ -110,7 +110,7 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
         dv_dim = discrete_values.ndim
 
     if indexes is not None:
-        Validator.is_type_valid(indexes, np.ndarray)
+        Validator.is_type_valid(indexes, np.ndarray, 'indexes')
         Validator.are_indexes_valid(indexes, matrix.shape[1])
 
     results = []
@@ -139,7 +139,7 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
                     changes = list(product(*discrete_values[alt_idx][crit_idx]))
 
             for change in changes:
-                change_val = np.round(change, 6) if isinstance(change, (int, np.integer, float)) else tuple(np.round(change, 6).tolist())
+                change_val = np.round(change, 6) if isinstance(change, (int, np.integer, float, np.floating)) else tuple(np.round(change, 6).tolist())
 
                 new_matrix = modify_matrix(matrix, alt_idx, crit_idx, change)
 
