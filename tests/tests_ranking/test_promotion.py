@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.ranking import ranking_promotion
+from pysensmcda.ranking import ranking_promotion
 from pymcdm.methods import COPRAS
 
 def test_ranking_promotion_default_parameters():

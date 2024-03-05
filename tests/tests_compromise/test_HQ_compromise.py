@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.compromise import HQ_compromise
+from pysensmcda.compromise import HQ_compromise
 
 def test_HQ_compromise_default_parameters():
     rankings = np.array([[2, 2, 2],

@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.alternative import percentage_modification
+from pysensmcda.alternative import percentage_modification
 
 def test_percentage_modification_single_percentage():
     matrix = np.array([[4, 1, 6], [2, 6, 3], [9, 5, 7]])

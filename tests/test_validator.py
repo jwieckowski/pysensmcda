@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.validator import Validator
+from pysensmcda.validator import Validator
 
 def test_is_type_valid():
     # Should not raise an exception

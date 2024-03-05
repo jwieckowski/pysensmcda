@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.criteria import remove_criteria
+from pysensmcda.criteria import remove_criteria
 
 def test_remove_criteria_no_indexes():
     matrix = np.array([

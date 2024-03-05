@@ -45,6 +45,6 @@ dependencies = [
 ]
 
 [project.urls] 
-"Homepage" = "https://github.com/jwieckowski/pysenscraft"
-"Bug Reports" = "https://github.com/jwieckowski/pysenscraft/issues"
-"Source" = "https://github.com/jwieckowski/pysenscraft"
+"Homepage" = "https://github.com/jwieckowski/pysensmcda"
+"Bug Reports" = "https://github.com/jwieckowski/pysensmcda/issues"
+"Source" = "https://github.com/jwieckowski/pysensmcda"

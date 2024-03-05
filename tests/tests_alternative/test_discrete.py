@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.alternative import discrete_modification
+from pysensmcda.alternative import discrete_modification
 
 def test_discrete_modification_example1():
     matrix = np.array([[4, 1, 6], [2, 6, 3], [9, 5, 7]])

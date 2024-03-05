@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.alternative import range_modification
+from pysensmcda.alternative import range_modification
 
 def test_range_modification_2D_range_change():
     matrix = np.array([[4, 1, 6], [2, 6, 3], [9, 5, 7]])

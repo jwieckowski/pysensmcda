@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.ranking import fuzzy_ranking
+from pysensmcda.ranking import fuzzy_ranking
 
 def test_fuzzy_ranking():
     rankings = np.array([

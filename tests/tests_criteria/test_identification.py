@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.criteria import relevance_identification
+from pysensmcda.criteria import relevance_identification
 from pymcdm.methods import TOPSIS
 from pymcdm.weights import equal_weights
 import pymcdm.normalizations as norm

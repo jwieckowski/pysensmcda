@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.criteria import percentage_modification
+from pysensmcda.criteria import percentage_modification
 
 def test_percentage_modification_single_change():
     weights = np.array([0.3, 0.3, 0.4])

@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.probabilistic import monte_carlo_weights
+from pysensmcda.probabilistic import monte_carlo_weights
 
 def test_monte_carlo_weights():
     n = 3

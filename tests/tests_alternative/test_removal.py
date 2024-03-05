@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.alternative import remove_alternatives
+from pysensmcda.alternative import remove_alternatives
 
 def test_remove_alternatives_default_behavior():
     matrix = np.array([

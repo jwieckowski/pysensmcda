@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.compromise.ICRA import iterative_compromise
+from pysensmcda.compromise.ICRA import iterative_compromise
 from pymcdm.methods import TOPSIS, VIKOR, EDAS
 
 def test_ICRA_default_parameters():

@@ -2,10 +2,10 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.calculate_preference import calculate_preference
+from pysensmcda.calculate_preference import calculate_preference
 from pymcdm.methods import TOPSIS
-from pysenscraft.criteria import percentage_modification
-from pysenscraft.alternative import discrete_modification
+from pysensmcda.criteria import percentage_modification
+from pysensmcda.alternative import discrete_modification
 
 def test_calculate_preference_alternative_sensitivity():
     topsis = TOPSIS()

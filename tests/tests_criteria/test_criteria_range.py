@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.criteria import range_modification
+from pysensmcda.criteria import range_modification
 
 def test_range_modification_single_change():
     weights = np.array([0.3, 0.3, 0.4])

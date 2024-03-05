@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.probabilistic import perturbed_weights
+from pysensmcda.probabilistic import perturbed_weights
 
 def test_perturbed_weights_default_parameters():
     weights = np.array([0.3, 0.4, 0.3])

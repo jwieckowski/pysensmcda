@@ -21,7 +21,7 @@ def calculate_preference(func: callable,
     Parameters
     ----------
         func: callable
-            Function for pysenscraft library that was used to acquire results.
+            Function for pysensmcda library that was used to acquire results.
         results: depending on func
             Results of the function which should be given as `func`.
         method: callable
@@ -64,7 +64,7 @@ def calculate_preference(func: callable,
         >>> calculate_preference(discrete_modification, results, topsis, kwargs)
 
     ### Example 2: Criteria sensitivity analysis - return preferences and rankings
-        >>> from pysenscraft.criteria import percentage_modification
+        >>> from pysensmcda.criteria import percentage_modification
         >>> 
         >>> weights = np.array([0.3, 0.3, 0.4])
         >>> percentage = 5
@@ -79,7 +79,7 @@ def calculate_preference(func: callable,
         >>> calculate_preference(percentage_modification, results, topsis, kwargs, method_type=1)
 
     ### Example 3: Criteria sensitivity analysis - return rankings and aggregated results
-        >>> from pysenscraft.criteria import percentage_modification
+        >>> from pysensmcda.criteria import percentage_modification
         >>> 
         >>> weights = np.array([0.3, 0.3, 0.4])
         >>> percentage = 5

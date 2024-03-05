@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.criteria import generate_weights_scenarios
+from pysensmcda.criteria import generate_weights_scenarios
 
 def test_generate_weights_scenarios_parallel_with_array_return():
     scenarios = generate_weights_scenarios(4, 0.1, 3, return_array=True)

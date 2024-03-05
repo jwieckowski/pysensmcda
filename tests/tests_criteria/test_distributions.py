@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.criteria.random_distribution import *
+from pysensmcda.criteria.random_distribution import *
 
 def test_chisquare_distribution_default():
     weights = chisquare_distribution(3)

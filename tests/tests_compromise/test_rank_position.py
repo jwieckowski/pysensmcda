@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.compromise import rank_position
+from pysensmcda.compromise import rank_position
 
 def test_rank_position():
     rankings = np.array([[3, 2, 3],

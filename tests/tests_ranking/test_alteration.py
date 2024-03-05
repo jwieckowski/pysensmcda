@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.ranking import ranking_alteration
+from pysensmcda.ranking import ranking_alteration
 from pymcdm.methods import ARAS
 
 def test_ranking_alteration_default_parameters():

@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscraft.probabilistic import perturbed_matrix
+from pysensmcda.probabilistic import perturbed_matrix
 
 def test_perturbed_matrix_default_parameters():
     matrix = np.array([[4, 3, 7], [1, 9, 6], [7, 5, 3]])
