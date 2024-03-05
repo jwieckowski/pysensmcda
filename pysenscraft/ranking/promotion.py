@@ -190,7 +190,7 @@ def ranking_promotion(matrix: np.ndarray,
     Validator.is_in_list(direction, [-1, 1])
     Validator.is_dimension_valid(matrix, 2)
     Validator.is_shape_equal(matrix.shape[0], initial_ranking.shape[0], custom_message="Number of rows in 'matrix' and length of 'initial_ranking' are different")
-    Validator.is_shape_equal(matrix.shape[0], direction.shape[0], custom_message="Number of rows in 'matrix' and length of 'direction' are different")
+    Validator.is_shape_equal(matrix.shape[1], direction.shape[0], custom_message="Number of rows in 'matrix' and length of 'direction' are different")
     if bounds is not None:
         Validator.is_type_valid(bounds, np.ndarray)
     if max_modification is not None:

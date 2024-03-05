@@ -148,14 +148,16 @@ def ICRA_pref_distribution(results: ICRAResults,
 
     Validator.is_type_valid(results, ICRAResults)
     Validator.is_type_valid(methods, list)
-    Validator.is_type_valid(palettes, list)
+    if palettes is not None:
+        Validator.is_type_valid(palettes, list)
     Validator.is_type_valid(by, str)
     Validator.is_in_list(by, ['methods', 'iters'])
     Validator.is_type_valid(file_name, str)
     Validator.is_type_valid(save, bool)
     Validator.is_type_valid(format, str)
     Validator.is_type_valid(show, bool)
-    Validator.is_type_valid(indexes, (None, list))
+    if indexes is not None:
+        Validator.is_type_valid(indexes, list)
     Validator.is_type_valid(FacetGrid_kwargs, dict)
 
     df = pd.concat([pd.DataFrame(arr, columns=methods) 

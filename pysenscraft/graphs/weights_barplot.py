@@ -63,7 +63,8 @@ def weights_barplot(weights: np.ndarray,
     """
     Validator.is_type_valid(weights, np.ndarray)
     Validator.is_type_valid(title, str)
-    Validator.is_type_valid(ax, (None, plt.Axes))
+    if ax is not None:
+        Validator.is_type_valid(ax, plt.Axes)
     Validator.is_type_valid(width, float)
     Validator.is_type_valid(color, str)
     Validator.is_type_valid(alpha, (int, float))
@@ -177,7 +178,8 @@ def slider_weights_barplot(initial_weights: np.ndarray,
     Validator.is_type_valid(grid_on, bool)
     Validator.is_type_valid(percentage_change, bool)
     Validator.is_type_valid(annotate_bars, bool)
-    Validator.is_type_valid(ax, (None, plt.Axes))
+    if ax is not None:
+        Validator.is_type_valid(ax, plt.Axes)
 
     if ax is None:
         fig, ax = plt.subplots()

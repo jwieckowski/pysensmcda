@@ -6,7 +6,7 @@ from ..validator import Validator
 from ..utils import memory_guard
 
 @memory_guard
-def monte_carlo_weights(n: int, distribution: str = 'uniform', num_samples: int = 1000, params: dict | None = None) -> np.ndarray:
+def monte_carlo_weights(n: int, distribution: str = 'uniform', num_samples: int = 1000, params: dict = dict()) -> np.ndarray:
     """
     Generate criteria weights probabilistically using Monte Carlo simulation.
 
