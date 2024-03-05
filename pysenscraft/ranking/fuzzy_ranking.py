@@ -38,11 +38,11 @@ def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None) -
     >>> print(fuzzy_rank)
     """
 
-    Validator.is_type_valid(rankings, np.ndarray)
-    Validator.is_dimension_valid(rankings, 2)
+    Validator.is_type_valid(rankings, np.ndarray, 'rankings')
+    Validator.is_dimension_valid(rankings, 2, 'rankings')
     if normalization_axis is not None:
-        Validator.is_type_valid(normalization_axis, int)
-        Validator.is_in_list(normalization_axis, [0, 1])
+        Validator.is_type_valid(normalization_axis, (int, np.integer), 'normalization_axis')
+        Validator.is_in_list(normalization_axis, [0, 1], 'normalization_axis')
         
     ALT = len(rankings[0])
 

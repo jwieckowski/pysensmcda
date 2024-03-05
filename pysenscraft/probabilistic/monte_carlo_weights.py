@@ -37,12 +37,12 @@ def monte_carlo_weights(n: int, distribution: str = 'uniform', num_samples: int 
     >>> print(modified_weights)
     """
 
-    Validator.is_type_valid(n, int)
-    Validator.is_type_valid(distribution, str)
+    Validator.is_type_valid(n, (int, np.integer), 'n')
+    Validator.is_type_valid(distribution, str, 'distribution')
     allowed_distributions = ['chisquare', 'laplace', 'normal', 'random', 'triangular', 'uniform']
-    Validator.is_in_list(distribution, allowed_distributions)
-    Validator.is_type_valid(num_samples, int)
-    Validator.is_type_valid(params, dict)
+    Validator.is_in_list(distribution, allowed_distributions, 'distribution')
+    Validator.is_type_valid(num_samples, (int, np.integer), 'num_samples')
+    Validator.is_type_valid(params, dict, 'params')
 
     modified_weights = []
 

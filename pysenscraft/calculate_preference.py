@@ -99,14 +99,14 @@ def calculate_preference(func: callable,
             If only_preference=True, array of preferences calculated for different matrices / weights depending on the type of sensitivity analysis is returned. Else the preferences are appended to results as last column. If `method_type` is set, the rankings are appended to column after preferences.
     """
 
-    Validator.is_callable(func)
-    Validator.is_type_valid(results, (list, np.ndarray, tuple))
-    Validator.is_callable(method)
-    Validator.is_type_valid(call_kwargs, dict)
-    Validator.is_type_valid(only_preference, bool)
+    Validator.is_callable(func, 'func')
+    Validator.is_type_valid(results, (list, np.ndarray, tuple), 'results')
+    Validator.is_callable(method, 'method')
+    Validator.is_type_valid(call_kwargs, dict, 'call_kwargs')
+    Validator.is_type_valid(only_preference, bool, 'only_preference')
     if method_type is not None:
-        Validator.is_type_valid(method_type, int)
-        Validator.is_in_list(method_type, [-1, 1])
+        Validator.is_type_valid(method_type, (int, np.integer), 'method_type')
+        Validator.is_in_list(method_type, [-1, 1], 'method_type')
 
     def preference_aggregator(results: tuple, 
                                 val_list: np.ndarray, 
@@ -139,23 +139,23 @@ def calculate_preference(func: callable,
             return results
 
     if func in [alternative.discrete_modification, alternative.percentage_modification, alternative.range_modification]:
-        Validator.is_key_in_dict(['weights', 'types'], call_kwargs)
+        Validator.is_key_in_dict(['weights', 'types'], call_kwargs, 'call_kwargs')
         val_list = np.asarray(results, dtype='object')[:, 3]
         params = 'matrix'
     elif func in [alternative.remove_alternatives]:
-        Validator.is_key_in_dict(['weights', 'types'], call_kwargs)
+        Validator.is_key_in_dict(['weights', 'types'], call_kwargs, 'call_kwargs')
         val_list = np.asarray(results, dtype='object')[:, 1]
         params = 'matrix'
     elif func in [criteria.percentage_modification, criteria.range_modification]:
-        Validator.is_key_in_dict(['matrix', 'types'], call_kwargs)
+        Validator.is_key_in_dict(['matrix', 'types'], call_kwargs, 'call_kwargs')
         val_list = np.array(results, dtype='object')[:, 2]
         params = 'weights'
     elif func in [probabilistic.monte_carlo_weights, probabilistic.perturbed_weights]:
-        Validator.is_key_in_dict(['matrix', 'types'], call_kwargs)
+        Validator.is_key_in_dict(['matrix', 'types'], call_kwargs, 'call_kwargs')
         val_list = np.array(results)
         params = 'weights'
     elif func in [probabilistic.perturbed_matrix]:
-        Validator.is_key_in_dict(['weights', 'types'], call_kwargs)
+        Validator.is_key_in_dict(['weights', 'types'], call_kwargs, 'call_kwargs')
         val_list = np.array(results)
         params = 'matrix'
     else:

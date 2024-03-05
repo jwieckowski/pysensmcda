@@ -52,16 +52,16 @@ def percentage_graph(percentage_changes: list | np.ndarray,
     ax : Axes
         Axes object on which graph was drawn.
     """
-    Validator.is_type_valid(percentage_changes, (list, np.ndarray))
-    Validator.is_type_valid(new_positions, list)
+    Validator.is_type_valid(percentage_changes, (list, np.ndarray), 'percentage_changes')
+    Validator.is_type_valid(new_positions, list, 'new_positions')
     if ax is not None:
-        Validator.is_type_valid(ax, plt.Axes)
+        Validator.is_type_valid(ax, plt.Axes, 'ax')
     if xticks is not None:
-        Validator.is_type_valid(xticks, list)
-    Validator.is_type_valid(percentage_kwargs, dict)
-    Validator.is_type_valid(kind, str)
-    Validator.is_in_list(kind, ['bar', 'line'])
-    Validator.is_type_valid(palette, dict)
+        Validator.is_type_valid(xticks, list, 'xticks')
+    Validator.is_type_valid(percentage_kwargs, dict, 'percentage_kwargs')
+    Validator.is_type_valid(kind, str, 'kind')
+    Validator.is_in_list(kind, ['bar', 'line'], 'kind')
+    Validator.is_type_valid(palette, dict, 'palette')
 
     if xticks is not None:
         Validator.is_shape_equal(len(xticks), len(percentage_changes), custom_message="Length of 'xticks' and 'percentage_changes' are different")
@@ -164,12 +164,12 @@ def rank_graph(initial_rank: int | float,
     ax : Axes
         Axes object on which graph was drawn.
     """
-    Validator.is_type_valid(initial_rank, (int, float, np.integer, np.floating))
-    Validator.is_type_valid(new_positions, list)
+    Validator.is_type_valid(initial_rank, (int, float, np.integer, np.floating), 'initial_rank')
+    Validator.is_type_valid(new_positions, list, 'new_positions')
     if ax is not None:
-        Validator.is_type_valid(ax, plt.Axes)
-    Validator.is_type_valid(palette, dict)
-    Validator.is_type_valid(rank_kwargs, dict)
+        Validator.is_type_valid(ax, plt.Axes, 'ax')
+    Validator.is_type_valid(palette, dict, 'palette')
+    Validator.is_type_valid(rank_kwargs, dict, 'rank_kwargs')
 
     if ax is None:
         ax = plt.gca()
@@ -265,21 +265,21 @@ def pd_rankings_graph(initial_rank: int | float,
         Axes object on which graphs were drawn. Cax - rank graph, main_ax - percentage graph
 
     """
-    Validator.is_type_valid(initial_rank, (int, float, np.integer, np.floating))
-    Validator.is_type_valid(new_positions, list)
-    Validator.is_type_valid(percentage_changes, (list, np.ndarray))
+    Validator.is_type_valid(initial_rank, (int, float, np.integer, np.floating), 'initial_rank')
+    Validator.is_type_valid(new_positions, list, 'new_positions')
+    Validator.is_type_valid(percentage_changes, (list, np.ndarray), 'percentage_changes')
     if xticks is not None:
-        Validator.is_type_valid(xticks, list)
-    Validator.is_type_valid(kind, str)
-    Validator.is_in_list(kind, ['bar', 'line'])
-    Validator.is_type_valid(title, str)
+        Validator.is_type_valid(xticks, list, 'xticks')
+    Validator.is_type_valid(kind, str, 'kind')
+    Validator.is_in_list(kind, ['bar', 'line'], 'kind')
+    Validator.is_type_valid(title, str, 'title')
     if ax is not None:
-        Validator.is_type_valid(ax, plt.Axes)
-    Validator.is_type_valid(draw_ranking_change, bool)
-    Validator.is_type_valid(height_ratio, list)
-    Validator.is_type_valid(percentage_kwargs, dict)
-    Validator.is_type_valid(rank_kwargs, dict)
-    Validator.is_type_valid(palette, dict)
+        Validator.is_type_valid(ax, plt.Axes, 'ax')
+    Validator.is_type_valid(draw_ranking_change, bool, 'draw_ranking_change')
+    Validator.is_type_valid(height_ratio, list, 'height_ratio')
+    Validator.is_type_valid(percentage_kwargs, dict, 'percentage_kwargs')
+    Validator.is_type_valid(rank_kwargs, dict, 'rank_kwargs')
+    Validator.is_type_valid(palette, dict, 'palette')
 
     if xticks is not None:
         Validator.is_shape_equal(len(xticks), len(percentage_changes), custom_message="Length of 'xticks' and 'percentage_changes' are different")

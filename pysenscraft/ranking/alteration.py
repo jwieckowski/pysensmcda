@@ -90,15 +90,16 @@ def ranking_alteration(weights: np.ndarray,
     
     """
     
-    Validator.is_callable(method)
-    Validator.is_type_valid(weights, np.ndarray)
-    Validator.is_dimension_valid(weights, 1)
-    Validator.is_type_valid(initial_ranking, np.ndarray)
-    Validator.is_type_valid(call_kwargs, dict)
-    Validator.is_key_in_dict(['matrix', 'weights'], call_kwargs)
-    Validator.is_type_valid(ranking_descending, bool)
-    Validator.is_type_valid(step, float)
-    Validator.is_positive_value(step)
+    Validator.is_callable(method, 'method')
+    Validator.is_type_valid(weights, np.ndarray, 'weights')
+    Validator.is_dimension_valid(weights, 1, 'weights')
+    Validator.is_sum_valid(weights)
+    Validator.is_type_valid(initial_ranking, np.ndarray, 'initial_ranking')
+    Validator.is_type_valid(call_kwargs, dict, 'call_kwargs')
+    Validator.is_key_in_dict(['matrix', 'weights'], call_kwargs, 'call_kwargs')
+    Validator.is_type_valid(ranking_descending, bool, 'ranking_descending')
+    Validator.is_type_valid(step, (float, np.floating), 'step')
+    Validator.is_positive_value(step, 'step')
 
     results = []
 

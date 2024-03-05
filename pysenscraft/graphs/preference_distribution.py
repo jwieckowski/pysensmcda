@@ -37,8 +37,8 @@ def preference_distribution(g: sns.FacetGrid, xlabel: str) -> None:
     >>>     plt.show()
     """
 
-    Validator.is_type_valid(g, sns.FacetGrid)
-    Validator.is_type_valid(xlabel, str)
+    Validator.is_type_valid(g, sns.FacetGrid, 'g')
+    Validator.is_type_valid(xlabel, str, 'xlabel')
 
     g.map(sns.kdeplot, xlabel, bw_adjust=.5, clip_on=False, fill=True, alpha=1, linewidth=1.5)
     g.map(sns.kdeplot, xlabel, clip_on=False, color="w", lw=2, bw_adjust=.5)
@@ -146,19 +146,19 @@ def ICRA_pref_distribution(results: ICRAResults,
     >>> ICRA_pref_distribution(result, methods, by='methods', indexes=[0, 2], palettes=palettes)
     """
 
-    Validator.is_type_valid(results, ICRAResults)
-    Validator.is_type_valid(methods, list)
+    Validator.is_type_valid(results, ICRAResults, 'results')
+    Validator.is_type_valid(methods, list, 'methods')
     if palettes is not None:
-        Validator.is_type_valid(palettes, list)
-    Validator.is_type_valid(by, str)
-    Validator.is_in_list(by, ['methods', 'iters'])
-    Validator.is_type_valid(file_name, str)
-    Validator.is_type_valid(save, bool)
-    Validator.is_type_valid(format, str)
-    Validator.is_type_valid(show, bool)
+        Validator.is_type_valid(palettes, list, 'palettes')
+    Validator.is_type_valid(by, str, 'by')
+    Validator.is_in_list(by, ['methods', 'iters'], 'by')
+    Validator.is_type_valid(file_name, str, 'file_name')
+    Validator.is_type_valid(save, bool, 'save')
+    Validator.is_type_valid(format, str, 'format')
+    Validator.is_type_valid(show, bool, 'show')
     if indexes is not None:
-        Validator.is_type_valid(indexes, list)
-    Validator.is_type_valid(FacetGrid_kwargs, dict)
+        Validator.is_type_valid(indexes, list, 'indexes')
+    Validator.is_type_valid(FacetGrid_kwargs, dict, 'FacetGrid_kwargs')
 
     df = pd.concat([pd.DataFrame(arr, columns=methods) 
                         for arr in results.all_preferences], 

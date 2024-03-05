@@ -177,29 +177,29 @@ def ranking_demotion(matrix: np.ndarray,
         for change in crit_values:
             yield change
 
-    Validator.is_callable(method)
-    Validator.is_type_valid(matrix, np.ndarray)
-    Validator.is_dimension_valid(matrix, 2)
-    Validator.is_type_valid(initial_ranking, np.ndarray)
-    Validator.is_type_valid(direction, np.ndarray)
-    Validator.is_in_list(direction, [-1, 1])
+    Validator.is_callable(method, 'method')
+    Validator.is_type_valid(matrix, np.ndarray, 'matrix')
+    Validator.is_dimension_valid(matrix, 2, 'matrix')
+    Validator.is_type_valid(initial_ranking, np.ndarray, 'initial_ranking')
+    Validator.is_type_valid(direction, np.ndarray, 'direction')
+    Validator.is_in_list(direction, [-1, 1], 'direction')
     Validator.is_shape_equal(matrix.shape[0], initial_ranking.shape[0], custom_message="Number of rows in 'matrix' and length of 'initial_ranking' are different")
     Validator.is_shape_equal(matrix.shape[1], direction.shape[0], custom_message="Number of rows in 'matrix' and length of 'direction' are different")
     if bounds is not None:
-        Validator.is_type_valid(bounds, np.ndarray)    
-    Validator.is_type_valid(call_kwargs, dict)
-    Validator.is_type_valid(ranking_descending, bool)
-    Validator.is_type_valid(step, (int, float))
-    Validator.is_type_valid(return_zeros, bool)
+        Validator.is_type_valid(bounds, np.ndarray, 'bounds')    
+    Validator.is_type_valid(call_kwargs, dict, 'call_kwargs')
+    Validator.is_type_valid(ranking_descending, bool, 'ranking_descending')
+    Validator.is_type_valid(step, (int, np.integer, float, np.floating), 'step')
+    Validator.is_type_valid(return_zeros, bool, 'return_zeros')
     if max_modification is not None:
-        Validator.is_type_valid(max_modification, int)
+        Validator.is_type_valid(max_modification, (int, np.integer), 'max_modification')
     if bounds is None and max_modification is None:
         raise TypeError("'max_modification' parameter must be given when 'bounds' is None")
     if positions is not None:
-        Validator.is_type_valid(positions, np.ndarray)
+        Validator.is_type_valid(positions, np.ndarray, 'positions')
         Validator.is_shape_equal(matrix.shape[0], positions.shape[0], custom_message="Number of rows in 'matrix' and length of 'positions' are different")
-        Validator.is_in_range(positions, 1, positions.shape[0])
-    Validator.is_key_in_dict(['matrix'], call_kwargs)
+        Validator.is_in_range(positions, 1, positions.shape[0], 'positions')
+    Validator.is_key_in_dict(['matrix'], call_kwargs, 'call_kwargs')
     
     # store demoted positions and changes that caused the demotions
     new_positions = np.full((matrix.shape), 0, dtype=int)

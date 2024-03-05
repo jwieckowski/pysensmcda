@@ -61,16 +61,16 @@ def weights_barplot(weights: np.ndarray,
     >>> ax, bars = weights_barplot(weights, title, color='green', width=0.5, alpha=0.7, grid_on=True, annotate_bars=True)
     >>> plt.show()
     """
-    Validator.is_type_valid(weights, np.ndarray)
-    Validator.is_type_valid(title, str)
+    Validator.is_type_valid(weights, np.ndarray, 'weights')
+    Validator.is_type_valid(title, str, 'title')
     if ax is not None:
-        Validator.is_type_valid(ax, plt.Axes)
-    Validator.is_type_valid(width, float)
-    Validator.is_type_valid(color, str)
-    Validator.is_type_valid(alpha, (int, float))
-    Validator.is_in_range(alpha, 0, 1)
-    Validator.is_type_valid(grid_on, bool)
-    Validator.is_type_valid(annotate_bars, bool)
+        Validator.is_type_valid(ax, plt.Axes, 'ax')
+    Validator.is_type_valid(width, (float, np.floating), 'width')
+    Validator.is_type_valid(color, str, 'color')
+    Validator.is_type_valid(alpha, (int, np.integer, float, np.floating), 'alpha')
+    Validator.is_in_range(alpha, 0, 1, 'alpha')
+    Validator.is_type_valid(grid_on, bool, 'grid_on')
+    Validator.is_type_valid(annotate_bars, bool, 'annotate_bars')
 
     if ax is None:
         ax = plt.gca()
@@ -169,17 +169,17 @@ def slider_weights_barplot(initial_weights: np.ndarray,
     >>> ax, criteria_slider, change_slider = slider_weights_barplot(weights, results, annotate_bars=True, grid_on=True)
     >>> plt.show()
     """
-    Validator.is_type_valid(initial_weights, np.ndarray)
-    Validator.is_type_valid(results, list)
-    Validator.is_type_valid(width, float)
-    Validator.is_type_valid(color, str)
-    Validator.is_type_valid(width, float)
-    Validator.is_type_valid(sort_values, bool)
-    Validator.is_type_valid(grid_on, bool)
-    Validator.is_type_valid(percentage_change, bool)
-    Validator.is_type_valid(annotate_bars, bool)
+    Validator.is_type_valid(initial_weights, np.ndarray, initial_weights)
+    Validator.is_type_valid(results, list, 'results')
+    Validator.is_type_valid(width, (float, np.floating), 'width')
+    Validator.is_type_valid(color, str, 'color')
+    Validator.is_type_valid(width, (float, np.floating), 'width')
+    Validator.is_type_valid(sort_values, bool, 'sort_values')
+    Validator.is_type_valid(grid_on, bool, 'grid_on')
+    Validator.is_type_valid(percentage_change, bool, 'percentage_change')
+    Validator.is_type_valid(annotate_bars, bool, 'annotate_bars')
     if ax is not None:
-        Validator.is_type_valid(ax, plt.Axes)
+        Validator.is_type_valid(ax, plt.Axes, 'ax')
 
     if ax is None:
         fig, ax = plt.subplots()

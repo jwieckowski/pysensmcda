@@ -59,15 +59,15 @@ def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6,
 
     """
 
-    Validator.is_type_valid(weights, np.ndarray)
-    Validator.is_dimension_valid(weights, 1)
+    Validator.is_type_valid(weights, np.ndarray, 'weights')
+    Validator.is_dimension_valid(weights, 1, 'weighst')
     Validator.is_sum_valid(weights, 1)
-    Validator.is_type_valid(simulations, int)
-    Validator.is_positive_value(simulations)
-    Validator.is_type_valid(precision, int)
-    Validator.is_positive_value(precision)
-    Validator.is_type_valid(perturbation_scale, (float, np.ndarray))
-    if isinstance(perturbation_scale, (float)):
+    Validator.is_type_valid(simulations, (int, np.integer), 'simulations')
+    Validator.is_positive_value(simulations, 'simulations')
+    Validator.is_type_valid(precision, (int, np.integer), 'precision')
+    Validator.is_positive_value(precision, 'precision')
+    Validator.is_type_valid(perturbation_scale, (np.floating, float, np.ndarray), 'perturbation_scale')
+    if isinstance(perturbation_scale, (float, np.floating)):
         perturbation_scale = np.full(weights.shape[0], perturbation_scale)
     elif isinstance(perturbation_scale, np.ndarray):
         Validator.is_shape_equal(weights.shape[0], perturbation_scale.shape[0], custom_message="Length of 'weights' and 'perturbation_scale' are different")

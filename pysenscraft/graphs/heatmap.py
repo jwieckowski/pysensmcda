@@ -79,20 +79,20 @@ def heatmap(matrix: np.ndarray,
 
     """
     
-    Validator.is_type_valid(matrix, np.ndarray)
-    Validator.is_type_valid(title, str)
-    Validator.is_type_valid(xlabel, str)
-    Validator.is_type_valid(ylabel, str)
-    Validator.is_type_valid(cmap, str)
-    Validator.is_type_valid(annotate, bool)
-    Validator.is_type_valid(fmt, str)
-    Validator.is_type_valid(linewidths, float)
-    Validator.is_type_valid(cbar_kwargs, dict)
-    Validator.is_type_valid(figsize, tuple)
-    Validator.is_type_valid(label_fontsize, int)
-    Validator.is_type_valid(title_fontsize, int)
+    Validator.is_type_valid(matrix, np.ndarray, 'matrix')
+    Validator.is_type_valid(title, str, 'title')
+    Validator.is_type_valid(xlabel, str, 'xlabel')
+    Validator.is_type_valid(ylabel, str, 'ylabel')
+    Validator.is_type_valid(cmap, str, 'cmap')
+    Validator.is_type_valid(annotate, bool, 'annotate')
+    Validator.is_type_valid(fmt, str, 'fmt')
+    Validator.is_type_valid(linewidths, (float, np.floating), 'linewidths')
+    Validator.is_type_valid(cbar_kwargs, dict, 'cbar_kwargs')
+    Validator.is_type_valid(figsize, tuple, 'figsize')
+    Validator.is_type_valid(label_fontsize, (int, np.integer), 'label_fontsize')
+    Validator.is_type_valid(title_fontsize, (int, np.integer), 'title_fontsize')
     if ax is not None:
-        Validator.is_type_valid(ax, plt.Axes)
+        Validator.is_type_valid(ax, plt.Axes, 'ax')
 
     if ax is None:
         plt.figure(figsize=figsize)

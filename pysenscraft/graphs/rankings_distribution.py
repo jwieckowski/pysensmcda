@@ -114,20 +114,20 @@ def rankings_distribution(rankings: np.ndarray,
             df['Method'] = method
         return df
     
-    Validator.is_type_valid(rankings, np.ndarray)
+    Validator.is_type_valid(rankings, np.ndarray, 'rankings')
     if ax is not None:
-        Validator.is_type_valid(ax, plt.Axes)
-    Validator.is_type_valid(title, str)
+        Validator.is_type_valid(ax, plt.Axes, 'ax')
+    Validator.is_type_valid(title, str, 'title')
     if methods is not None:
-        Validator.is_type_valid(methods, list)
-    Validator.is_type_valid(legend_loc, str)
-    Validator.is_in_list(legend_loc, ['upper', 'lower', 'right'])
-    Validator.is_type_valid(plot_type, str)
-    Validator.is_in_list(plot_type, ['box', 'boxen', 'violin'])
-    Validator.is_type_valid(plot_kwargs, dict)
-    Validator.is_type_valid(xlabel, str)
-    Validator.is_type_valid(ylabel, str)
-    Validator.is_type_valid(show_legend, bool)  
+        Validator.is_type_valid(methods, list, 'methods')
+    Validator.is_type_valid(legend_loc, str, 'legend_loc')
+    Validator.is_in_list(legend_loc, ['upper', 'lower', 'right'], 'legend_loc')
+    Validator.is_type_valid(plot_type, str, 'plot_type')
+    Validator.is_in_list(plot_type, ['box', 'boxen', 'violin'], 'plot_type')
+    Validator.is_type_valid(plot_kwargs, dict, 'plot_kwargs')
+    Validator.is_type_valid(xlabel, str, 'xlabel')
+    Validator.is_type_valid(ylabel, str, 'ylabel')
+    Validator.is_type_valid(show_legend, bool, 'show_legend')  
 
     if ax is None:
         ax = plt.gca()
