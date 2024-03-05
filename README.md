@@ -130,9 +130,9 @@ citation
 
 ## Usage example
 
-General usage examples see [`examples.ipynb`](./examples/examples.ipynb)
-Graphs submodule usage examples see [`graphs_examples.ipynb`](./examples/graphs_examples.ipynb)
-Literature example analysis see [`literature_example.ipynb`](./examples/literature_example.ipynb)
+- General usage examples see [`examples.ipynb`](./examples/examples.ipynb)
+- Graphs submodule usage examples see [`graphs_examples.ipynb`](./examples/graphs_examples.ipynb)
+- Literature example analysis see [`literature_example.ipynb`](./examples/literature_example.ipynb)
 
 ## Related work
 
