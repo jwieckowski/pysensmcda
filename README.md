@@ -53,7 +53,7 @@ citation
 
 <br/>
 
-- #### Alternative:
+- ### Alternative:
 
 | Name                    |  Reference   |
 | ----------------------- | :----------: |
@@ -64,7 +64,7 @@ citation
 
 <br/>
 
-- #### Criteria:
+- ### Criteria:
 
 | Name                                             |  Reference   |
 | ------------------------------------------------ | :----------: |
@@ -83,7 +83,7 @@ citation
 
 <br/>
 
-- #### Probabilistic:
+- ### Probabilistic:
 
 | Name                           |  Reference   |
 | ------------------------------ | :----------: |
@@ -93,7 +93,7 @@ citation
 
 <br/>
 
-- #### Ranking:
+- ### Ranking:
 
 | Name               |  Reference   |
 | ------------------ | :----------: |
@@ -104,7 +104,7 @@ citation
 
 <br/>
 
-- #### Compromise:
+- ### Compromise:
 
 | Name                                         |  Reference   |
 | -------------------------------------------- | :----------: |
@@ -115,7 +115,9 @@ citation
 | ICRA - Iterative Compromise Ranking Analysis | [[0]](#ref0) |
 | Rank position method                         | [[0]](#ref0) |
 
-- #### Graphs:
+<br/>
+
+- ### Graphs:
 
 | Name                             |
 | -------------------------------- |
