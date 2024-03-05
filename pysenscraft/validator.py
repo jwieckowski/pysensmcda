@@ -1,11 +1,21 @@
 # Copyright (C) 2023 - 2024 Jakub Więckowski
 
 import numpy as np
+import inspect
 
 def get_var_name(var):
-    for name, value in globals().items():
-        if value is var:
-            return name
+    frame = inspect.currentframe()
+    frame = inspect.getouterframes(frame)[1]
+    string = inspect.getframeinfo(frame[0]).code_context[0].strip()
+    args = string[string.find('(') + 1:-1].split(',')
+    
+    name = None
+    for i in args:
+        if i.find('=') != -1:
+            name = i.split('=')[1].strip()        
+        else:
+            name = i
+    return name
 
 class Validator:
     @staticmethod
