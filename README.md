@@ -1,6 +1,6 @@
-# PySensCraft
+# PySensMCDA
 
-PySensCraft: Python Sensitivity Crafting Toolbox for Decision Support
+PySensMCDA: Python Sensitivity Analysis Multi-Criteria Decision Analysis Package for Decision Support
 
 Description
 
@@ -9,7 +9,7 @@ Description
 The package can be download using pip:
 
 ```Bash
-pip install pysenscraft
+pip install pysensmcda
 ```
 
 ## Testing
@@ -33,7 +33,7 @@ Do przemyślenia na pewno nazwa ale to najmniejszy problem, na samym końcu sie 
 
 ### Struktura biblioteki:
 
-W folderze `pysenscraft` podfoldery z zakresem technik analizy wrażliwości:
+W folderze `pysensmcda` podfoldery z zakresem technik analizy wrażliwości:
 
 - alternative (modyfikacje macierzy decyzyjnej)
 - criteria (modyfikacje kryteriów)

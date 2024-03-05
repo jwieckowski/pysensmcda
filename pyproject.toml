@@ -3,13 +3,13 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pysenscraft"
+name = "pysensmcda"
 version = "1.0.0"
-description = "Python Sensitivity Crafting Toolbox for Decision Support"
+description = "Python Sensitivity Analysis Multi-Criteria Decision Analysis Package"
 readme = "README.md"
 license = {file = "LICENSE.txt"}
 requires-python = ">=3.10"
-keywords = ["sensitivity analysis", "python", "decision-making", "mcda", "robustness"]
+keywords = ["sensitivity analysis", "decision-making", "python", "mcda", "robustness"]
 authors = [
     {name = "Jakub Więckowski", email = "j.wieckowski@il-pib.pl"},
     {name = "Bartosz Paradowski", email = "b.paradowski@il-pib.pl"}
