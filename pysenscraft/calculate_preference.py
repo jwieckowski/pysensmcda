@@ -103,7 +103,6 @@ def calculate_preference(func: callable,
     Validator.is_type_valid(results, (list, np.ndarray, tuple))
     Validator.is_callable(method)
     Validator.is_type_valid(call_kwargs, dict)
-    Validator.is_key_in_dict(['matrix', 'weights'], call_kwargs)
     Validator.is_type_valid(only_preference, bool)
     if method_type is not None:
         Validator.is_type_valid(method_type, int)
@@ -140,18 +139,23 @@ def calculate_preference(func: callable,
             return results
 
     if func in [alternative.discrete_modification, alternative.percentage_modification, alternative.range_modification]:
+        Validator.is_key_in_dict(['weights', 'types'], call_kwargs)
         val_list = np.asarray(results, dtype='object')[:, 3]
         params = 'matrix'
     elif func in [alternative.remove_alternatives]:
+        Validator.is_key_in_dict(['weights', 'types'], call_kwargs)
         val_list = np.asarray(results, dtype='object')[:, 1]
         params = 'matrix'
     elif func in [criteria.percentage_modification, criteria.range_modification]:
+        Validator.is_key_in_dict(['matrix', 'types'], call_kwargs)
         val_list = np.array(results, dtype='object')[:, 2]
         params = 'weights'
     elif func in [probabilistic.monte_carlo_weights, probabilistic.perturbed_weights]:
+        Validator.is_key_in_dict(['matrix', 'types'], call_kwargs)
         val_list = np.array(results)
         params = 'weights'
     elif func in [probabilistic.perturbed_matrix]:
+        Validator.is_key_in_dict(['weights', 'types'], call_kwargs)
         val_list = np.array(results)
         params = 'matrix'
     else:

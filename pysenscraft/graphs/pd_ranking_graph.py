@@ -164,7 +164,7 @@ def rank_graph(initial_rank: int | float,
     ax : Axes
         Axes object on which graph was drawn.
     """
-    Validator.is_type_valid(initial_rank, (int, float))
+    Validator.is_type_valid(initial_rank, (int, float, np.integer, np.floating))
     Validator.is_type_valid(new_positions, list)
     if ax is not None:
         Validator.is_type_valid(ax, plt.Axes)
@@ -265,7 +265,7 @@ def pd_rankings_graph(initial_rank: int | float,
         Axes object on which graphs were drawn. Cax - rank graph, main_ax - percentage graph
 
     """
-    Validator.is_type_valid(initial_rank, (int, float))
+    Validator.is_type_valid(initial_rank, (int, float, np.integer, np.floating))
     Validator.is_type_valid(new_positions, list)
     Validator.is_type_valid(percentage_changes, (list, np.ndarray))
     if xticks is not None:
