@@ -115,6 +115,8 @@ def percentage_graph(percentage_changes: list | np.ndarray,
     
     if xticks is None:
         ax.set_xticks(np.arange(0, crit_num), [f'$C_{{{i+1}}}$' for i in range(crit_num)])
+    else:
+        ax.set_xticks(np.arange(0, crit_num), xticks)
     ax.yaxis.set_major_formatter(mtick.PercentFormatter())
     ax.set_ylabel(percentage_kwargs.get('ylabel', ''))
     ax.set_title(percentage_kwargs.get('title', ''))
