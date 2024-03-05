@@ -63,9 +63,9 @@ def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6,
     Validator.is_dimension_valid(weights, 1, 'weighst')
     Validator.is_sum_valid(weights, 1)
     Validator.is_type_valid(simulations, (int, np.integer), 'simulations')
-    Validator.is_positive_value(simulations, 'simulations')
+    Validator.is_positive_value(simulations, var_name='simulations')
     Validator.is_type_valid(precision, (int, np.integer), 'precision')
-    Validator.is_positive_value(precision, 'precision')
+    Validator.is_positive_value(precision, var_name='precision')
     Validator.is_type_valid(perturbation_scale, (np.floating, float, np.ndarray), 'perturbation_scale')
     if isinstance(perturbation_scale, (float, np.floating)):
         perturbation_scale = np.full(weights.shape[0], perturbation_scale)

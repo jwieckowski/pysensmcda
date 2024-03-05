@@ -41,7 +41,7 @@ def triangular_distribution(size: int, left: float = 0.0, mode: float = 0.5, rig
 
     
     Validator.is_type_valid(size, (int, np.integer), 'size')
-    Validator.is_positive_value(size, 'size')
+    Validator.is_positive_value(size, var_name='size')
 
     if left > mode or mode > right or left > right:
         raise ValueError('Parameters should follow the condition left <= mode <= right')

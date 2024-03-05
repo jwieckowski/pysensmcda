@@ -109,7 +109,7 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
     Validator.is_in_list(types, [-1, 1], 'types')
     Validator.is_callable(corr_coef, 'corr_coef')
     Validator.is_type_valid(max_iters, int, 'max_iters')
-    Validator.is_positive_value(max_iters, 'max_iters')
+    Validator.is_positive_value(max_iters, var_name='max_iters')
     if compromise_weights is not None:
         Validator.is_type_valid(compromise_weights, np.ndarray, 'compromise_weights')
         Validator.is_sum_valid(compromise_weights, 1, 'compromise_weights')

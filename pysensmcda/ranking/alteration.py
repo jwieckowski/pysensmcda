@@ -99,7 +99,7 @@ def ranking_alteration(weights: np.ndarray,
     Validator.is_key_in_dict(['matrix', 'weights'], call_kwargs, 'call_kwargs')
     Validator.is_type_valid(ranking_descending, bool, 'ranking_descending')
     Validator.is_type_valid(step, (float, np.floating), 'step')
-    Validator.is_positive_value(step, 'step')
+    Validator.is_positive_value(step, var_name='step')
 
     results = []
 

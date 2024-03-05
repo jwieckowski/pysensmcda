@@ -37,10 +37,10 @@ def normal_distribution(size: int, loc: float = 0.0, scale: float = 1.0) -> np.n
     """
 
     Validator.is_type_valid(size, (int, np.integer), 'size')
-    Validator.is_positive_value(size, 'size')
+    Validator.is_positive_value(size, var_name='size')
     Validator.is_type_valid(loc, (int, np.integer, float, np.floating), 'loc')
     Validator.is_type_valid(scale, (int, np.integer, float, np.floating), 'scale')
-    Validator.is_positive_value(scale, 'scale')
+    Validator.is_positive_value(scale, var_name='scale')
 
     weights = np.abs(np.random.normal(loc, scale, size=size))
     return np.array(weights) / np.sum(weights)

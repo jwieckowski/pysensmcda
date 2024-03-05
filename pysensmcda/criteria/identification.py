@@ -96,7 +96,7 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     
     Validator.is_callable(method, 'method')
     Validator.is_type_valid(excluded_criteria, (int, np.integer), 'excluded_criteria')
-    Validator.is_positive_value(excluded_criteria, 'excluded_criteria')
+    Validator.is_positive_value(excluded_criteria, var_name='excluded_criteria')
     Validator.is_key_in_dict(['matrix', 'weights', 'types'], call_kwargs, 'call_kwargs')
     Validator.is_type_in_dict_valid('matrix', call_kwargs, np.ndarray, 'call_kwargs')
     initial_matrix = call_kwargs['matrix'].copy()

@@ -77,9 +77,9 @@ def HQ_compromise(rankings: np.ndarray, max_iters:int = 1000, tol:float = 10e-10
 
     Validator.is_type_valid(rankings, np.ndarray, 'rankings')
     Validator.is_type_valid(max_iters, int, 'max_iters')
-    Validator.is_positive_value(max_iters, 'max_iters')
+    Validator.is_positive_value(max_iters, var_name='max_iters')
     Validator.is_type_valid(tol, float, 'tol')
-    Validator.is_positive_value(tol, 'tol')
+    Validator.is_positive_value(tol, var_name='tol')
 
     R = rankings
     M = R.shape[1]
