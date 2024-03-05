@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscmcda.compromise import improved_borda
+from pysensmcda.compromise import improved_borda
 from pymcdm.methods import TOPSIS, VIKOR
 
 def test_improved_borda():

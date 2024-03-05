@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysensmcdacompromise import dominance_directed_graph
+from pysensmcda.compromise import dominance_directed_graph
 
 def test_dominance_directed_graph():
     rankings = np.array([[3, 2, 3],

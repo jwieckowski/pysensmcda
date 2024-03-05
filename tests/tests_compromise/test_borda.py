@@ -2,7 +2,7 @@
 
 import numpy as np
 from pytest import raises
-from pysenscmcda.compromise import borda
+from pysensmcda.compromise import borda
 
 def test_borda():
     rankings = np.array([[3, 2, 3],
