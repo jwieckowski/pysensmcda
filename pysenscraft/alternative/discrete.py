@@ -95,7 +95,7 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
         return new_matrix
 
     Validator.is_type_valid(matrix, np.ndarray, 'matrix')
-    Validator.is_dimension_valid(matrix, 2)
+    Validator.is_dimension_valid(matrix, 2, 'matrix')
     Validator.is_type_valid(discrete_values, np.ndarray, 'discrete_values')
 
     dv_dim = 0

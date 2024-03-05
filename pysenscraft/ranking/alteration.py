@@ -93,7 +93,7 @@ def ranking_alteration(weights: np.ndarray,
     Validator.is_callable(method, 'method')
     Validator.is_type_valid(weights, np.ndarray, 'weights')
     Validator.is_dimension_valid(weights, 1, 'weights')
-    Validator.is_sum_valid(weights)
+    Validator.is_sum_valid(weights, 1)
     Validator.is_type_valid(initial_ranking, np.ndarray, 'initial_ranking')
     Validator.is_type_valid(call_kwargs, dict, 'call_kwargs')
     Validator.is_key_in_dict(['matrix', 'weights'], call_kwargs, 'call_kwargs')
