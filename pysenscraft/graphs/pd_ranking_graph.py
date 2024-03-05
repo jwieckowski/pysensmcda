@@ -70,8 +70,8 @@ def percentage_graph(percentage_changes: list | np.ndarray,
         ax = plt.gca()
 
     crit_num = len(percentage_changes)
-    min_change = np.round(np.min(percentage_changes), -2)
-    max_change = np.round(np.max(percentage_changes), -2)
+    min_change = np.round(np.min(percentage_changes))
+    max_change = np.round(np.max(percentage_changes))
     step = int(np.max(np.abs([min_change/5, max_change/5])))
 
     ax.grid(axis='y', alpha=0.5, linestyle='--')
@@ -261,8 +261,8 @@ def pd_rankings_graph(initial_rank: int | float,
 
     Returns
     -------
-    ax : Axes
-        Axes object on which graphs were drawn.
+    (cax, main_ax): tuple[Axes]
+        Axes object on which graphs were drawn. Cax - rank graph, main_ax - percentage graph
 
     """
     Validator.is_type_valid(initial_rank, (int, float))
@@ -324,4 +324,4 @@ def pd_rankings_graph(initial_rank: int | float,
     fig.align_ylabels()
     plt.suptitle(title)
     
-    return ax
+    return (cax, main_ax)
