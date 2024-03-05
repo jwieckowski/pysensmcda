@@ -34,6 +34,7 @@ pip install pytest
 pytest tests
 ```
 
+<!--
 ## Citation
 
 If you use `PySensMCDA` in you work, please cite the following [publication](https://scholar.google.pl/):
@@ -45,6 +46,7 @@ As BibTeX:
 ```
 citation
 ```
+-->
 
 ## Modules and functionalities
 

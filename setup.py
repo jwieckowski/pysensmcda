@@ -28,7 +28,6 @@ setuptools.setup(
         "pymcdm",
         "scipy",
         "setuptools",
-        "pytest",
         "thread6",
         "seaborn",
         "tqdm",
