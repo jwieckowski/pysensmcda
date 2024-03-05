@@ -1,9 +1,8 @@
 [![github](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/jwieckowski/pysenscraft)
 [![DOI:10.1016/j.softx.2022.101271](http://img.shields.io/badge/DOI-10.1016/j.softx.2022.101271-0f81c2.svg)](https://doi.org/10.1016/j.softx.2022.101271)
+[![Version](https://img.shields.io/pypi/v/pyfdm)](https://pypi.org/project/)
 
 <!-- [![License](https://img.shields.io/github/license/nlesc/pyfdm)]() -->
-
-[![Version](https://img.shields.io/pypi/v/pyfdm)](https://pypi.org/project/)
 
 ## PySensCraft
 
