@@ -8,7 +8,7 @@ setuptools.setup(
     version="1.0.0",
     author="Jakub Więckowski, Bartosz Paradowski",
     author_email="j.wieckowski@il-pib.pl, b.paradowski@il-pib.pl",
-    description="Python Sensitivity Crafting Toolbox for Decision Support",
+    description="Python Sensitivity Analysis Multi-Criteria Decision Analysis Package",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/jwieckowski/pysensmcda",
