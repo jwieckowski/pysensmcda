@@ -9,8 +9,8 @@ def uniform_distribution(size: int, low: float = 0.0, high: float = 1.0) -> np.n
     """
     Generate a set of normalized weights sampled from a uniform distribution.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     size : int
         Number of weights to generate.
 
@@ -20,18 +20,20 @@ def uniform_distribution(size: int, low: float = 0.0, high: float = 1.0) -> np.n
     high : float, optional, default=1.0
         Upper bound of the uniform distribution.
 
-    Returns
-    -------
+    Returns:
+    ---------
     ndarray
         Array of normalized weights sampled from a uniform distribution.
 
-    ## Example
-    --------
-    ### Example 1: Generate normalized weights from a uniform distribution with default parameters
+    Examples:
+    ----------
+    Example 1: Generate normalized weights from a uniform distribution with default parameters
+    
     >>> weights = uniform_distribution(3)
     >>> print(weights)
 
-    ### Example 2: Generate normalized weights from a uniform distribution with explicit parameters
+    Example 2: Generate normalized weights from a uniform distribution with explicit parameters
+    
     >>> weights = uniform_distribution(3, 2, 5)
     >>> print(weights)
     """

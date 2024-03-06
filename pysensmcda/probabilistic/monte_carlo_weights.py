@@ -10,8 +10,8 @@ def monte_carlo_weights(n: int, distribution: str = 'uniform', num_samples: int 
     """
     Generate criteria weights probabilistically using Monte Carlo simulation.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     n : int
         Number of weights to generate.
 
@@ -25,13 +25,13 @@ def monte_carlo_weights(n: int, distribution: str = 'uniform', num_samples: int 
     num_samples : int, optional, default=1000
         Number of samples to generate in the Monte Carlo simulation.
 
-    Returns
-    -------
+    Returns:
+    ---------
     ndarray
         Array of modified criteria weights based on Monte Carlo simulation.
 
-    Examples
-    --------
+    Example:
+    ---------
     >>> n = 3
     >>> modified_weights = monte_carlo_weights(n, num_samples=1000, distribution='normal', params={'loc': 0.5, 'scale': 0.1})
     >>> print(modified_weights)

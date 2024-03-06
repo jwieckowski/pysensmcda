@@ -9,8 +9,8 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
     """
     Generate perturbed decision matrices based on the given initial decision matrix using random perturbation based on uniform distribution.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     matrix : ndarray
         2D array representing the initial decision matrix.
 
@@ -25,21 +25,23 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
         If float, then all decision matrix is modeled with the same perturbation scale.
         If ndarray, then each criterion is modeled with a given perturbation scale.
 
-    Returns
-    -------
+    Returns:
+    ---------
     ndarray
         A ndarray of simulations length with perturbed decision matrices based on the given initial decision matrix.
 
-    Examples
-    --------
-    ### Example 1 - Run with default parameters
+    Examples:
+    ----------
+    Example 1: Run with default parameters
+    
     >>> matrix = np.array([ [4, 3, 7], [1, 9, 6], [7, 5, 3] ])
     >>> simulations = 1000
     >>> results = perturbed_matrix(matrix, simulations)
     >>> for r in results:
     ...     print(r)
 
-    ### Example 2 - Run with given precision and perturbation scale
+    Example 2: Run with given precision and perturbation scale
+    
     >>> matrix = np.array([ [4, 3, 7], [1, 9, 6], [7, 5, 3] ])
     >>> simulations = 500
     >>> precision = 3
@@ -48,7 +50,8 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
     >>> for r in results:
     ...     print(r)
 
-    ### Example 3 - Run with perturbation scale defined for each column
+    Example 3: Run with perturbation scale defined for each column
+    
     >>> matrix = np.array([ [4, 3, 7], [1, 9, 6], [7, 5, 3] ])
     >>> simulations = 100
     >>> precision = 3
@@ -57,7 +60,8 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
     >>> for r in results:
     ...     print(r)
 
-    ### Example 4 - Run with 2D perturbation scale array
+    Example 4: Run with 2D perturbation scale array
+    
     >>> matrix = np.array([ [4, 3, 7], [1, 9, 6], [7, 5, 3] ])
     >>> simulations = 100
     >>> precision = 3

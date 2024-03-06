@@ -133,3 +133,6 @@ dmypy.json
 
 # installation instruction
 installation.md
+
+# pandoc
+docs/*.exe

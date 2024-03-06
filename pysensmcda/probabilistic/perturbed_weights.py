@@ -9,8 +9,8 @@ def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6,
     """
     Generate perturbed weights based on the given initial criteria weights based on the given perturbation scale and uniform distribution.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     weights : ndarray
         1D array representing the existing criteria weights
 
@@ -25,21 +25,23 @@ def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6,
         If float, then all criteria weights modeled with the same perturbation scale.
         If ndarray, then each criterion modeled with given perturbation scale.
 
-    Returns
-    -------
+    Returns:
+    ---------
     ndarray
         A ndarray of perturbed weights based on the given criteria weights
 
-    Examples
-    --------
-    ### Example 1 - run with default parameters
+    Examples:
+    ----------
+    Example 1: Run with default parameters
+
     >>> weights = np.array([0.3, 0.4, 0.3])
     >>> simulations = 1000
     >>> results = perturbed_weights(weights, simulations)
     >>> for r in results:
     ...     print(r)
 
-    ### Example 2 - run with given precision and perturbation scale
+    Example 2: Run with given precision and perturbation scale
+
     >>> weights = np.array([0.3, 0.4, 0.3])
     >>> simulations = 1000
     >>> precision = 3
@@ -48,7 +50,8 @@ def perturbed_weights(weights: np.ndarray, simulations: int, precision: int = 6,
     >>> for r in results:
     ...     print(r)
 
-    ### Example 3 - run with perturbation scale defined for each criterion
+    Example 3: Run with perturbation scale defined for each criterion
+    
     >>> weights = np.array([0.3, 0.4, 0.3])
     >>> simulations = 1000
     >>> precision = 3

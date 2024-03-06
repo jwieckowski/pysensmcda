@@ -17,8 +17,8 @@ def rankings_distribution(rankings: np.ndarray,
                         ylabel: str = 'Position', 
                         show_legend: bool = True) -> plt.Axes:
     """
-    Parameters
-    ----------
+    Parameters:
+    ------------
     rankings: np.ndarray
         3d or 2d array of rankings to plot distribution for.
     ax: plt.Axes | None, optional, default=None
@@ -40,16 +40,24 @@ def rankings_distribution(rankings: np.ndarray,
     show_legend: bool, optional, default='True'
         Boolean responsible for whether the legend is visible.
 
-    Examples
-    --------
-    ### Example 1 - one method
+    Returns:
+    ---------
+    ax: Axis
+        Axis on which plot was drawn.
+    
+    Examples:
+    ----------
+
+    Example 1: One method
+    
     >>> rankings = np.array([[1, 2, 3, 4 ,5],
     >>>                      [2, 3, 5, 4, 1],
     >>>                      [5, 3, 2, 1, 4]])
     >>> rankings_distribution(rankings, title='TOPSIS ranking distribution')
     >>> plt.show()
     
-    ### Example 2 - multiple methods
+    Example 2: Multiple methods
+    
     >>> rankings = np.array([[[1, 2, 3, 4 ,5],
     >>>              [2, 3, 5, 4, 1],
     >>>              [5, 3, 2, 1, 4]],
@@ -59,7 +67,8 @@ def rankings_distribution(rankings: np.ndarray,
     >>> rankings_distribution(rankings, title='Ranking distribution')
     >>> plt.show()
 
-    ### Example 3 - multiple methods with names
+    Example 3: Multiple methods with names
+    
     >>> rankings = np.array([[[1, 2, 3, 4 ,5],
     >>>              [2, 3, 5, 4, 1],
     >>>              [5, 3, 2, 1, 4]],
@@ -71,39 +80,37 @@ def rankings_distribution(rankings: np.ndarray,
     >>> rankings_distribution(rankings, methods=methods, title='Ranking distribution', ax=ax)
     >>> plt.show()
 
-    ### Example 4 - single method, no legend, custom labels
+    Example 4: Single method, no legend, custom labels
+    
     >>> rankings = np.array([[1, 2, 3, 4 ,5],
     >>>                      [2, 3, 5, 4, 1],
     >>>                      [5, 3, 2, 1, 4]])
     >>> rankings_distribution(rankings, title='TOPSIS ranking distribution', show_legend=False, xlabel='Alt', ylabel='Ranking position')
     >>> plt.show()
 
-    Returns
-    -------
-    ax: Axis
-        Axis on which plot was drawn.
     """
     def create_df(rankings: np.ndarray, method: str | None = None) -> pd.DataFrame:
         """
         Internal function for dataframe creation for the purpose of plotting rankings distribution
 
-        Parameters
-        ----------
+        Parameters:
+        ------------
         rankings: np.ndarray
             2d array of rankings for specific method
         method: str | None, optional, default=None
             Method name
+        
+        Returns:
+        ---------
+        df: pd.DataFrame
 
-        Example
-        -------
+        Example:
+        ---------
         >>> rankings = np.array([[1, 2, 3, 4 ,5],
         >>>              [2, 3, 5, 4, 1],
         >>>              [5, 3, 2, 1, 4]])
         >>> create_df(rankings)
         
-        Returns
-        -------
-        df: pd.DataFrame
         """
         df = []
         for ranking in rankings:

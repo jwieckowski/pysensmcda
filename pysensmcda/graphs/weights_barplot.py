@@ -16,8 +16,8 @@ def weights_barplot(weights: np.ndarray,
     """
     Generate a bar plot to visualize criteria weights.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     weights : np.ndarray
         1D array representing criteria weights.
 
@@ -42,20 +42,22 @@ def weights_barplot(weights: np.ndarray,
     annotate_bars : bool, optional, default=False
         If True, annotate each bar with its corresponding weight value.
 
-    Returns
-    -------
+    Returns:
+    ---------
     mpl.axes.Axes, mpl.container.BarContainer
         Matplotlib Axes and BarContainer objects for the generated bar plot.
 
-    Examples
-    --------
-    ## Example 1: Plot visualization with required parameters
+    Examples:
+    ----------
+    Example 1: Plot visualization with required parameters
+    
     >>> weights = np.array([0.3, 0.4, 0.3])
     >>> title = 'Criteria Weights'
     >>> ax, bars = weights_barplot(weights, title)
     >>> plt.show()
 
-    ## Example 2: Plot visualization with additional parameters
+    Example 2: Plot visualization with additional parameters
+    
     >>> weights = np.array([0.3, 0.4, 0.3])
     >>> title = 'Criteria Weights'
     >>> ax, bars = weights_barplot(weights, title, color='green', width=0.5, alpha=0.7, grid_on=True, annotate_bars=True)
@@ -105,8 +107,8 @@ def slider_weights_barplot(initial_weights: np.ndarray,
     """
     Create an interactive slider-based bar plot to visualize changes in criteria weights.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     initial_weights : np.ndarray
         1D array representing the initial criteria weights.
 
@@ -135,14 +137,15 @@ def slider_weights_barplot(initial_weights: np.ndarray,
     annotate_bars : bool, optional, default=False
         If True, annotate each bar with its corresponding weight value.
 
-    Returns
-    -------
+    Returns:
+    ---------
     Tuple[plt.Axes, mpl.widgets.Slider, mpl.widgets.Slider]
         Matplotlib Axes and two Slider objects for interactive use.
 
-    Examples
-    --------
-    ## Example 1: Plot visualization with required parameters and percentage_modification
+    Examples:
+    ----------
+    Example 1: Plot visualization with required parameters and percentage_modification
+    
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> percentages = np.array([5, 5, 5])
     >>> indexes = np.array([[0, 1], 2], dtype='object')
@@ -151,7 +154,8 @@ def slider_weights_barplot(initial_weights: np.ndarray,
     >>> ax, criteria_slider, change_slider = slider_weights_barplot(weights, results, percentage_change=True, annotate_bars=True)
     >>> plt.show()
 
-    ## Example 2: Plot visualization with additional parameters and percentage_modification
+    Example 2: Plot visualization with additional parameters and percentage_modification
+    
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> percentages = np.array([5, 5, 5])
     >>> indexes = np.array([[0, 1], 2], dtype='object')
@@ -160,7 +164,8 @@ def slider_weights_barplot(initial_weights: np.ndarray,
     >>> ax, criteria_slider, change_slider = slider_weights_barplot(weights, results, percentage_change=True, annotate_bars=True, width=0.7, grid_on=True, color='red)
     >>> plt.show()
 
-    ## Example 3: Plot visualization with range modification
+    Example 3: Plot visualization with range modification
+    
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> range_values = np.array([[0.28, 0.32], [0.30, 0.33], [0.37, 0.44]])
     >>> indexes = np.array([[0, 1], 2], dtype='object')

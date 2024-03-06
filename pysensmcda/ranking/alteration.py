@@ -15,8 +15,8 @@ def ranking_alteration(weights: np.ndarray,
     """
     Identify the minimal change in criteria weights that causes an alteration in the ranking of alternatives.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     weights : ndarray
         1D vector with criteria weights used for multi-criteria evaluation.
 
@@ -38,14 +38,15 @@ def ranking_alteration(weights: np.ndarray,
     step : float, optional, default = 0.01
         Step size for the weights modification.
 
-    Returns
-    -------
+    Returns:
+    ---------
     list of tuples
         Each tuple contains the index of the modified weight, the new set of weights, and the resulting ranking.
 
-    ## Examples
-    --------
-    ### Example 1: Ranking alteration analysis with default parameters 
+    Examples:
+    ----------
+    Example 1: Ranking alteration analysis with default parameters 
+    
     >>> weights = np.array([0.4, 0.5, 0.1])
     >>> matrix = np.array([
     ...     [4, 2, 6],
@@ -66,7 +67,8 @@ def ranking_alteration(weights: np.ndarray,
     >>> for r in results:
     ...     print(r)
     
-    ### Example 2: Ranking alteration analysis with default parameters with explicitly defined step
+    Example 2: Ranking alteration analysis with default parameters with explicitly defined step
+    
     >>> weights = np.array([0.4, 0.5, 0.1])
     >>> matrix = np.array([
     ...     [4, 2, 6],

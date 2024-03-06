@@ -27,8 +27,8 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
 
         The ICRA is an approach that provides decision maker a compromise ranking for specific set of considered rankings using specific mutli-criteria decision-making methods ICRA main advantage is using preference values and weights for each expert / decision-making method
 
-        Parameters
-        ----------
+        Parameters:
+        ------------
         methods: array of callable
             Array that should contain callable functions or objects for all considered MCDMs. The function or function returned by object should return preference value. The data should be stored in dictionary in following way:
             >>> {
@@ -48,8 +48,8 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
         compromise_weights: ndarray, optional, default=equal weights
             Weights of methods / experts in compromise seeking. Sum of the weights should be 1. (e.g. sum(weights) == 1).
 
-        Returns
-        -------
+        Returns:
+        ---------
         results: object
             ICRAResults object is returned, which consists of:
             initial_preferences: ndarray
@@ -61,8 +61,8 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
             all_rankings: ndarray
             all_corrs: ndarray
 
-        Example
-        -------
+        Example:
+        ---------
         >>> ## Initial decision problem evaluation - random problem
         >>> decision_matrix = np.random.random((7, 5))
         >>> 

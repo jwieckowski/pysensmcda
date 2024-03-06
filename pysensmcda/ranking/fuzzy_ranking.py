@@ -10,8 +10,8 @@ def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None) -
     """
     Generate fuzzy ranking matrix based on positional rankings.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     rankings : np.ndarray
         2D array with positional rankings, where each row represents a separate positional ranking of alternatives.
 
@@ -21,13 +21,13 @@ def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None) -
         If 0, it normalizes the obtained fuzzy rankings regarding values in columns (by distribution of positions for alternatives).
         If None or not specified, it returns the default fuzzy ranking matrix without data normalization.
 
-    Returns
-    -------
+    Returns:
+    ---------
     np.ndarray
         Fuzzy ranking matrix based on the specified normalization_axis. Each element represents the membership degree of alternatives and ranking positions.
 
-    Examples
-    --------
+    Example:
+    ----------
     >>> rankings = np.array([
     ...     [1, 2, 3, 4, 5],
     ...     [2, 1, 5, 3, 4],

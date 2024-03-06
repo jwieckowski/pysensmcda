@@ -10,8 +10,8 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
     """
     Modify a decision matrix based on specified range values, indexes representing the combination of columns to be modified, and steps of range modifications.
 
-    Parameters
-    ----------
+    Parameters:
+    -------------
     matrix : ndarray
         2D array representing the initial decision matrix.
 
@@ -28,15 +28,16 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
         Step size for the change in given range. If int, all changes for columns are made with the same step.
         If ndarray, the modification step is adjusted for each column separately.
 
-    Returns
-    -------
+    Returns:
+    ----------
     List[Tuple[int, int | tuple, tuple, ndarray]]
         A list of tuples containing information about the modified alternative index, criteria index, range change,
         and the resulting decision matrix.
 
-    ## Examples
-    --------
-    ### Example 1: Modify the decision matrix with a 2D range change, same range for row in matrix for a given column
+    Examples:
+    -----------
+    Example 1: Modify the decision matrix with a 2D range change, same range for row in matrix for a given column
+    
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -47,7 +48,8 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
     >>> for r in results:
     ...     print(r)
 
-    ### Example 2: Modify the decision matrix with a 3D range change array, given range for every element in matrix
+    Example 2: Modify the decision matrix with a 3D range change array, given range for every element in matrix
+    
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -62,7 +64,8 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
     >>> for r in results:
     ...     print(r)
 
-    ### Example 3: Modify the decision matrix with specific column indexes
+    Example 3: Modify the decision matrix with specific column indexes
+    
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -74,7 +77,8 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
     >>> for r in results:
     ...     print(r)
 
-    ### Example 4: Modify the decision matrix with a specified step size
+    Example 4: Modify the decision matrix with a specified step size
+    
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -86,7 +90,8 @@ def range_modification(matrix: np.ndarray, range_values: np.ndarray, indexes: No
     >>> for r in results:
     ...     print(r)
 
-    ### Example 5: Modify the decision matrix with individual step sizes for each column
+    Example 5: Modify the decision matrix with individual step sizes for each column
+    
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],

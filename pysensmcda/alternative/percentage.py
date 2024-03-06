@@ -10,8 +10,8 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     """
     Modify a decision matrix based on specified percentage changes, directions, indexes, and steps of percentage modifications.
 
-    Parameters
-    ----------
+    Parameters:
+    -------------
     matrix : ndarray
         2D array representing the initial decision matrix.
 
@@ -32,15 +32,16 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
         Step size for the percentage change. If int, all changes for columns are made with the same step.
         If ndarray, the modification step is adjusted for each column separately.
 
-    Returns
-    -------
+    Returns:
+    ----------
     List[Tuple[int, int | tuple, tuple, ndarray]]
         A list of tuples containing information about the modified alternative index, criteria index, percentage change,
         and the resulting decision matrix.
 
-    ## Examples
-    --------
-    ### Example 1: Modify decision matrix with a single percentage change
+    Examples:
+    -----------
+    Example 1: Modify decision matrix with a single percentage change
+
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -51,7 +52,8 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     >>> for r in results:
     ...     print(r)
 
-    # Example 2: Modify matrix with percentages list
+    Example 2: Modify matrix with percentages list
+
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -62,7 +64,8 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     >>> for r in results:
     ...     print(r)
 
-    ### Example 3: Modify matrix with percentages list and specific direction for each column
+    Example 3: Modify matrix with percentages list and specific direction for each column
+
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -74,7 +77,8 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     >>> for r in results:
     ...     print(r)
 
-    ### Example 4: Modify matrix with percentages list, and specific column indexes
+    Example 4: Modify matrix with percentages list, and specific column indexes
+
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -86,7 +90,8 @@ def percentage_modification(matrix: np.ndarray, percentages: int | np.ndarray, d
     >>> for r in results:
     ...     print(r)
 
-    ### Example 5: Modify matrix with percentages list, and specific modification step
+    Example 5: Modify matrix with percentages list, and specific modification step
+    
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],

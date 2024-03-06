@@ -15,8 +15,8 @@ def percentage_graph(percentage_changes: list | np.ndarray,
     """
     Graph for showing percentage changes in criteria values and changes in alternative rank.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     percentage_changes: list | ndarray
         Changes of values of criteria in percentage values.
     new_positions: list
@@ -31,8 +31,13 @@ def percentage_graph(percentage_changes: list | np.ndarray,
     palette: dict, optional, default=dict()
         Sets colors for specific part of the plot. Available keys: 'positive', 'neutral', 'negative'.
         
-    Example
-    -------
+    Returns:
+    ---------
+    ax : Axes
+        Axes object on which graph was drawn.
+    
+    Example:
+    ---------
     >>> palette = {
     >>>     'positive': '#4c72b0',
     >>>     'neutral': 'black',
@@ -47,10 +52,6 @@ def percentage_graph(percentage_changes: list | np.ndarray,
     >>> percentage_graph(percentage_changes, new_positions, palette=palette, percentage_kwargs=percentage_kwargs)
     >>> plt.show()
 
-    Returns
-    -------
-    ax : Axes
-        Axes object on which graph was drawn.
     """
     Validator.is_type_valid(percentage_changes, (list, np.ndarray), 'percentage_changes')
     Validator.is_type_valid(new_positions, list, 'new_positions')
@@ -109,8 +110,8 @@ def percentage_graph(percentage_changes: list | np.ndarray,
             for idx, change in enumerate(percentage_changes):
                 dist = np.sign(change)*step/2 if np.sign(change) else step/2
                 ax.text(x=idx , y=change+dist, s=f'Rank {new_positions[idx]}', ha='center')
-    
-    ax.set_ylim(np.min(percentage_changes) - step, np.max(percentage_changes) + step)
+    if not np.all(percentage_changes == 0):
+        ax.set_ylim(np.min(percentage_changes) - step, np.max(percentage_changes) + step)
     ax.set_xlim(-0.5, crit_num-0.5)
     
     if xticks is None:
@@ -131,8 +132,8 @@ def rank_graph(initial_rank: int | float,
     """
     Graph for showing promotion / demotion of position of specific alternative.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     initial_rank: int|int
         Initial position of the alternative.
     new_positions: list
@@ -144,8 +145,13 @@ def rank_graph(initial_rank: int | float,
     rank_kwargs: dict, optional, default=dict()
         Dictionary for styling plots. Available keys: 'base_linestyle', 'base_linewidth', 'linestyle', 'linewidth', 'ylabel', 'title', 'marker', 'markersize'.
 
-    Example
-    -------
+    Returns:
+    ---------
+    ax : Axes
+        Axes object on which graph was drawn.
+    
+    Example:
+    ---------
     >>> palette = {
     >>>     'positive': '#4c72b0',
     >>>     'neutral': 'black',
@@ -161,10 +167,6 @@ def rank_graph(initial_rank: int | float,
     >>> plt.xlim(-1, 5)
     >>> plt.show()
 
-    Returns
-    -------
-    ax : Axes
-        Axes object on which graph was drawn.
     """
     Validator.is_type_valid(initial_rank, (int, float, np.integer, np.floating), 'initial_rank')
     Validator.is_type_valid(new_positions, list, 'new_positions')
@@ -214,8 +216,8 @@ def pd_rankings_graph(initial_rank: int | float,
     """
     Graph for plotting results of promotion / demotion ranking procedure
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     initial_rank: int|int
         Initial position of the alternative.
     new_positions: list
@@ -239,8 +241,13 @@ def pd_rankings_graph(initial_rank: int | float,
     palette: dict, optional, default=dict()
         Sets colors for specific part of the plot. Available keys: 'positive', 'neutral', 'negative'.
 
-    Example
-    -------
+    Returns:
+    ---------
+    (cax, main_ax): tuple[Axes]
+        Axes object on which graphs were drawn. Cax - rank graph, main_ax - percentage graph
+    
+    Example:
+    ---------
     >>> results = ranking_promotion(matrix, initial_ranking, copras, call_kwargs, ranking_descending, direction, step, max_modification=max_modification, return_zeros=return_zeros)
     >>> results = np.array(results)
     >>> for alt in range(matrix.shape[1]):
@@ -262,12 +269,8 @@ def pd_rankings_graph(initial_rank: int | float,
     >>>                 percentage_changes.append(0)
     >>>                 new_positions.append(initial_ranking[alt])
     >>>         
-    >>>         promotion_graph(initial_ranking[alt], new_positions, np.array(percentage_changes), kind='bar', title=f'Rank promotion - $A_{{{alt+1}}}$')
+    >>>         pd_rankings_graph(initial_ranking[alt], new_positions, np.array(percentage_changes), kind='bar', title=f'Rank promotion - $A_{{{alt+1}}}$')
 
-    Returns
-    -------
-    (cax, main_ax): tuple[Axes]
-        Axes object on which graphs were drawn. Cax - rank graph, main_ax - percentage graph
 
     """
     Validator.is_type_valid(initial_rank, (int, float, np.integer, np.floating), 'initial_rank')

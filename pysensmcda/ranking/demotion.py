@@ -22,8 +22,8 @@ def ranking_demotion(matrix: np.ndarray,
     Demote alternatives in a decision matrix by adjusting specific criteria values, considering constraints on rankings. 
     With only required parameters given, the analysis is looking for changes that cause demotion for last position in ranking.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     matrix : ndarray
         2D array with a decision matrix containing alternatives in rows and criteria in columns.
 
@@ -62,15 +62,16 @@ def ranking_demotion(matrix: np.ndarray,
         Value determining maximum modification size represented as percent of initial value.
         Required if `bounds` parameter is not given.
 
-    Returns
-    -------
+    Returns:
+    ---------
     List[Tuple[int, int, float, int]]
         A list of tuples containing information about alternative index, criterion index, size of change,
         and achieved new positions based on demotion analysis.
 
-    ## Examples
-    --------
-    ### Example 1: Demotion analysis based on the COPRAS method with only required parameters
+    Examples:
+    ----------
+    Example 1: Demotion analysis based on the COPRAS method with only required parameters
+    
     >>> matrix = np.array([
     ...     [4, 2, 6],
     ...     [7, 3, 2],
@@ -94,7 +95,8 @@ def ranking_demotion(matrix: np.ndarray,
     >>> for r in results:
     ...     print(r)
 
-    ### Example 2: Demotion analysis based on the COPRAS method with explicitly defined modification bounds
+    Example 2: Demotion analysis based on the COPRAS method with explicitly defined modification bounds
+    
     >>> matrix = np.array([
     ...     [4, 2, 6],
     ...     [7, 3, 2],
@@ -117,7 +119,8 @@ def ranking_demotion(matrix: np.ndarray,
     >>> for r in results:
     ...     print(r)
 
-    ### Example 3: Demotion analysis based on the COPRAS method with explicitly defined modification bounds and targeted positions
+    Example 3: Demotion analysis based on the COPRAS method with explicitly defined modification bounds and targeted positions
+    
     >>> matrix = np.array([
     ...     [4, 2, 6],
     ...     [7, 3, 2],
@@ -141,7 +144,8 @@ def ranking_demotion(matrix: np.ndarray,
     >>> for r in results:
     ...     print(r)
 
-    ### Example 4: Demotion analysis based on the COPRAS method with not returned values without noticed demotion
+    Example 4: Demotion analysis based on the COPRAS method with not returned values without noticed demotion
+    
     >>> matrix = np.array([
     ...     [4, 2, 6],
     ...     [7, 3, 2],

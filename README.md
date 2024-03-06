@@ -1,5 +1,5 @@
 [![github](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/jwieckowski/pysensmcda)
-[![Version](https://img.shields.io/pypi/v/pyfdm)](https://pypi.org/project/)
+[![Version](https://img.shields.io/pypi/v/pysensmcda)](https://pypi.org/project/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <!-- [![DOI:10.1016/j.softx.2022.101271](http://img.shields.io/badge/DOI-10.1016/j.softx.2022.101271-0f81c2.svg)](https://doi.org/10.1016/j.softx.2022.101271) -->
@@ -56,41 +56,41 @@ citation
 
 - ### Alternative:
 
-| Name                    |  Reference   |
-| ----------------------- | :----------: |
-| Discrete modification   | [[0]](#ref0) |
-| Percentage modification | [[0]](#ref0) |
-| Range modification      | [[0]](#ref0) |
-| Alternative removal     | [[0]](#ref0) |
+| Name                    |   Reference    |
+| ----------------------- | :------------: |
+| Discrete modification   |       -        |
+| Percentage modification | [[14]](#ref14) |
+| Range modification      |       -        |
+| Alternative removal     |  [[8]](#ref8)  |
 
 <br/>
 
 - ### Criteria:
 
-| Name                                             |  Reference   |
-| ------------------------------------------------ | :----------: |
-| Random distribution - weights generation         |      -       |
-| &nbsp;&nbsp;&nbsp;&nbsp; Chisquare distribution  |      -       |
-| &nbsp;&nbsp;&nbsp;&nbsp; Laplace distribution    |      -       |
-| &nbsp;&nbsp;&nbsp;&nbsp; Normal distribution     |      -       |
-| &nbsp;&nbsp;&nbsp;&nbsp; Random distribution     |      -       |
-| &nbsp;&nbsp;&nbsp;&nbsp; Triangular distribution |      -       |
-| &nbsp;&nbsp;&nbsp;&nbsp; Uniform distribution    |      -       |
-| Percentage modification                          | [[0]](#ref0) |
-| Range modification                               | [[0]](#ref0) |
-| Weights scenarios                                | [[0]](#ref0) |
-| Cirteria identification                          | [[6]](#ref6) |
-| Criteria removal                                 | [[0]](#ref0) |
+| Name                                             |   Reference    |
+| ------------------------------------------------ | :------------: |
+| Random distribution - weights generation         |       -        |
+| &nbsp;&nbsp;&nbsp;&nbsp; Chisquare distribution  |       -        |
+| &nbsp;&nbsp;&nbsp;&nbsp; Laplace distribution    |       -        |
+| &nbsp;&nbsp;&nbsp;&nbsp; Normal distribution     |       -        |
+| &nbsp;&nbsp;&nbsp;&nbsp; Random distribution     |       -        |
+| &nbsp;&nbsp;&nbsp;&nbsp; Triangular distribution |       -        |
+| &nbsp;&nbsp;&nbsp;&nbsp; Uniform distribution    |       -        |
+| Percentage modification                          | [[15]](#ref15) |
+| Range modification                               |       -        |
+| Weights scenarios                                |       -        |
+| Criteria identification                          |  [[6]](#ref6)  |
+| Criteria removal                                 | [[13]](#ref13) |
 
 <br/>
 
 - ### Probabilistic:
 
-| Name                           |  Reference   |
-| ------------------------------ | :----------: |
-| Monte carlo weights generation | [[0]](#ref0) |
-| Perturbated matrix             | [[0]](#ref0) |
-| Perturbated weights            | [[0]](#ref0) |
+| Name                           |   Reference    |
+| ------------------------------ | :------------: |
+| Monte carlo weights generation | [[10]](#ref10) |
+| Perturbed matrix               | [[12]](#ref12) |
+| Perturbed weights              | [[11]](#ref11) |
 
 <br/>
 
@@ -98,10 +98,10 @@ citation
 
 | Name               |  Reference   |
 | ------------------ | :----------: |
-| Ranking alteration | [[0]](#ref0) |
-| Demotion           | [[0]](#ref0) |
-| Promotion          | [[0]](#ref0) |
-| Fuzzy ranking      | [[0]](#ref0) |
+| Ranking alteration | [[7]](#ref7) |
+| Demotion           |      -       |
+| Promotion          | [[9]](#ref9) |
+| Fuzzy ranking      |      -       |
 
 <br/>
 
@@ -157,3 +157,21 @@ Don't forget to check out these other amazing software packages!
 <a name="ref5">**[5]**</a> Mohammadi, M., & Rezaei, J. (2020). Ensemble ranking: Aggregation of rankings produced by different multi-criteria decision-making methods. Omega, 96, 102254.
 
 <a name="ref6">**[6]**</a> Kizielewicz, B., Wątróbski, J., & Sałabun, W. (2020). Identification of relevant criteria set in the MCDA process—Wind farm location case study. Energies, 13(24), 6548.
+
+<a name="ref7">**[7]**</a> Maliene, V., Dixon-Gough, R., & Malys, N. (2018). Dispersion of relative importance values contributes to the ranking uncertainty: Sensitivity analysis of Multiple Criteria Decision-Making methods. Applied Soft Computing, 67, 286-298.
+
+<a name="ref8">**[8]**</a> Nabavi, S. R., Wang, Z., & Rangaiah, G. P. (2023). Sensitivity Analysis of Multi-Criteria Decision-Making Methods for Engineering Applications. Industrial & Engineering Chemistry Research, 62(17), 6707-6722.
+
+<a name="ref9">**[9]**</a> Wolters, W. T. M., & Mareschal, B. (1995). Novel types of sensitivity analysis for additive MCDM methods. European Journal of Operational Research, 81(2), 281-290.
+
+<a name="ref10">**[10]**</a> Baležentis, T., & Streimikiene, D. (2017). Multi-criteria ranking of energy generation scenarios with Monte Carlo simulation. Applied energy, 185, 862-871.
+
+<a name="ref11">**[11]**</a> Zhang, C., Wang, Q., Zeng, S., Baležentis, T., Štreimikienė, D., Ališauskaitė-Šeškienė, I., & Chen, X. (2019). Probabilistic multi-criteria assessment of renewable micro-generation technologies in households. Journal of Cleaner Production, 212, 582-592.
+
+<a name="ref12">**[12]**</a> Barker, K., & Haimes, Y. Y. (2009). Assessing uncertainty in extreme events: Applications to risk-based decision making in interdependent infrastructure sectors. Reliability Engineering & System Safety, 94(4), 819-829.
+
+<a name="ref13">**[13]**</a> Więckowski, J., Kizielewicz, B., Shekhovtsov, A., & Sałabun, W. (2023). How do the criteria affect sustainable supplier evaluation?-A case study using multi-criteria decision analysis methods in a fuzzy environment. Journal of Engineering Management and Systems Engineering, 2(1), 37-52.
+
+<a name="ref14">**[14]**</a> Kolbowicz, M., Nowak, M., & Więckowski, J. (2024). A multi-criteria system for performance assessment and support decision-making based on the example of Premier League top football strikers.
+
+<a name="ref15">**[15]**</a> Triantaphyllou, E., & Sánchez, A. (1997). A sensitivity analysis approach for some deterministic multi‐criteria decision‐making methods. Decision sciences, 28(1), 151-194.
