@@ -109,8 +109,8 @@ def percentage_graph(percentage_changes: list | np.ndarray,
             for idx, change in enumerate(percentage_changes):
                 dist = np.sign(change)*step/2 if np.sign(change) else step/2
                 ax.text(x=idx , y=change+dist, s=f'Rank {new_positions[idx]}', ha='center')
-    
-    ax.set_ylim(np.min(percentage_changes) - step, np.max(percentage_changes) + step)
+    if not np.all(percentage_changes == 0):
+        ax.set_ylim(np.min(percentage_changes) - step, np.max(percentage_changes) + step)
     ax.set_xlim(-0.5, crit_num-0.5)
     
     if xticks is None:
