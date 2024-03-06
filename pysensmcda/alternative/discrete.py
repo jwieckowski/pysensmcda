@@ -10,8 +10,8 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
     """
     Modify a decision matrix based on specified discrete values and indexes combinations representing the columns modified at the time.
 
-    Parameters
-    ----------
+    Parameters:
+    -------------
     matrix : ndarray
         2D array representing the initial decision matrix.
 
@@ -24,15 +24,16 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
         Indexes of the columns from matrix to be modified. If None, all columns are considered subsequently.
         If ndarray, it specifies the indexes or combinations of indexes for the columns to be modified.
 
-    Returns
-    -------
+    Returns:
+    ----------
     List[Tuple[int, int | tuple, tuple, ndarray]]
         A list of tuples containing information about the modified alternative index, criteria index, discrete change,
         and the resulting decision matrix.
 
-    ## Examples
-    --------
-    ### Example 1: Modify decision matrix with discrete values
+    Examples:
+    ------------
+    Example 1: Modify decision matrix with discrete values
+
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -43,7 +44,8 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
     >>> for r in results:
     ...     print(r)
 
-    ### Example 2: Modify matrix with discrete values list and specified indexes
+    Example 2: Modify matrix with discrete values list and specified indexes
+
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -55,7 +57,8 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
     >>> for r in results:
     ...     print(r)
 
-    ### Example 3: Modify matrix with 3D discrete values array
+    Example 3: Modify matrix with 3D discrete values array
+
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],
@@ -70,7 +73,8 @@ def discrete_modification(matrix: np.ndarray, discrete_values: np.ndarray, index
     >>> for r in results:
     ...     print(r)
 
-    ### Example 4: Modify matrix with 3D discrete values array and specified indexes
+    Example 4: Modify matrix with 3D discrete values array and specified indexes
+
     >>> matrix = np.array([
     ... [4, 1, 6],
     ... [2, 6, 3],

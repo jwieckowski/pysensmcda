@@ -21,8 +21,10 @@ def hist_dist(data: np.ndarray,
             min_bins: int = 1, 
             max_bins: int = 20) -> tuple[plt.Axes, Slider] | plt.Axes:
     """
-    Parameters
-    ----------
+    Visualization of distribution of values with histograms
+
+    Parameters:
+    ------------
         data: ndarray
             Values of criteria, where columns designate separate criteria.
         ax: Axis | None, optional, default=None
@@ -50,28 +52,32 @@ def hist_dist(data: np.ndarray,
         max_bins: int, optional, default=20
             Maximum amount of bins available to select with slider.
 
-    Examples
-    --------
-    ### Example 1: hist with slider
-    >>> fig, ax = plt.subplots()
-    >>> results = np.array([0.294, 0.306, 0.288, 0.312, 0.282, 0.318, 0.304, 0.296, 0.308, 0.292, 0.312, 0.288, 0.316, 0.284])
-    >>> # In the case of using sliders, the reference should be kept, so Python wouldn't GC
-    >>> _, bins_slider = hist_dist(results, ax, fig=fig, slider_label='Number\nof bins', kind='hist', xlabel='Value', title='Criterion value distribution')
-    >>> plt.show()
-
-    ### Example 2: hist+kde without slider
-    >>> fig, ax = plt.subplots()
-    >>> results = np.array([0.294, 0.306, 0.288, 0.312, 0.282, 0.318, 0.304, 0.296, 0.308, 0.292, 0.312, 0.288, 0.316, 0.284])
-    >>> hist_dist(results, ax, fig=fig, slider_label='Number\nof bins', show_slider=False, xlabel='Value', title='Criterion value distribution')
-    >>> plt.show()
-    
-    Returns
-    -------
+    Returns:
+    ---------
         tuple(ax, slider) if show_slider=True else ax
         ax: matplotlib.Axes
             Axes object or list of Axes objects on which plots were drawn.
         slider: matplotlib.widgets.Slider
             Slider object used in plot
+    
+    Examples:
+    ----------
+
+    Example 1: Hist with slider
+    
+    >>> fig, ax = plt.subplots()
+    >>> results = np.array([0.294, 0.306, 0.288, 0.312, 0.282, 0.318, 0.304, 0.296, 0.308, 0.292, 0.312, 0.288, 0.316, 0.284])
+    >>> # In the case of using sliders, the reference should be kept, so Python wouldn't GC
+    >>> _, bins_slider = hist_dist(results, ax, fig=fig, slider_label='Number of bins', kind='hist', xlabel='Value', title='Criterion value distribution')
+    >>> plt.show()
+
+    Example 2: Hist+kde without slider
+    
+    >>> fig, ax = plt.subplots()
+    >>> results = np.array([0.294, 0.306, 0.288, 0.312, 0.282, 0.318, 0.304, 0.296, 0.308, 0.292, 0.312, 0.288, 0.316, 0.284])
+    >>> hist_dist(results, ax, fig=fig, slider_label='Number of bins', show_slider=False, xlabel='Value', title='Criterion value distribution')
+    >>> plt.show()
+    
     """
     
     Validator.is_type_valid(data, np.ndarray, 'data')
@@ -161,11 +167,14 @@ def mutli_hist_dist(data: np.ndarray,
                     max_bins: int = 20, 
                     show_slider: bool = True, 
                     bins_count: str | int = 'auto', 
-                    main_slider_label: str = 'Number\nof bins', 
+                    main_slider_label: str = 'Number of bins', 
                     xlabel: str = 'Value') -> tuple[plt.Axes, plt.Figure, Slider, list[Slider]] | tuple[plt.Axes, plt.Figure]:
     """
-    Parameters
-    ----------
+    Visualization of distribution of multiple values with histograms
+
+
+    Parameters:
+    ------------
         data: ndarray
             Values of criteria, where columns designate separate criteria.
         nrows: int
@@ -198,13 +207,13 @@ def mutli_hist_dist(data: np.ndarray,
             If True slider to change number of bins is shown.
         bins_count: int|'auto', optional, default='auto'
             Number of initial bins.
-        main_slider_label: str, optional, default='Number\nof bins'
+        main_slider_label: str, optional, default='Number of bins'
             Label of main slider that controls all sliders at once.
         xlabel: str, optional, default='Value'
             Label of x axis.
 
     Example
-    -------
+    ---------
         >>> results = np.array([[0, -0.02, np.array([0.294, 0.303, 0.403])],
         >>>     [0, 0.02, np.array([0.306, 0.297, 0.397])],
         >>>     [0, -0.04, np.array([0.288, 0.306, 0.406])],
@@ -224,8 +233,8 @@ def mutli_hist_dist(data: np.ndarray,
         >>> _, _, sliders, main_slider = mutli_hist_dist(critera_values, title_pos=0.5, nrows=1, ncols=3, figsize=(8, 4))
         >>> plt.show()
 
-    Returns
-    -------
+    Returns:
+    ---------
         tuple(ax, fig, main_slider, sliders) if show_slider=True else tuple(ax, fig)
         ax: matplotlib.Axes
             Axes object or list of Axes objects on which plots were drawn.

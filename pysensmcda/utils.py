@@ -1,6 +1,8 @@
 # Copyright (C) 2023 Jakub Więckowski
+import functools
 
 def memory_guard(func):
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)

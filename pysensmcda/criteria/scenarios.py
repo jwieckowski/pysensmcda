@@ -17,8 +17,8 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
     """
     Generate scenarios for examining criteria weights based on given criteria number and step of weights space exploration
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     crit_num : int
         The number of criteria.
 
@@ -46,34 +46,39 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
     save_zeros: bool, optional, default=True
         If True saves weights vectors where zeros are present.
 
-    Returns
-    -------
+    Returns:
+    ---------
     list or None
         Depending on return_array parameter, None or nd.array will be returned.
 
-    Examples
-    --------
-    ### Example 1: parallel without array return
+    Examples:
+    ----------
+    Example 1: parallel without array return
+    
     >>> generate_weights_scenarios(4, 0.1, 3)
     >>> # results will be saved to 'out.npy'
 
-    ### Example 2: parallel with array return
+    Example 2: parallel with array return
+    
     >>> scenarios = generate_weights_scenarios(4, 0.1, 3, return_array=True)
     >>> print(scenarios)
     >>> [(0.9, 0.1, 0.0, 0.0), (0.8, 0.2, 0.0, 0.0), ...]
     >>> # results will be saved to 'out.npy'
 
-    ### Example 3: parallel with custom file name
+    Example 3: parallel with custom file name
+    
     >>> generate_weights_scenarios(4, 0.1, 3, file_name='4crit_0.1')
     >>> # results will be saved to '4crit_0.1.npy'
 
-    ### Example 3: sequential
+    Example 3: sequential
+    
     >>> generate_weights_scenarios(4, 0.1, 3, sequential=True)
     >>> print(scenarios)
     >>> [(0.9, 0.1, 0.0, 0.0), (0.8, 0.2, 0.0, 0.0), ...]
     >>> # results will not be saved
 
-    ### Example 4: sequential with saving to file
+    Example 4: sequential with saving to file
+    
     >>> generate_weights_scenarios(4, 0.1, 3, sequential=True, file_name='4crit_0.1')
     >>> print(scenarios)
     >>> [(0.9, 0.1, 0.0, 0.0), (0.8, 0.2, 0.0, 0.0), ...]

@@ -21,8 +21,8 @@ def heatmap(matrix: np.ndarray,
     """
     Visualize the fuzzy ranking matrix using a heatmap.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     matrix : np.ndarray
         2D matrix, for example, obtained from the 'fuzzy_ranking' function.
 
@@ -62,12 +62,12 @@ def heatmap(matrix: np.ndarray,
     ax : plt.Axes, optional
         The axes on which to draw the heatmap. If not provided, a new figure will be created.
 
-    Returns
-    -------
+    Returns:
+    ---------
     plt.Axes
 
-    Examples
-    --------
+    Examples:
+    ----------
     >>> rankings = np.array([
     ...     [1, 2, 3, 4, 5],
     ...     [2, 1, 5, 3, 4],

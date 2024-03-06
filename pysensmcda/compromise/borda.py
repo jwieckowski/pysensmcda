@@ -10,23 +10,24 @@ def borda(rankings: np.ndarray) -> np.ndarray:
     """
     Calculates compromised ranking using borda voting rule.
 
-    Parameters
-    ----------
+    Parameters:
+    -------------
         rankings: ndarray
             Two-dimensional matrix containing different rankings in columns.
 
-    Example
+    Returns:
     ----------
+        ndarray
+            Numpy array containing compromised ranking.
+    
+    Example:
+    ------------
         >>> rankings = np.array([[3, 2, 3],
         >>>                     [4, 4, 4],
         >>>                     [2, 3, 2],
         >>>                     [1, 1, 1]])
         >>> compromised_ranking = borda(rankings)
 
-    Returns
-    --------
-        ndarray
-            Numpy array containing compromised ranking.
     """
 
     Validator.is_type_valid(rankings, np.ndarray, 'rankings')

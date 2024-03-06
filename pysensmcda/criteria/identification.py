@@ -14,8 +14,8 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     The core idea behind this method is to iteratively exclude a specified number of criteria and evaluate the impact on the ranking of alternatives. 
     By systematically excluding different criteria and analyzing the resulting changes in the ranking, the function aims to identify which criteria significantly influence the final decision.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     method : callable
         The evaluation function to be used for preference and ranking calculation.
         Should include `matrix`, `weights`, and `types` as one of the parameters to pass modified input data to the assessment process.
@@ -39,15 +39,16 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     precision: int, optional, default=6
         Precision for rounding the results.
 
-    Returns
-    -------
+    Returns:
+    ---------
     list
         List of tuples containing information about the relevance identification process.
         Each tuple includes the excluded criteria indices, correlation coefficient values, distance calculated as the sum of the Euclidean distance between preferences, and the modified matrix.
 
-    Examples
-    --------
-    ### Example 1: Identify relevant criteria in a custom matrix using TOPSIS method
+    Examples:
+    ----------
+    Example 1: Identify relevant criteria in a custom matrix using TOPSIS method
+    
     >>> matrix = np.array([
     ...    [4, 3, 5, 7],
     ...    [7, 4, 2, 4],
@@ -66,7 +67,8 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     >>> for r in results:
     ...     print(r)
 
-    ### Example 2: Identify relevant criteria in using TOPSIS method and excluding 3 criteria in the problem
+    Example 2: Identify relevant criteria in using TOPSIS method and excluding 3 criteria in the problem
+    
     >>> matrix = np.array([
     ...    [106.78,  6.75,  2.  , 220.  ,  6.  ,  1.  , 52.  , 455.5 ,  8.9 , 36.8 ],
     ...    [ 86.37,  7.12,  3.  , 400.  , 10.  ,  0.  , 20.  , 336.5 ,  7.2 , 29.8 ],

@@ -12,18 +12,18 @@ def preference_distribution(g: sns.FacetGrid, xlabel: str) -> None:
     Function for kde distribution based on `sns.FacetGrid`
     Code from https://seaborn.pydata.org/examples/kde_ridgeplot.html Adapted for ICRA approach, however can be used separately
     
-    Parameters
+    Parameters:
     ----------
     g: sns.FacetGrid
         `See provided link`
     xlabel: str
         Label of x axis
 
-    Retruns
+    Returns:
     -------
         None
 
-    Example
+    Example:
     -------
     >>> methods = ["TOPSIS", "VIKOR", "COMET"]
     >>> preference = np.random.random((8, 3))
@@ -71,8 +71,8 @@ def ICRA_pref_distribution(results: ICRAResults,
     """
     Function for plotting distibution of preferences for ICRA approach across different methods or iterations.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     results: ICRAResults
         Results obtained form ICRA procedure.
     methods: list[str]
@@ -95,13 +95,15 @@ def ICRA_pref_distribution(results: ICRAResults,
     FacetGrid_kwargs: dict, optional, default=dict()
         Keyword arguments to pass into `sns.FacetGrid()`.
 
-    Returns
-    -------
+    Returns:
+    ---------
         None
         
-    Examples
-    --------
-    ### Example of obtaining ICRA results
+    Example:
+    ----------
+    
+    Example of obtaining ICRA results
+    
     >>> ## Initial decision problem evaluation - random problem
     >>> decision_matrix = np.random.random((7, 5))
     >>> 
@@ -130,15 +132,18 @@ def ICRA_pref_distribution(results: ICRAResults,
     >>> 
     >>> result = iterative_compromise(methods, ICRA_matrix, method_types)
 
-    ### Example 1 - show and save plots for TOPSIS and COMET distribution across all iterations
+    Example 1: Show and save plots for TOPSIS and COMET distribution across all iterations
+    
     >>> methods = ["TOPSIS", "VIKOR", "COMET"]
     >>> ICRA_pref_distribution(result, methods, save=True, by='methods', indexes=[0, 2])
     
-    ### Example 2 - save plots for first and third iterations across all methods under custom file name with pdf format
+    Example 2: Save plots for first and third iterations across all methods under custom file name with pdf format
+    
     >>> methods = ["TOPSIS", "VIKOR", "COMET"]
     >>> ICRA_pref_distribution(result, methods, file_name='custom_file_name', format='pdf', save=True, show=False, by='iters', indexes=[0, 2])
     
-    ### Example 3 - using custom palettes
+    Example 3: Using custom palettes
+    
     >>> methods = ["TOPSIS", "VIKOR", "COMET"]
     >>> palettes = []
     >>> for idx in range(2):

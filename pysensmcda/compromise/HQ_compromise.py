@@ -32,8 +32,8 @@ def HQ_compromise(rankings: np.ndarray, max_iters:int = 1000, tol:float = 10e-10
     """
     Perform HQ (Half-Quadratic) compromise on a set of rankings.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     rankings : np.ndarray
         2D array representing the rankings. Each row corresponds to an alternative,
         and each column corresponds to a criterion.
@@ -44,14 +44,15 @@ def HQ_compromise(rankings: np.ndarray, max_iters:int = 1000, tol:float = 10e-10
     tol : float, optional, default=10e-10
         Tolerance for convergence.
 
-    Returns
-    -------
+    Returns:
+    ---------
         tuple
             Tuple that contains (consensus_index, trust_index), weights of rankings, compromised ranking
     
     Examples
-    --------
-    ### Example 1
+    ----------
+    Example 1: Calculation with default parameters
+
         >>> rankings = np.array([[2, 2, 2],
         >>>                     [3, 4, 5],
         >>>                     [1, 1, 4],
@@ -62,7 +63,8 @@ def HQ_compromise(rankings: np.ndarray, max_iters:int = 1000, tol:float = 10e-10
         >>>                     [6, 7, 6]])
         >>> HQ_compromise(rankings)
     
-    ### Example 2 - set tolerance on convergance and change maximum number of iterations
+    Example 2: Set tolerance on convergence and change maximum number of iterations
+    
         >>> rankings = np.array([[2, 2, 2],
         >>>                     [3, 4, 5],
         >>>                     [1, 1, 4],

@@ -10,8 +10,8 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
     """
     Modify a set of criteria weights based on specified range values, directions, and indexes.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     weights : ndarray
         1D array representing the initial criteria weights. Should sum up to 1.
 
@@ -27,22 +27,24 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
     step : float, optional, default=0.01
         Step size for the change in given range.
 
-    Returns
-    -------
+    Returns:
+    ---------
     List[Tuple[int, Union[float, Tuple[float, ...]], ndarray]]
         A list of tuples containing information about the modified criteria index, 
         range change, and the resulting criteria weights.
 
-    ## Examples
-    --------
-    ### Example 1: Modify weights with a single range change
+    Examples:
+    ------------
+    Example 1: Modify weights with a single range change
+    
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> range_values = np.array([[0.25, 0.3], [0.3, 0.35], [0.37, 0.43]])
     >>> results = range_modification(weights, range_values)
     >>> for r in results:
     ...     print(r)
 
-    ### Example 2: Modify weights with range values, specific indexes, and step size
+    Example 2: Modify weights with range values, specific indexes, and step size
+    
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> indexes = np.array([[0, 1], 2], dtype='object')
     >>> range_values = np.array([[0.25, 0.3], [0.3, 0.35], [0.37, 0.43]])
@@ -50,7 +52,8 @@ def range_modification(weights: np.ndarray, range_values: np.ndarray, indexes: N
     >>> for r in results:
     ...     print(r)
 
-    ### Example 3: Modify weights with range values and individual step sizes
+    Example 3: Modify weights with range values and individual step sizes
+    
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> range_values = np.array([[0.25, 0.3], [0.3, 0.35], [0.37, 0.43]])
     >>> step = 0.02

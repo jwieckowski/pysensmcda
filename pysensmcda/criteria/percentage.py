@@ -10,8 +10,8 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
     """
     Modify a set of criteria weights based on specified percentage changes, directions, and indexes.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     weights : ndarray
         1D array representing the initial criteria weights. Should sum up to 1.
 
@@ -31,22 +31,24 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
     step : int | float, optional, default=1
         Step size for the percentage change.
 
-    Returns
-    -------
+    Returns:
+    ---------
     List[Tuple[int | tuple, tuple, ndarray]]
         A list of tuples containing information about the modified criteria index, percentage change,
         and the resulting criteria weights.
 
-    ## Examples
-    --------
-    ### Example 1: Modify weights with a single percentage change
+    Examples:
+    ----------
+    Example 1: Modify weights with a single percentage change
+    
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> percentage = 5
     >>> results = percentage_modification(weights, percentage)
     >>> for r in results:
     ...     print(r)
 
-    # Example 2: Modify weights with percentages, specific indexes, and step size
+    Example 2: Modify weights with percentages, specific indexes, and step size
+    
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> percentages = np.array([5, 5, 5])
     >>> indexes = np.array([[0, 1], 2], dtype='object')
@@ -54,7 +56,8 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
     >>> for r in results:
     ...     print(r)
 
-    ### Example 3: Modify weights with percentages and specific direction for each criterion
+    Example 3: Modify weights with percentages and specific direction for each criterion
+    
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> percentages = np.array([6, 4, 5])
     >>> direction = np.array([-1, 1, -1])
@@ -62,7 +65,8 @@ def percentage_modification(weights: np.ndarray, percentages: int | np.ndarray, 
     >>> for r in results:
     ...     print(r)
 
-    ### Example 4: Modify weights with percentages, specific indexes, and individual step sizes
+    Example 4: Modify weights with percentages, specific indexes, and individual step sizes
+    
     >>> weights = np.array([0.3, 0.3, 0.4])
     >>> percentages = np.array([6, 4, 8])
     >>> indexes = np.array([0, 2])

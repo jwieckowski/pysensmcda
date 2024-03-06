@@ -7,24 +7,25 @@ from ..utils import memory_guard
 
 def vector_normalization(x: np.ndarray, cost: bool=True) -> np.ndarray:
     """
-    Parameters
+    Parameters:
     ----------
     x: ndarray
         Vector of numbers to be normalized.
     cost: bool, optional, cost=True
         Type of normalization. If True normalize as cost criterion, if False normalize as profit criterion.
 
-    Example
+    Returns:
+    -------
+        ndarray
+            Normalized vector.
+    
+    Example:
     -------
     >>> normalized_matrix = matrix.copy()
     >>> for i in range(criteria_number):
     >>>     cost = True if types[i] == -1 else False
     >>>     normalized_matrix[:, i] = normalization(matrix[:, i], cost)
 
-    Returns
-    -------
-    ndarray
-        Normalized vector.
     """
     if cost:
         return 1 - (x / np.sqrt(sum(x ** 2)))
@@ -35,8 +36,8 @@ def improved_borda(preferences: np.ndarray, preference_types: np.ndarray | list=
     """
     Improved borda was presented along Probabilistic Linguistic MULTIMOORA, where authors used specific utility functions. This implementation relyes on the concept proposed by author, however it does provide freedom for the user.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     preferences: ndarray
         Preferences for alternatives in rows that will be further compromised. Columns designates methods / criteria.
     preference_types: list | ndarray, optional, default=[]
@@ -48,9 +49,13 @@ def improved_borda(preferences: np.ndarray, preference_types: np.ndarray | list=
     norm_types: list | ndarray, optional, default=[]
         Changes type of normalization if needed, -1 for cost, 1 for profit.
 
-    Example
-    --------
-    ### Example 1: no utility functions
+    Returns:
+    ---------
+        ndarray
+            Compromised ranking.
+
+    Example:
+    ----------
     >>> matrix = np.random.random((8,5))
     >>> criteria_num = matrix.shape[1]
     >>> weights = np.ones(criteria_num)/criteria_num
@@ -58,12 +63,6 @@ def improved_borda(preferences: np.ndarray, preference_types: np.ndarray | list=
     >>> preferences = np.array([topsis(matrix, weights, types), vikor(matrix, weights, types)]).T
     >>> 
     >>> compromise_ranking = improved_borda(preferences, [1, -1])
-
-    Returns
-    -------
-    ndarray
-        Compromised ranking.
-
     """
     
     Validator.is_type_valid(preferences, np.ndarray, 'preferences')

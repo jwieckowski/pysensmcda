@@ -9,8 +9,8 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
     """
     Remove one or more alternatives from a decision matrix.
 
-    Parameters
-    ----------
+    Parameters:
+    -------------
     matrix : ndarray
         2D array with a decision matrix containing multiple criteria and alternatives.
 
@@ -18,14 +18,15 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
         Index or array of indexes specifying which alternative to remove. 
         If None, one alternative will be subsequently removed by default.
 
-    Returns
-    -------
+    Returns:
+    ----------
     List[Tuple[int, ndarray]]
         A list of tuples containing information about the new decision matrix.
 
-    ## Examples
-    --------
-    ### Example 1: Remove one alternative (default behavior)
+    Examples:
+    -----------
+    Example 1: Remove one alternative (default behavior)
+    
     >>> matrix = np.array([
     ...     [1, 2, 3, 4],
     ...     [1, 2, 3, 4],
@@ -37,7 +38,8 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
     >>> for result in results:
     ...     print(result)
 
-    ### Example 2: Remove alternative at a specific index
+    Example 2: Remove alternative at a specific index
+    
     >>> matrix = np.array([
     ...     [1, 2, 3, 4],
     ...     [1, 2, 3, 4],
@@ -49,7 +51,8 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
     >>> for result in results:
     ...     print(result)
 
-    ### Example 3: Remove alternatives with specified indexes (1D array)
+    Example 3: Remove alternatives with specified indexes (1D array)
+    
     >>> matrix = np.array([
     ...     [1, 2, 3, 4],
     ...     [1, 2, 3, 4],
@@ -61,7 +64,8 @@ def remove_alternatives(matrix: np.ndarray, indexes: None | int | np.ndarray = N
     >>> for result in results:
     ...     print(result)
 
-    ### Example 4: Remove alternatives with specified indexes (mixed-type array)
+    Example 4: Remove alternatives with specified indexes (mixed-type array)
+    
     >>> matrix = np.array([
     ...     [1, 2, 3, 4],
     ...     [1, 2, 3, 4],

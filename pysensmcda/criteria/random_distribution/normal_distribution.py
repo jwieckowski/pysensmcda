@@ -9,8 +9,8 @@ def normal_distribution(size: int, loc: float = 0.0, scale: float = 1.0) -> np.n
     """
     Generate a set of normalized weights sampled from a normal distribution.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     size : int
         Number of weights to generate.
 
@@ -20,18 +20,20 @@ def normal_distribution(size: int, loc: float = 0.0, scale: float = 1.0) -> np.n
     scale : float, optional, default=1.0
         Standard deviation of the normal distribution.
 
-    Returns
-    -------
-    ndarray
-        Array of normalized weights sampled from a normal distribution.
+    Returns:
+    ---------
+        ndarray
+            Array of normalized weights sampled from a normal distribution.
 
-    ## Example
-    --------
-    ### Example 1: Generate normalized weights from a normal distribution with default parameters
+    Examples:
+    ----------
+    Example 1: Generate normalized weights from a normal distribution with default parameters
+    
     >>> weights = normal_distribution(3)
     >>> print(weights)
 
-    ### Example 2: Generate normalized weights from a normal distribution with explicit parameters
+    Example 2: Generate normalized weights from a normal distribution with explicit parameters
+    
     >>> weights = normal_distribution(3, 5, 2)
     >>> print(weights)
     """

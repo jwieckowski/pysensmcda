@@ -9,8 +9,8 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
     """
     Remove one or more criteria from a decision matrix and adjust corresponding criteria weights.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     matrix : ndarray
         2D array with decision matrix containing multiple criteria and alternatives.
 
@@ -21,15 +21,16 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
         Index or array of indexes specifying which criteria to remove. 
         If None, one criterion will be removed by default
 
-    Returns
-    -------
+    Returns:
+    ---------
     List[Tuple[int, ndarray, ndarray]]
         A list of tuples containing information about the removed criteria, new decision matrix,
         and adjusted criteria weights.
 
-    ## Examples
-    --------
-    ### Example 1: no indexes given
+    Examples:
+    ----------
+    Example 1: no indexes given
+    
     >>> matrix = np.array([
     ...     [1, 2, 3, 4, 4],
     ...     [1, 2, 3, 4, 4],
@@ -40,7 +41,8 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
     >>> for result in results:
     ...     print(result)
 
-    ### Example 2: int index given
+    Example 2: int index given
+    
     >>> matrix = np.array([
     ...     [1, 2, 3, 4, 4],
     ...     [1, 2, 3, 4, 4],
@@ -51,7 +53,8 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
     >>> for result in results:
     ...     print(result)
 
-    ### Example 3: array indexes given, one-dimensional
+    Example 3: array indexes given, one-dimensional
+    
     >>> matrix = np.array([
     ...     [1, 2, 3, 4, 4],
     ...     [1, 2, 3, 4, 4],
@@ -62,7 +65,8 @@ def remove_criteria(matrix: np.ndarray, weights: np.ndarray, indexes: None | int
     >>> for result in results:
     ...     print(result)
 
-    ### Example 4: array indexes given, elements of array as list
+    Example 4: array indexes given, elements of array as list
+    
     >>> matrix = np.array([
     ...     [1, 2, 3, 4, 4],
     ...     [1, 2, 3, 4, 4],

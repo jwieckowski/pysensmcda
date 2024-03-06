@@ -18,8 +18,8 @@ def calculate_preference(func: callable,
     """
     Wrapper for calculating preference depending on the sensitivity analysis function.
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
         func: callable
             Function for pysensmcda library that was used to acquire results.
         results: depending on func
@@ -36,9 +36,15 @@ def calculate_preference(func: callable,
         method_type: int or None, optional, default=None
             If set, rankings are returned. Supported values: -1 for ascending ranking; 1 for descending ranking
 
-    Examples
-    --------
-    ### Example 1: Alternative sensitivity analysis - return only preferences
+    Returns:
+    ---------
+        ndarray or list[tuple]
+            If only_preference=True, array of preferences calculated for different matrices / weights depending on the type of sensitivity analysis is returned. Else the preferences are appended to results as last column. If `method_type` is set, the rankings are appended to column after preferences.
+    
+    Examples:
+    ----------
+    Example 1: Alternative sensitivity analysis - return only preferences
+    
         >>> from pymcdm.methods import TOPSIS
         >>> 
         >>> topsis = TOPSIS()
@@ -63,7 +69,8 @@ def calculate_preference(func: callable,
         >>> 
         >>> calculate_preference(discrete_modification, results, topsis, kwargs)
 
-    ### Example 2: Criteria sensitivity analysis - return preferences and rankings
+    Example 2: Criteria sensitivity analysis - return preferences and rankings
+    
         >>> from pysensmcda.criteria import percentage_modification
         >>> 
         >>> weights = np.array([0.3, 0.3, 0.4])
@@ -78,7 +85,8 @@ def calculate_preference(func: callable,
         >>> 
         >>> calculate_preference(percentage_modification, results, topsis, kwargs, method_type=1)
 
-    ### Example 3: Criteria sensitivity analysis - return rankings and aggregated results
+    Example 3: Criteria sensitivity analysis - return rankings and aggregated results
+    
         >>> from pysensmcda.criteria import percentage_modification
         >>> 
         >>> weights = np.array([0.3, 0.3, 0.4])
@@ -93,10 +101,6 @@ def calculate_preference(func: callable,
         >>> 
         >>> calculate_preference(percentage_modification, results, topsis, kwargs, only_preference=False, method_type=1)
 
-    Returns
-    -------
-        ndarray or list[tuple]
-            If only_preference=True, array of preferences calculated for different matrices / weights depending on the type of sensitivity analysis is returned. Else the preferences are appended to results as last column. If `method_type` is set, the rankings are appended to column after preferences.
     """
 
     Validator.is_callable(func, 'func')

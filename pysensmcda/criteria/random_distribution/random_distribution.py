@@ -9,19 +9,18 @@ def random_distribution(size: int) -> np.ndarray:
     """
     Generate a set of normalized weights sampled from a random distribution ( from half-open interval [0.0, 1.0) ).
 
-    Parameters
-    ----------
+    Parameters:
+    ------------
     size : int
         Number of weights to generate.
 
-    Returns
-    -------
-    ndarray
-        Array of normalized weights sampled from a random distribution.
+    Returns:
+    ---------
+        ndarray
+            Array of normalized weights sampled from a random distribution.
 
-    ## Example
-    --------
-    ### Example 1: Generate normalized weights from a random distribution with default parameters
+    Example
+    ---------
     >>> weights = random_distribution(3)
     >>> print(weights)
     """
