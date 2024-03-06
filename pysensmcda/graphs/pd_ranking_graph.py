@@ -253,7 +253,10 @@ def pd_rankings_graph(initial_rank: int | float,
     >>>             if len(r):
     >>>                 _ , crit, change, new_pos = r[0]
     >>>                 crit = int(crit)
-    >>>                 percentage_changes.append((change - matrix[alt, crit])/matrix[alt, crit]*100)
+    >>>                 if initial_ranking[alt] == new_pos:
+                            percentage_changes.append(0)
+                        else:
+                            percentage_changes.append((change - matrix[alt, crit])/matrix[alt, crit]*100)
     >>>                 new_positions.append(new_pos)
     >>>             else:
     >>>                 percentage_changes.append(0)

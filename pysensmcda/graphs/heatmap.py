@@ -102,6 +102,9 @@ def heatmap(matrix: np.ndarray,
 
     sns.heatmap(matrix, cmap=cmap, annot=annotate, fmt=fmt, linewidths=linewidths, cbar_kws=cbar_kwargs, ax=ax)
     ax.set_title(title, fontsize=title_fontsize)
+    x = np.arange(0, matrix.shape[0])
+    ax.set_xticks(x+0.5, [f'$A_{{{i+1}}}$' for i in range(len(x))])
+    ax.set_yticks(x+0.5, [f'${i+1}$' for i in range(len(x))])
     ax.set_xlabel(xlabel, fontsize=label_fontsize)
     ax.set_ylabel(ylabel, fontsize=label_fontsize)
 
