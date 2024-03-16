@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pysensmcda",
-    version="1.0.0",
+    version="1.0.1",
     author="Jakub Więckowski, Bartosz Paradowski",
     author_email="j.wieckowski@il-pib.pl, b.paradowski@il-pib.pl",
     description="Python Sensitivity Analysis Multi-Criteria Decision Analysis Package",
