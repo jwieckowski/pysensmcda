@@ -177,9 +177,11 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
                         try:
                             temp_results = np.round(np.array(pickle.load(f)) * step, precision)
                             if not save_zeros:
-                                npaa.append(temp_results[np.all(temp_results != 0, axis=1)])
+                                if len(temp_results != 0):
+                                    npaa.append(temp_results[np.all(temp_results != 0, axis=1)])
                             else:
-                                npaa.append(temp_results)
+                                if len(temp_results != 0):
+                                    npaa.append(temp_results)
                         except EOFError:
                             break
 
