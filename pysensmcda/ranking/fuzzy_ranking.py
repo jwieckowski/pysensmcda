@@ -17,8 +17,8 @@ def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None) -
 
     normalization_axis : int, optional
         Specifies the type of fuzzy ranking representation. 
-        If 1, it normalizes the obtained fuzzy rankings regarding values in rows (by positions in rankings).
         If 0, it normalizes the obtained fuzzy rankings regarding values in columns (by distribution of positions for alternatives).
+        If 1, it normalizes the obtained fuzzy rankings regarding values in rows (by positions in rankings).
         If None or not specified, it returns the default fuzzy ranking matrix without data normalization.
 
     Returns:
@@ -62,4 +62,11 @@ def fuzzy_ranking(rankings: np.ndarray, normalization_axis: None | int = None) -
         return rank_prob.to_numpy()
     else:
         M = rank_prob.to_numpy()
-        return np.round(M / np.max(M, axis=normalization_axis), 4)
+        max_values = np.max(M, axis=normalization_axis)
+        if normalization_axis == 0:
+            FM = np.round(M / max_values, 4)
+        else:
+            FM = M.copy()
+            for i in range(ALT):
+                FM[i, :] = np.round(M[i, :] / max_values[i], 4)
+        return FM
