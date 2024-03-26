@@ -90,7 +90,7 @@ def perturbed_matrix(matrix: np.ndarray, simulations: int, precision: int = 6, p
     modified_matrices = []
 
     for _ in range(simulations):
-        perturbation = np.random.uniform(-perturbation_scale, perturbation_scale, matrix.shape)
+        perturbation = np.random.uniform(-perturbation_scale, perturbation_scale, (matrix.shape[0], matrix.shape[1]))
         modified_matrix = matrix + perturbation
         modified_matrices.append(list(np.round(modified_matrix, precision)))
 
