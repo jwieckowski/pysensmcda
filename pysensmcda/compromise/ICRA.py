@@ -25,7 +25,7 @@ def iterative_compromise(methods: dict, preferences: np.ndarray, types, corr_coe
     """ Iterative Compromise Ranking Analysis (ICRA).
         ---------------------------------------------
 
-        The ICRA is an approach that provides decision maker a compromise ranking for specific set of considered rankings using specific mutli-criteria decision-making methods ICRA main advantage is using preference values and weights for each expert / decision-making method
+        The ICRA is an approach that provides decision maker a compromise ranking for specific set of considered rankings using specific multi-criteria decision-making methods ICRA main advantage is using preference values and weights for each expert / decision-making method
 
         Parameters:
         ------------

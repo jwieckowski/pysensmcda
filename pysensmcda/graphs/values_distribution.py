@@ -151,7 +151,7 @@ def hist_dist(data: np.ndarray,
     else:
         return ax
     
-def mutli_hist_dist(data: np.ndarray, 
+def multi_hist_dist(data: np.ndarray, 
                     nrows: int, 
                     ncols:int, 
                     figsize: tuple[int], 
@@ -228,9 +228,9 @@ def mutli_hist_dist(data: np.ndarray,
         >>>     [2, 0.06, np.array([0.288, 0.288, 0.424])],
         >>>     [2, -0.08, np.array([0.316, 0.316, 0.368])],
         >>>     [2, 0.08, np.array([0.284, 0.284, 0.432])]], dtype=object)
-        >>> critera_values = np.array([*results[:, 2]], dtype=float)
+        >>> criteria_values = np.array([*results[:, 2]], dtype=float)
         >>> # In the case of using sliders, the reference should be kept, so Python wouldn't GC
-        >>> _, _, sliders, main_slider = mutli_hist_dist(critera_values, title_pos=0.5, nrows=1, ncols=3, figsize=(8, 4))
+        >>> _, _, sliders, main_slider = multi_hist_dist(criteria_values, title_pos=0.5, nrows=1, ncols=3, figsize=(8, 4))
         >>> plt.show()
 
     Returns:
