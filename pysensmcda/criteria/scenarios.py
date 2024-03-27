@@ -143,6 +143,11 @@ def generate_weights_scenarios(crit_num: int, step: float, precision: int = 4, c
         def sum_of_seq(n):
             return (n*(n+1))/2
         
+        if crit_num == 2:
+            return max_points+1
+        elif crit_num == 3:
+            return sum_of_seq(max_points+1)
+        
         s = []
         for i in range(max_points+2):
             s.append(sum_of_seq(i))
