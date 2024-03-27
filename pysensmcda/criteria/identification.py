@@ -9,7 +9,7 @@ from ..validator import Validator
 from ..utils import memory_guard
 
 @memory_guard
-def relevance_identification(method: callable, call_kwargs: dict, ranking_descending: bool, excluded_criteria: int = 1, corr_coef: Union[Callable, List[Callable]] = weighted_spearman, precision: int = 6) -> list[tuple[tuple[int] | int, tuple[float] | float, float, np.ndarray]]:
+def relevance_identification(method: callable, call_kwargs: dict, ranking_descending: bool, excluded_criteria: int = 1, return_all: bool = False, corr_coef: Union[Callable, List[Callable]] = weighted_spearman, precision: int = 6) -> list[tuple[tuple[int] | int, tuple[float] | float, float, np.ndarray]]:
     """
     The core idea behind this method is to iteratively exclude a specified number of criteria and evaluate the impact on the ranking of alternatives. 
     By systematically excluding different criteria and analyzing the resulting changes in the ranking, the function aims to identify which criteria significantly influence the final decision.
@@ -30,6 +30,11 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
 
     excluded_criteria: int, optional, default=1
         Number of criteria to be excluded in each iteration.
+
+    return_all: bool, optional, default=False
+        Flag determining if the returned results include all data in criteria identification process
+        If True, all data is return for each iteration of relevance identification.
+        If False, only the least relevant criterion for each iteration is returned.
 
     corr_coef: callable | list, optional, default=pymcdm.correlations.weighted_spearman
         Function which will be used to check similarity of rankings while achieving compromise.
@@ -140,6 +145,7 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
 
         # index of minimum change
         min_change_idx = None
+        excluded_idx = None
         min_distance = 1 * new_matrix.shape[0]
 
         temp_results = []
@@ -172,8 +178,12 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
             if distance < min_distance:
                 min_distance = distance
                 min_change_idx = index
+                excluded_idx = i
 
-        excluded.append(min_change_idx)
-        results.append(temp_results[min_change_idx])
+        excluded.append(excluded_idx)
+        if return_all:
+            results.append(temp_results)
+        else:
+            results.append(temp_results[min_change_idx])
 
     return results
