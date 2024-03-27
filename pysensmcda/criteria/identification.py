@@ -137,6 +137,7 @@ def relevance_identification(method: callable, call_kwargs: dict, ranking_descen
     Validator.is_type_in_dict_valid('matrix', call_kwargs, np.ndarray, 'call_kwargs')
     initial_matrix = call_kwargs['matrix'].copy()
     Validator.is_dimension_valid(initial_matrix, 2, 'initial_matrix', custom_message="'matrix' in 'call_kwargs' should be a 2D array'")
+    Validator.is_type_valid(return_all, bool, 'return_all')
 
     if excluded_criteria > initial_matrix.shape[1]:
         raise ValueError('`excluded_criteria` should not exceed the number of columns in matrix')

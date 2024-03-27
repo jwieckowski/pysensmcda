@@ -17,6 +17,8 @@ def heatmap(matrix: np.ndarray,
                 figsize: tuple = (8, 6),
                 label_fontsize: int = 10,
                 title_fontsize: int = 12,
+                cbar_title_fontsize: int = 10,
+                ticks_labels_fontsize: int = 8,
                 ax: plt.Axes = None) -> plt.Axes:
     """
     Visualize the fuzzy ranking matrix using a heatmap.
@@ -59,6 +61,12 @@ def heatmap(matrix: np.ndarray,
     title_fontsize : int, optional
         Font size for the title.
 
+    cbar_title_fontsize : int, optional
+        Font size for the colorbar title.
+    
+    ticks_labels_fontsize : int, optional
+        Font size for the xticks and yticks labels.
+
     ax : plt.Axes, optional
         The axes on which to draw the heatmap. If not provided, a new figure will be created.
 
@@ -91,6 +99,9 @@ def heatmap(matrix: np.ndarray,
     Validator.is_type_valid(figsize, tuple, 'figsize')
     Validator.is_type_valid(label_fontsize, (int, np.integer), 'label_fontsize')
     Validator.is_type_valid(title_fontsize, (int, np.integer), 'title_fontsize')
+    Validator.is_type_valid(cbar_title_fontsize, (int, np.integer), 'cbar_title_fontsize')
+    Validator.is_type_valid(ticks_labels_fontsize, (int, np.integer), 'ticks_labels_fontsize')
+
     if ax is not None:
         Validator.is_type_valid(ax, plt.Axes, 'ax')
 
@@ -101,10 +112,11 @@ def heatmap(matrix: np.ndarray,
         ax = ax
 
     sns.heatmap(matrix, cmap=cmap, annot=annotate, fmt=fmt, linewidths=linewidths, cbar_kws=cbar_kwargs, ax=ax)
+    ax.figure.axes[-1].yaxis.label.set_size(cbar_title_fontsize)
     ax.set_title(title, fontsize=title_fontsize)
     x = np.arange(0, matrix.shape[0])
-    ax.set_xticks(x+0.5, [f'$A_{{{i+1}}}$' for i in range(len(x))])
-    ax.set_yticks(x+0.5, [f'${i+1}$' for i in range(len(x))])
+    ax.set_xticks(x+0.5, [f'$A_{{{i+1}}}$' for i in range(len(x))], fontsize=ticks_labels_fontsize)
+    ax.set_yticks(x+0.5, [f'${i+1}$' for i in range(len(x))], fontsize=ticks_labels_fontsize)
     ax.set_xlabel(xlabel, fontsize=label_fontsize)
     ax.set_ylabel(ylabel, fontsize=label_fontsize)
 
