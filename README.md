@@ -1,5 +1,5 @@
 [![github](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/jwieckowski/pysensmcda)
-[![Version](https://img.shields.io/pypi/v/pysensmcda)](https://pypi.org/project/)
+[![Version](https://img.shields.io/pypi/v/pysensmcda)](https://pypi.org/project/pysensmcda/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <!-- [![DOI:10.1016/j.softx.2022.101271](http://img.shields.io/badge/DOI-10.1016/j.softx.2022.101271-0f81c2.svg)](https://doi.org/10.1016/j.softx.2022.101271) -->
