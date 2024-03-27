@@ -5,8 +5,7 @@ numpy==1.26.0
 pandas==2.2.0
 pymcdm==1.2.0
 scipy==1.11.3
-setuptools==63.2.0
+setuptools>=65.5.1
 thread6==0.2.0
 seaborn==0.13.2
 tqdm==4.65.0
-setuptools==63.2.0
